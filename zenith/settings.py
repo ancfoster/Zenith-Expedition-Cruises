@@ -136,9 +136,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 
-IS_PRODUCTION = os.environ.get('IS_PRODUCTION')
-
-# AWS Variables
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'zenith-cruises'
@@ -146,25 +143,15 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.eu-west-2.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
-
-# Define static and media dirs
 STATIC_LOCATION = 'static'
-PUBLIC_MEDIA_LOCATION = 'media'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+STATICFILES_STORAGE = 'zenith.storage_backends.StaticStorage'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-if IS_PRODUCTION == 'development':
-    STATIC_URL = os.path.join(BASE_DIR, '/static/')
-
-else:
-    #Static
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-    STATICFILES_STORAGE = 'zenith-cruises.storage_backends.StaticStorage'
-
-#Media
+PUBLIC_MEDIA_LOCATION = 'media'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
-DEFAULT_FILE_STORAGE = 'zenith-cruises.storage_backends.PublicMediaStorage'
+DEFAULT_FILE_STORAGE = 'zeniths.storage_backends.PublicMediaStorage'
 
 
 # Default primary key field type
