@@ -29,8 +29,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['zenith-ci.herokuapp.com']
-
 
 # Application definition
 
@@ -56,6 +54,18 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = False
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/success'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
