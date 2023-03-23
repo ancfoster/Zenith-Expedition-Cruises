@@ -123,14 +123,14 @@ class Tag(models.Model):
     name = models.CharField(max_length=25, verbose_name="Tag Name")
 
 
-class Movements(models.Models):
+class Movements(models.Model):
     '''
     A movement represents what ship is doing each day.
     A cruise is made up of a number of movements which are ordered.
     '''
 PossibleMovements = [
     ('D' = 'Destination'),
-    ('AS' = 'At Sea'),
+    ('SD' = 'Sea Day'),
     ('SC' = 'Scenic Cruising')
 ]
     date = models.DateTimeField(editable=False)
@@ -138,5 +138,50 @@ PossibleMovements = [
     ship = models.ForeignKey(Ship, on_delete=models.SET_NULL, null=True, related_name="movement", editable=False)
     destination = models.ForeignKey(Destination, on_delete=models.SET_NULL, null=True, related_name="movement")
     cruise = models.ForeignKey(Destination, on_delete=models.CASCADE, related_name="movement")
-    order = models.PositiveSmallIntegerField, validators=[MinValueValidator(1), MaxValueValidator(200)]
+    order = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(200)])
     description = models.CharField(max_length=120, null=True, blank=True, default=null, verbose_name="Movement Description")
+
+    def __str__(self):
+        return self.date
+
+
+class Bookings(models.Model):
+    '''
+    Booking model, a booking is connected to a ticket.
+    Bokkings can be be deleted/cancelled but not tickets, unless
+    the whole cruise is deleted.
+    Booking ref is generated during the booking process.
+    '''
+    booking_ref = models.CharField(max_length=50, editable=False)
+    booked_by = models.ForeignKey(User, null=True, default=True, on_delete=models.SET_NULL, related_name='ticket')
+    number_of_guests = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(3)], verbose_name="Number of guests")
+    booking_price = models.DecimalField(max_digits=9, decimal_places=2)
+    booked_on = models.DateTimeField(auto_now_add=True)
+    ticket = models.ForeignKey(Tickets, on_delete=models.SET_NULL, related_name="booking")
+    guest1 = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name="booking")
+    guest2 = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name="booking")
+    guest3 = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name="booking")
+
+
+    def __str__(self):
+        return self.booking_ref
+
+
+class Tickets(models.Model):
+    '''
+    Tickets are automatically generated every time a cruise is created.
+    A ticket is generated for every single suite onboard a ship.
+    '''
+    ticket_ref = models.CharField(max_length=30, editable=False, verbose_name="Ticket reference")
+    ship = model.ForeignKey(Ships, on_delete=models.SET_NULL, related_name="ticket")
+    cruise = model.ForeignKey(Cruises, on_delete=models.PROTECT, related_name="ticket")
+    booked = model.BooleanField(default=False, verbose_name="Has ticket been booked?")
+    suite = model.ForeignKey(Suites, on_delete=models.PROTECT, related_name="ticket")
+    booking = model.ForeignKey(Bookings, on_delete=models.SET_NULL, blank=True, null=True, related_name="ticket")
+    created_on = created_on = models.DateTimeField(auto_now_add=True, editable=False)
+
+    def __str__(self):
+        return self.ticket_ref
+
+
+class Guests(models.Model):
