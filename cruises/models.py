@@ -55,9 +55,12 @@ class Suites(models.Model):
     '''
     Each ship has a number of suites and this information is used in ticket generation.
     '''
-    ship = models.ForeignKey(Ship, on_delete=models.SET_NULL, null=True, related_name="ship")
+    ship = models.ForeignKey(Ship, on_delete=models.SET_NULL, null=True, related_name="suite")
     suite_num_name = models.CharField(max_length=30, min_length=3, verbose_name="Suite Name/Number")
-    category = models.ForeignKey(Suite_Category, on_delete=models.SET_NULL, null=True, related_name="Suite Category")
+    category = models.ForeignKey(Suite_Category, on_delete=models.SET_NULL, null=True, related_name="suite")
+
+    def __str__(self):
+        return self.suite_num_name
 
 
 class Suite_Category(models.Model):
@@ -70,22 +73,70 @@ class Suite_Category(models.Model):
     size = models.PositiveSmallIntegerField(verbose_name="Size of suite sq m", validators=[MinValueValidator(19), MaxValueValidator(200)])
     suite_image = models.ImageField(verbose_name='Suite Image')
     suite_layout_image = models.ImageField(verbose_name='Ship Layout Image')
-    suite_feature_list = models.CharField(blank=True, max_length=3000, default='')
+    suite_feature_list = models.CharField(blank=True, max_length=3000, default='', verbose_name="Suite Feature List")
+
+
+    def __str__(self):
+        return self.name
 
 
 class Fares(models.Model):
     '''
     This model is used to control th fares of cruises and apply offers
     '''
-    cruise = models.ForeignKey(Cruise, on_delete=models.SET_NULL, null=True, related_name="cruise")
-    suite_category = models.ForeignKey(Cruise, on_delete=models.SET_NULL, null=True, related_name="suite_category")
+    cruise = models.ForeignKey(Cruise, on_delete=models.SET_NULL, null=True, related_name="fares")
+    suite_category = models.ForeignKey(Cruise, on_delete=models.SET_NULL, null=True, related_name="fares")
     price = models.DecimalField(max_digits=9, decimal_places=2)
     special_offer = models.BooleanField(initial=False)
     offer_price = models.DecimalField(max_digits=9, decimal_places=2)
+
+
+    def __str__(self):
+        return self.cruise
 
 
 class Cruises(models.Model):
     '''
     Model for cruises
     '''
-    ship = models.ForeignKey(Ship)
+    name = models.Charfield(max_length="120", verbose_name="Cruise Name")
+    ship = models.ForeignKey(Ship, on_delete=models.SET_NULL, null=True, related_name="cruises")
+    created_on = models.DateTimeField(auto_now_add=True)
+    duration = models.PositiveSmallIntegerField(verbose_name="Cruise Duration", validators=[MinValueValidator(2), MaxValueValidator(199)])  # noqa
+    start_date = models.DateTimeField(verbose_name="Cruise Start Date")
+    end_date = models.DateTimeField(verbose_name="Cruise End Date")
+    description = models.TextField(max_length=2000, verbose_name="Cruise Description")
+    results_image = models.ImageField(verbose_name='Results Image')
+    listing_image = models.ImageField(verbose_name='Listing Image')
+    map_image = models.ImageField(verbose_name='Map Image')
+    bookable = models.BooleanField(default=True)
+    tags = models.ManyToManyField(Tag, related_name="Cruise", null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Tag(models.Model):
+    '''
+    Tags are used to help with filtering
+    '''
+    name = models.CharField(max_length=25, verbose_name="Tag Name")
+
+
+class Movements(models.Models):
+    '''
+    A movement represents what ship is doing each day.
+    A cruise is made up of a number of movements which are ordered.
+    '''
+PossibleMovements = [
+    ('D' = 'Destination'),
+    ('AS' = 'At Sea'),
+    ('SC' = 'Scenic Cruising')
+]
+    date = models.DateTimeField(editable=False)
+    type = models.CharField(choices=PossibleMovements, max_length=2)
+    ship = models.ForeignKey(Ship, on_delete=models.SET_NULL, null=True, related_name="movement", editable=False)
+    destination = models.ForeignKey(Destination, on_delete=models.SET_NULL, null=True, related_name="movement")
+    cruise = models.ForeignKey(Destination, on_delete=models.CASCADE, related_name="movement")
+    order = models.PositiveSmallIntegerField, validators=[MinValueValidator(1), MaxValueValidator(200)]
+    description = models.CharField(max_length=120, null=True, blank=True, default=null, verbose_name="Movement Description")
