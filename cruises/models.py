@@ -83,7 +83,7 @@ class Cruises(models.Model):
     '''
     Model for cruises
     '''
-    name = models.CharField(max_length="120", verbose_name="Cruise Name")
+    name = models.CharField(max_length=120, verbose_name="Cruise Name")
     ship = models.ForeignKey(Ships, on_delete=models.SET_NULL, null=True, related_name="cruises")
     created_on = models.DateTimeField(auto_now_add=True)
     duration = models.PositiveSmallIntegerField(verbose_name="Cruise Duration", validators=[MinValueValidator(2), MaxValueValidator(199)])  # noqa
@@ -94,7 +94,7 @@ class Cruises(models.Model):
     listing_image = models.ImageField(verbose_name='Listing Image')
     map_image = models.ImageField(verbose_name='Map Image')
     bookable = models.BooleanField(default=True)
-    tags = models.ManyToManyField(Tag, related_name="Cruise", null=True, blank=True)
+    tags = models.ManyToManyField(Tag, related_name="Cruise", blank=True)
 
     def __str__(self):
         return self.name
@@ -105,13 +105,7 @@ class Fares(models.Model):
     This model is used to control th fares of cruises and apply offers
     '''
     cruise = models.ForeignKey(Cruises, on_delete=models.SET_NULL, null=True, related_name="fares")
-
-    def get_suite_cats():
-        suite_cats = SuiteCategories.objects.all()
-        return [suite_cat.name for suite_cat in suite_cats]
-
-    suite_category = models.CharField(choices=get_suite_cats)
-        
+    suite_category = models.ForeignKey(SuiteCategories, on_delete=models.PROTECT, related_name="fares")      
     price = models.DecimalField(max_digits=9, decimal_places=2)
     special_offer = models.BooleanField(default=False)
     offer_price = models.DecimalField(max_digits=9, decimal_places=2)
@@ -132,9 +126,9 @@ class Movements(models.Model):
     ('SC', 'Scenic Cruising')]
     date = models.DateField(editable=False)
     type = models.CharField(choices=PossibleMovements, max_length=2)
-    ship = models.ForeignKey(Ships, on_delete=models.SET_NULL, null=True, related_name="movement", editable=False)
+    ship = models.ForeignKey(Ships, on_delete=models.SET_NULL, null=True, editable=False, related_name="movement")
     destination = models.ForeignKey(Destination, on_delete=models.SET_NULL, null=True, related_name="movement")
-    cruise = models.ForeignKey(Destination, on_delete=models.CASCADE, related_name="movement")
+    cruise = models.ForeignKey(Cruises, on_delete=models.CASCADE, related_name="movement")
     order = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(200)])
     description = models.CharField(max_length=120, null=True, blank=True, default=None, verbose_name="Movement Description")
 
@@ -148,7 +142,7 @@ class Tickets(models.Model):
     A ticket is generated for every single suite onboard a ship.
     '''
     ticket_ref = models.CharField(max_length=30, editable=False, verbose_name="Ticket reference")
-    ship = models.ForeignKey(Ships, on_delete=models.SET_NULL, related_name="ticket")
+    ship = models.ForeignKey(Ships, null=True, on_delete=models.SET_NULL, related_name="ticket")
     cruise = models.ForeignKey(Cruises, on_delete=models.PROTECT, related_name="ticket")
     booked = models.BooleanField(default=False, verbose_name="Has ticket been booked?")
     suite = models.ForeignKey(Suites, on_delete=models.PROTECT, related_name="ticket")
@@ -157,6 +151,23 @@ class Tickets(models.Model):
     def __str__(self):
         return self.ticket_ref
 
+
+class Bookings(models.Model):
+    '''
+    Booking model, a booking is connected to a ticket.
+    Bokkings can be be deleted/cancelled but not tickets, unless
+    the whole cruise is deleted.
+    Booking ref is generated during the booking process.
+    '''
+    booking_ref = models.CharField(max_length=50, editable=False)
+    booked_by = models.ForeignKey(User, null=True, default=True, on_delete=models.SET_NULL, related_name='ticket')
+    number_of_guests = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(3)], verbose_name="Number of guests")
+    booking_price = models.DecimalField(max_digits=9, decimal_places=2)
+    booked_on = models.DateTimeField(auto_now_add=True)
+    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, related_name="booking")
+
+    def __str__(self):
+        return self.booking_ref
 
 
 class Guests(models.Model):
@@ -178,33 +189,11 @@ class Guests(models.Model):
     country_residence = CountryField(blank_label="(Select Country)")
     email = models.EmailField(max_length=70, verbose_name="Email Address")
     telephone = models.CharField(max_length=20, verbose_name="Telephone")
-    telephone = models.CharField(max_length=20, verbose_name="Telephone")
     dietary_requirements = models.CharField(max_length=200, blank=True, verbose_name="Dietary Requirements")
+    booking = models.ForeignKey(Bookings, on_delete=models.CASCADE, related_name="guest")
 
     def __str__(self):
         return self.first_name.last_name
-
-
-class Bookings(models.Model):
-    '''
-    Booking model, a booking is connected to a ticket.
-    Bokkings can be be deleted/cancelled but not tickets, unless
-    the whole cruise is deleted.
-    Booking ref is generated during the booking process.
-    '''
-    booking_ref = models.CharField(max_length=50, editable=False)
-    booked_by = models.ForeignKey(User, null=True, default=True, on_delete=models.SET_NULL, related_name='ticket')
-    number_of_guests = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(3)], verbose_name="Number of guests")
-    booking_price = models.DecimalField(max_digits=9, decimal_places=2)
-    booked_on = models.DateTimeField(auto_now_add=True)
-    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, related_name="booking")
-    guest1 = models.ForeignKey(Guests, on_delete=models.SET_NULL, related_name="booking")
-    guest2 = models.ForeignKey(Guests, on_delete=models.SET_NULL, related_name="booking")
-    guest3 = models.ForeignKey(Guests, on_delete=models.SET_NULL, related_name="booking")
-
-
-    def __str__(self):
-        return self.booking_ref
 
 
 
