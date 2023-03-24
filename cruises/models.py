@@ -1,14 +1,16 @@
 from django.db import models
+from django_countries.fields import CountryField
+from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator, MaxLengthValidator  # noqa
 
 # Create your models here.
 
-class Country(models.Model):
+class Destination(models.Model):
     '''
-    Model for country, used for guest model & destination model
+    Model for different cruise destinations
     '''
-    name = models.CharField(max_length=50)
-    continent = models.CharField(choices=ContinentChoices, max_length=20)
+    name = models.CharField(max_length=60, verbose_name="Destination Name")
+    country = CountryField(blank_label="(Select Nationality)")
     ContinentChoices = [
         ('Antarctica', 'Antarctica'),
         ('Africa', 'Africa'),
@@ -18,23 +20,13 @@ class Country(models.Model):
         ('South America', 'South America'),
         ('Oceania', 'Oceania')
     ]
-
-    def __str__(self):
-        return self.name
-
-
-class Destination(models.Model):
-    '''
-    Model for different cruise destinations
-    '''
-    name = models.CharField(max_length=60, verbose_name="Destination Name")
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, related_name="Country")
+    continent = models.CharField(choices=ContinentChoices, max_length=20)
     description = models.TextField(max_length=700, blank=False, verbose_name="Destination Description")
     image = models.ImageField(verbose_name='Destination Image')
-    latitude = DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Latitude")
-    longitude = DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Longitude")
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Latitude")
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Longitude")
 
-    def __str__(self);
+    def __str__(self):
         return self.name
 
 
@@ -51,19 +43,7 @@ class Ships(models.Model):
         return self.name
 
 
-class Suites(models.Model):
-    '''
-    Each ship has a number of suites and this information is used in ticket generation.
-    '''
-    ship = models.ForeignKey(Ship, on_delete=models.SET_NULL, null=True, related_name="suite")
-    suite_num_name = models.CharField(max_length=30, min_length=3, verbose_name="Suite Name/Number")
-    category = models.ForeignKey(Suite_Category, on_delete=models.SET_NULL, null=True, related_name="suite")
-
-    def __str__(self):
-        return self.suite_num_name
-
-
-class Suite_Category(models.Model):
+class SuiteCategories(models.Model):
     '''
     Each suite falls into a category. The category determines the pricing a customer pays.
     '''
@@ -80,31 +60,35 @@ class Suite_Category(models.Model):
         return self.name
 
 
-class Fares(models.Model):
+class Suites(models.Model):
     '''
-    This model is used to control th fares of cruises and apply offers
+    Each ship has a number of suites and this information is used in ticket generation.
     '''
-    cruise = models.ForeignKey(Cruise, on_delete=models.SET_NULL, null=True, related_name="fares")
-    suite_category = models.ForeignKey(Cruise, on_delete=models.SET_NULL, null=True, related_name="fares")
-    price = models.DecimalField(max_digits=9, decimal_places=2)
-    special_offer = models.BooleanField(initial=False)
-    offer_price = models.DecimalField(max_digits=9, decimal_places=2)
-
+    ship = models.ForeignKey(Ships, on_delete=models.SET_NULL, null=True, related_name="suite")
+    suite_num_name = models.CharField(max_length=30, verbose_name="Suite Name/Number")
+    category = models.ForeignKey(SuiteCategories, on_delete=models.SET_NULL, null=True, related_name="suite")
 
     def __str__(self):
-        return self.cruise
+        return self.suite_num_name
+
+
+class Tag(models.Model):
+    '''
+    Tags are used to help with filtering
+    '''
+    name = models.CharField(max_length=25, verbose_name="Tag Name")
 
 
 class Cruises(models.Model):
     '''
     Model for cruises
     '''
-    name = models.Charfield(max_length="120", verbose_name="Cruise Name")
-    ship = models.ForeignKey(Ship, on_delete=models.SET_NULL, null=True, related_name="cruises")
+    name = models.CharField(max_length="120", verbose_name="Cruise Name")
+    ship = models.ForeignKey(Ships, on_delete=models.SET_NULL, null=True, related_name="cruises")
     created_on = models.DateTimeField(auto_now_add=True)
     duration = models.PositiveSmallIntegerField(verbose_name="Cruise Duration", validators=[MinValueValidator(2), MaxValueValidator(199)])  # noqa
-    start_date = models.DateTimeField(verbose_name="Cruise Start Date")
-    end_date = models.DateTimeField(verbose_name="Cruise End Date")
+    start_date = models.DateField(verbose_name="Cruise Start Date")
+    end_date = models.DateField(verbose_name="Cruise End Date")
     description = models.TextField(max_length=2000, verbose_name="Cruise Description")
     results_image = models.ImageField(verbose_name='Results Image')
     listing_image = models.ImageField(verbose_name='Listing Image')
@@ -116,11 +100,25 @@ class Cruises(models.Model):
         return self.name
 
 
-class Tag(models.Model):
+class Fares(models.Model):
     '''
-    Tags are used to help with filtering
+    This model is used to control th fares of cruises and apply offers
     '''
-    name = models.CharField(max_length=25, verbose_name="Tag Name")
+    cruise = models.ForeignKey(Cruises, on_delete=models.SET_NULL, null=True, related_name="fares")
+
+    def get_suite_cats():
+        suite_cats = SuiteCategories.objects.all()
+        return [suite_cat.name for suite_cat in suite_cats]
+
+    suite_category = models.CharField(choices=get_suite_cats)
+        
+    price = models.DecimalField(max_digits=9, decimal_places=2)
+    special_offer = models.BooleanField(default=False)
+    offer_price = models.DecimalField(max_digits=9, decimal_places=2)
+
+
+    def __str__(self):
+        return self.cruise
 
 
 class Movements(models.Model):
@@ -128,21 +126,63 @@ class Movements(models.Model):
     A movement represents what ship is doing each day.
     A cruise is made up of a number of movements which are ordered.
     '''
-PossibleMovements = [
-    ('D' = 'Destination'),
-    ('SD' = 'Sea Day'),
-    ('SC' = 'Scenic Cruising')
-]
-    date = models.DateTimeField(editable=False)
+    PossibleMovements = [
+    ('D', 'Destination'),
+    ('SD', 'Sea Day'),
+    ('SC', 'Scenic Cruising')]
+    date = models.DateField(editable=False)
     type = models.CharField(choices=PossibleMovements, max_length=2)
-    ship = models.ForeignKey(Ship, on_delete=models.SET_NULL, null=True, related_name="movement", editable=False)
+    ship = models.ForeignKey(Ships, on_delete=models.SET_NULL, null=True, related_name="movement", editable=False)
     destination = models.ForeignKey(Destination, on_delete=models.SET_NULL, null=True, related_name="movement")
     cruise = models.ForeignKey(Destination, on_delete=models.CASCADE, related_name="movement")
     order = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(200)])
-    description = models.CharField(max_length=120, null=True, blank=True, default=null, verbose_name="Movement Description")
+    description = models.CharField(max_length=120, null=True, blank=True, default=None, verbose_name="Movement Description")
 
     def __str__(self):
         return self.date
+
+
+class Tickets(models.Model):
+    '''
+    Tickets are automatically generated every time a cruise is created.
+    A ticket is generated for every single suite onboard a ship.
+    '''
+    ticket_ref = models.CharField(max_length=30, editable=False, verbose_name="Ticket reference")
+    ship = models.ForeignKey(Ships, on_delete=models.SET_NULL, related_name="ticket")
+    cruise = models.ForeignKey(Cruises, on_delete=models.PROTECT, related_name="ticket")
+    booked = models.BooleanField(default=False, verbose_name="Has ticket been booked?")
+    suite = models.ForeignKey(Suites, on_delete=models.PROTECT, related_name="ticket")
+    created_on = created_on = models.DateTimeField(auto_now_add=True, editable=False)
+
+    def __str__(self):
+        return self.ticket_ref
+
+
+
+class Guests(models.Model):
+    '''
+    Guest model, each booking has at least 1 guest
+    '''
+    title = models.CharField(max_length=9, verbose_name="Title")
+    first_name = models.CharField(max_length=25, verbose_name="First Name")
+    last_name = models.CharField(max_length=25, verbose_name="Last Name")
+    dob = models.DateField(max_length=25, verbose_name="Date of Birth")
+    nationality = CountryField(blank_label="(Select Nationality)")
+    passport_number = models.CharField(max_length=20, verbose_name="Passport Number")
+    passport_expiry = models.DateField(verbose_name="Passport Expiry Date")
+    address_line_1 = models.CharField(max_length=50, verbose_name="Address Line 1")
+    address_line_2 = models.CharField(max_length=50, blank=True, verbose_name="Address Line 2")
+    town_city = models.CharField(max_length=50, verbose_name="Town/City")
+    state_county = models.CharField(max_length=50, blank=True, verbose_name="State/County")
+    zip_postcode = models.CharField(max_length=12, verbose_name="Zip/Post Code")
+    country_residence = CountryField(blank_label="(Select Country)")
+    email = models.EmailField(max_length=70, verbose_name="Email Address")
+    telephone = models.CharField(max_length=20, verbose_name="Telephone")
+    telephone = models.CharField(max_length=20, verbose_name="Telephone")
+    dietary_requirements = models.CharField(max_length=200, blank=True, verbose_name="Dietary Requirements")
+
+    def __str__(self):
+        return self.first_name.last_name
 
 
 class Bookings(models.Model):
@@ -157,31 +197,14 @@ class Bookings(models.Model):
     number_of_guests = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(3)], verbose_name="Number of guests")
     booking_price = models.DecimalField(max_digits=9, decimal_places=2)
     booked_on = models.DateTimeField(auto_now_add=True)
-    ticket = models.ForeignKey(Tickets, on_delete=models.SET_NULL, related_name="booking")
-    guest1 = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name="booking")
-    guest2 = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name="booking")
-    guest3 = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name="booking")
+    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, related_name="booking")
+    guest1 = models.ForeignKey(Guests, on_delete=models.SET_NULL, related_name="booking")
+    guest2 = models.ForeignKey(Guests, on_delete=models.SET_NULL, related_name="booking")
+    guest3 = models.ForeignKey(Guests, on_delete=models.SET_NULL, related_name="booking")
 
 
     def __str__(self):
         return self.booking_ref
 
 
-class Tickets(models.Model):
-    '''
-    Tickets are automatically generated every time a cruise is created.
-    A ticket is generated for every single suite onboard a ship.
-    '''
-    ticket_ref = models.CharField(max_length=30, editable=False, verbose_name="Ticket reference")
-    ship = model.ForeignKey(Ships, on_delete=models.SET_NULL, related_name="ticket")
-    cruise = model.ForeignKey(Cruises, on_delete=models.PROTECT, related_name="ticket")
-    booked = model.BooleanField(default=False, verbose_name="Has ticket been booked?")
-    suite = model.ForeignKey(Suites, on_delete=models.PROTECT, related_name="ticket")
-    booking = model.ForeignKey(Bookings, on_delete=models.SET_NULL, blank=True, null=True, related_name="ticket")
-    created_on = created_on = models.DateTimeField(auto_now_add=True, editable=False)
 
-    def __str__(self):
-        return self.ticket_ref
-
-
-class Guests(models.Model):
