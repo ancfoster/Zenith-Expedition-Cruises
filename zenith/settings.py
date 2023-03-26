@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'cruises',
     'site_pages',
+    'cruise_manager',
 ]
 
 AUTHENTICATION_BACKENDS = [
