@@ -2,6 +2,7 @@ from django.db import models
 from django_countries.fields import CountryField
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator, MaxLengthValidator  # noqa
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -77,7 +78,12 @@ class Tag(models.Model):
     Tags are used to help with filtering
     '''
     name = models.CharField(max_length=25, verbose_name="Tag Name")
+    slug = models.SlugField(blank=True, unique=True)
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 class Cruises(models.Model):
     '''
@@ -95,6 +101,12 @@ class Cruises(models.Model):
     map_image = models.ImageField(verbose_name='Map Image')
     bookable = models.BooleanField(default=True)
     tags = models.ManyToManyField(Tag, related_name="Cruise", blank=True)
+    slug = models.SlugField(blank=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
