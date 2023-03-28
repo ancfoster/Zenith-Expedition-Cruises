@@ -26,6 +26,8 @@ class Destination(models.Model):
     image = models.ImageField(verbose_name='Destination Image')
     latitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Latitude")
     longitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Longitude")
+    slug = slug = models.SlugField(blank=True, unique=True)
+
 
     def __str__(self):
         return self.name
@@ -42,6 +44,9 @@ class Ships(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Ships"
 
 
 class SuiteCategories(models.Model):
@@ -114,7 +119,7 @@ class Cruises(models.Model):
 
 class Fares(models.Model):
     '''
-    This model is used to control th fares of cruises and apply offers
+    This model is used to control the fares of cruises and apply offers
     '''
     cruise = models.ForeignKey(Cruises, on_delete=models.SET_NULL, null=True, related_name="fares")
     suite_category = models.ForeignKey(SuiteCategories, on_delete=models.PROTECT, related_name="fares")      
