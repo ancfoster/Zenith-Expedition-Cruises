@@ -8,12 +8,20 @@ from django.views import generic, View
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-# from .forms import
+from .forms import NewDestinationForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
+@login_required
 def NewDestination(request):
-    return render(request, 'cruise_manager/new_destination.html')
+    if request.method == 'POST':
+        new_destination_form = NewDestinationForm(request.POST, request.FILES)
+    else:
+        new_destination_form = NewDestinationForm()
+    context = {
+        'new_destination_form': new_destination_form
+    }
+    return render(request, 'cruise_manager/new_destination.html', context)
 
 '''
 This function compresses uploaded imagaes for end user performance,

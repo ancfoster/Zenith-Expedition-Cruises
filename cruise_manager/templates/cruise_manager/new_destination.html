@@ -8,7 +8,21 @@ Create a new Destination
 {% block content %}
 <div class="admin_create_cont">
     <h2>Create a Destination</h2>
+    <div>
+        <form class="flex flex-col flex-wrap" method="POST" id="new_destination_form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ new_destination_form.name }}
+            {{ new_destination_form.country }}
+            {{ new_destination_form.continent }}
+            {{ new_destination_form.description }}
+            {{ new_destination_form.image }}
+            {{ new_destination_form.latitude }}
+            {{ new_destination_form.longitude }}
+            <button type="submit">Add Destination</button>
+        </form>
+    </div>
 </div>
+
 {% endblock %}
 
 
