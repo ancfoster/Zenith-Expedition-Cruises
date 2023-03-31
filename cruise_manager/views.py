@@ -8,15 +8,17 @@ from django.views import generic, View
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-from .forms import
+# from .forms import
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
-
+def NewDestination(request):
+    return render(request, 'cruise_manager/new_destination.html')
 
 '''
 This function compresses uploaded imagaes for end user performance,
 SEO purposes. It also removes alpha channel from PNGs for JPEG conversion.
+Uses PILLOW library.
 '''
 def compress_uploaded_images(image, image_name):
     image = Image.open(image)
