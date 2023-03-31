@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'allauth',
+    'storages',
     'django_countries',
     'allauth.account',
     'allauth.socialaccount',
@@ -165,7 +166,7 @@ STATICFILES_DIRS = [
 ]
 PUBLIC_MEDIA_LOCATION = 'media'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
-DEFAULT_FILE_STORAGE = 'zeniths.storage_backends.PublicMediaStorage'
+DEFAULT_FILE_STORAGE = 'zenith.storage_backends.PublicMediaStorage'
 
 
 # Default primary key field type
