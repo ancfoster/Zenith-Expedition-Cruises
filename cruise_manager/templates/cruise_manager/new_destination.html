@@ -1,24 +1,35 @@
 
 {% extends "admin_base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 {% block head %}
 Create a new Destination
 {% endblock %}
 
 {% block content %}
 <div class="admin_create_cont">
-    <h2>Create a Destination</h2>
+    <h2 class="admin_h2">Create a Destination</h2>
     <div>
-        <form class="flex flex-col flex-wrap" method="POST" id="new_destination_form" enctype="multipart/form-data">
+        <form class="flex flex-col flex-wrap bg-ad" method="POST" id="new_destination_form" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ new_destination_form.name }}
-            {{ new_destination_form.country }}
-            {{ new_destination_form.continent }}
-            {{ new_destination_form.description }}
-            {{ new_destination_form.image }}
+            <label class="admin_form_label" for="id_name">Name</label>
+            {% render_field new_destination_form.name class+="admin_field" %}
+            <label class="admin_form_label" for="id_country">Country</label>
+            {% render_field new_destination_form.country class+="admin_field" %}
+            <label class="admin_form_label" for="id_continent">Continent</label>
+            {% render_field new_destination_form.continent class+="admin_field" %}
+            <label class="admin_form_label" for="id_description">Description</label>
+            {% render_field new_destination_form.description class+="admin_field" %}
+            <label class="admin_form_label" for="id_image">Image</label>
+            <span class="mb-2 p-2 rounded-l bg-slate-200 text-sm text-grey666">Tip: Destination image appears on cruise listing pages</span>
+            {% render_field new_destination_form.image class+="admin_field" %}
+            <label class="admin_form_label">Coordinates</label>
+            <span class="text-grey666 text-sm mb-2 mt-2">Drag the map to set the coordinate fields.</span>
+            <div class="flex"><span class="pr-2">Latitude:</span><span class="mr-2" id="latitude_span">l</span><span>Longitude:</span><span id="longitude_span">lo</span></div>
             {{ new_destination_form.latitude }}
             {{ new_destination_form.longitude }}
-            <button type="submit">Add Destination</button>
+
+            <button type="submit" class="admin_button">Add Destination</button>
         </form>
     </div>
 </div>

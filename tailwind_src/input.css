@@ -14,3 +14,15 @@
 .admin_nav_a {
     @apply flex items-center w-full hover:bg-black111 rounded-lg p-2 pr-3 text-black222 leading-4 text-base hover:text-white;
 }
+.admin_create_cont {
+    @apply max-w-[760px] w-full ml-auto mr-auto p-4 flex flex-col flex-wrap bg-admin_section_bg rounded-lg border border-grey_b_light
+}
+.admin_form_label {
+    @apply text-base text-black333 mb-2 mt-2 font-medium
+}
+.admin_h2 {
+    @apply text-2xl font-medium text-black333 text-center mb-2
+}
+.admin_field {
+    @apply bg-field_inactive rounded-lg p-3 mb-2 hover:bg-field_active_hover border-field_inactive_border border-2 text-base text-grey666 active:bg-field_active_hover active:text-black333
+}

@@ -20,6 +20,7 @@ module.exports = {
         black333: '#333333',
         grey444: '#444444',
         grey555: '#555555',
+        grey666: '#666666',
         grey_b_light: '#DADADA',
         field_inactive: '#f1f1f1',
         field_active_hover: '#fdfdfd',
