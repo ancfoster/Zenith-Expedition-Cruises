@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200" rel="stylesheet" />
+</head>
+<body class="font-admin bg-admin_grey_bg">
+    <div class="w-full h-12 fixed top-0 left-0 flex items-center justify-between bg-admin_bar_bg shadow-sm z-40 border-b-[1px] border-b-grey_b_light">
+        <div id="burgerCont" class="flex items-center justify-center w-[64px] text-black222 hover:bg-black222 hover:text-white h-12 border-r-[1px] border-r-grey_b_light cursor-pointer mr-2">
+            <i id="burgerIcon" class="material-symbols-outlined">menu</i>
+        </div>
+        <div class="w-full flex pl-2 items-center justify-center md:justify-start text-xl font-medium leading-4"><img class="h-6 mr-3" src="{% static 'images/logo_black_star.svg' %}">Cruise Manager</div>
+        <div class="w-[64px] h-full flex items-center justify-center cursor-pointer text-black222 hover:bg-black222 hover:text-white">
+           <a href="#" class="flex items-center justify-center h-full"> <i class="material-symbols-outlined">logout</i></a>
+        </div>
+    </div>
+    <nav id="adminNav" class="flex flex-row fixed top-0 p-4 left-0 mt-12 z-30 w-full md:w-auto transition-transform -translate-x-full nav_height bg-admin_bar_bg shadow-l">
+        <ul class="w-full">
+            <li class="admin_nav_li">
+                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">dashboard</span><span class="ml-2">Dashboard</span></a>
+            </li>
+            <li class="admin_nav_li">
+                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">directions_boat</span><span class="ml-2">Cruises</span></a>
+            </li>
+            <li class="admin_nav_li">
+                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">explore</span><span class="ml-2">Destnations</span></a>
+            </li>
+            <li class="admin_nav_li">
+                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">label</span><span class="ml-2">Tags</span></a>
+            </li>
+            <li class="admin_nav_li">
+                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">confirmation_number</span><span class="ml-2">Bookings</span></a>
+            </li>
+            <li class="admin_nav_li">
+                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">mail</span><span class="ml-2">Enquiries</span></a>
+            </li>
+            <li class="admin_nav_li">
+                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">house</span><span class="ml-2">Home Page Settings</span></a>
+            </li>
+        </ul>
+    </nav>
+<main class="w-full mt-12 pt-6 pl-4 pr-4">
+    {% block content %}
+    {% endblock %}
+</main>
+<script src="{% static 'js/admin.js' %}"></script>
+{% block footerscripts %}
+{% endblock %}
+</body>
+</html>
