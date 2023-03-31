@@ -1,0 +1,16 @@
+@import url("https://use.typekit.net/nxl7rat.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav_height {
+    height: calc(100% - 3rem)!important;
+}
+
+.admin_nav_li {
+    @apply w-full block pb-4 relative;
+}
+.admin_nav_a {
+    @apply flex items-center w-full hover:bg-black111 rounded-lg p-2 pr-3 text-black222 leading-4 text-base hover:text-white;
+}
