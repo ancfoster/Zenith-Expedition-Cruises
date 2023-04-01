@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login
 from PIL import Image
 from django.views import generic, View
+from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
@@ -18,8 +19,18 @@ def NewDestination(request):
     mapkey = os.environ.get('MAPBOX')
     if request.method == 'POST':
         new_destination_form = NewDestinationForm(request.POST, request.FILES)
+        if new_destination_form.is_valid():
+            image = new_destination_form.cleaned_data['image']
+            image_name = new_destination_form.cleaned_data['name'].replace(" ", "")
+            compressed_image = compress_uploaded_images(image, image_name)
+            new_destination_form.instance.image = compressed_image
+            new_destination_form.instance.image.field.upload_to = 'destination_img/'
+            form = new_destination_form.save()
+            form.save()
+            return redirect('new_destination')
     else:
         new_destination_form = NewDestinationForm()
+
     context = {
         'mapkey': mapkey,
         'new_destination_form': new_destination_form
