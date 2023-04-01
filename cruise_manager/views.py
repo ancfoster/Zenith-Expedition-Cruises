@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
@@ -14,11 +15,13 @@ from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cru
 
 @login_required
 def NewDestination(request):
+    mapkey = os.environ.get('MAPBOX')
     if request.method == 'POST':
         new_destination_form = NewDestinationForm(request.POST, request.FILES)
     else:
         new_destination_form = NewDestinationForm()
     context = {
+        'mapkey': mapkey,
         'new_destination_form': new_destination_form
     }
     return render(request, 'cruise_manager/new_destination.html', context)

@@ -5,6 +5,10 @@
 {% block head %}
 Create a new Destination
 {% endblock %}
+{% block head_resources %}
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+{% endblock %}
 
 {% block content %}
 <div class="admin_create_cont">
@@ -21,11 +25,12 @@ Create a new Destination
             <label class="admin_form_label" for="id_description">Description</label>
             {% render_field new_destination_form.description class+="admin_field" %}
             <label class="admin_form_label" for="id_image">Image</label>
-            <span class="mb-2 p-2 rounded-l bg-slate-200 text-sm text-grey666">Tip: Destination image appears on cruise listing pages</span>
+            <span class="mb-3 p-2 rounded-xl bg-blue-50 text-sm text-grey444">Tip: Destination image appears on cruise listing pages</span>
             {% render_field new_destination_form.image class+="admin_field" %}
             <label class="admin_form_label">Coordinates</label>
-            <span class="text-grey666 text-sm mb-2 mt-2">Drag the map to set the coordinate fields.</span>
-            <div class="flex"><span class="pr-2">Latitude:</span><span class="mr-2" id="latitude_span">l</span><span>Longitude:</span><span id="longitude_span">lo</span></div>
+            <span class="text-grey666 text-base mb-3">Drag the map to set the coordinate fields.</span>
+            <div id='map' class="w-full h-[320px] mb-2"></div>
+            <div class="flex"><span class="pr-2 font-normal">Latitude:</span><span class="mr-4 font-medium" id="latitude_span">l</span><span class="pr-2 font-normal">Longitude:</span><span id="longitude_span" class="font-medium">lo</span></div>
             {{ new_destination_form.latitude }}
             {{ new_destination_form.longitude }}
 
@@ -36,6 +41,72 @@ Create a new Destination
 
 {% endblock %}
 
-
 {% block footerscripts %}
+<script>
+    const LatitudeSpan = document.getElementById('latitude_span');
+const LongitudeSpan = document.getElementById('longitude_span');
+const IdLatitude = document.getElementById('id_latitude');
+const IdLongitude = document.getElementById('id_longitude');
+
+mapboxgl.accessToken = '{{ mapkey }}';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [0, 0], // starting position
+      zoom: 2,
+    });
+    // This code comes from the MapBox docuentation
+    // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
+    map.addControl(new mapboxgl.NavigationControl());
+    map.loadImage("{% static 'images/crosshairs.png' %}", (error, image) => {
+        map.addImage('crosshairs', image);
+        map.addSource('point', {
+            'type': 'geojson',
+            'data': {
+            'type': 'FeatureCollection',
+            'features': [
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                        'type': 'Point',
+                        'coordinates': [0.0000, 0.0000]
+                    }
+                }
+            ]
+                }
+            });
+            map.addLayer({
+                    'id': 'points',
+                    'type': 'symbol',
+                    'source': 'point', // reference the data source
+                    'layout': {
+                    'icon-image': 'crosshairs', // reference the image
+                    'icon-size': 0.4
+                    }
+                    });
+    });
+    map.on('move', () => {
+        
+        let position = map.getCenter();
+        let lat = position.lat.toFixed(4);
+        let lon = position.lng.toFixed(4);
+        LatitudeSpan.innerText = lat;
+        LongitudeSpan.innerText = lon;
+        IdLatitude.value = lat
+        IdLongitude.value = lon
+        map.getSource('point').setData({
+        'type': 'FeatureCollection',
+        'features': [
+        {
+            'type': 'Feature',
+            'geometry': {
+            'type': 'Point',
+            'coordinates': [lon, lat]
+            }
+        }
+        ]
+        });
+    });
+</script>
+<script src="{% static 'js/new_destination.js' %}"></script>
 {% endblock %}
