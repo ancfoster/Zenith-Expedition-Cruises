@@ -30,7 +30,7 @@ Create a new Destination
             <label class="admin_form_label">Coordinates</label>
             <span class="text-grey666 text-base mb-3">Drag the map to set the coordinate fields.</span>
             <div id='map' class="w-full h-[320px] mb-2"></div>
-            <div class="flex"><span class="pr-2 font-normal">Latitude:</span><span class="mr-4 font-medium" id="latitude_span">l</span><span class="pr-2 font-normal">Longitude:</span><span id="longitude_span" class="font-medium">lo</span></div>
+            <div class="flex"><span class="pr-2 font-normal">Latitude:</span><span class="mr-4 font-medium" id="latitude_span">0.0000</span><span class="pr-2 font-normal">Longitude:0.0000</span><span id="longitude_span" class="font-medium">lo</span></div>
             {{ new_destination_form.latitude }}
             {{ new_destination_form.longitude }}
 
@@ -43,11 +43,11 @@ Create a new Destination
 
 {% block footerscripts %}
 <script>
-    const LatitudeSpan = document.getElementById('latitude_span');
+const LatitudeSpan = document.getElementById('latitude_span');
 const LongitudeSpan = document.getElementById('longitude_span');
 const IdLatitude = document.getElementById('id_latitude');
 const IdLongitude = document.getElementById('id_longitude');
-
+// This JS is kept in template file to hide mapkey from GitHUb repo
 mapboxgl.accessToken = '{{ mapkey }}';
     var map = new mapboxgl.Map({
       container: 'map',
@@ -108,5 +108,5 @@ mapboxgl.accessToken = '{{ mapkey }}';
         });
     });
 </script>
-<script src="{% static 'js/new_destination.js' %}"></script>
+
 {% endblock %}
