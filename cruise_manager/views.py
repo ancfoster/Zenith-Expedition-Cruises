@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login as auth_login
 from PIL import Image
 from django.views import generic, View
@@ -14,7 +15,7 @@ from .forms import NewDestinationForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
-@login_required
+@staff_member_required
 def NewDestination(request):
     mapkey = os.environ.get('MAPBOX')
     if request.method == 'POST':
