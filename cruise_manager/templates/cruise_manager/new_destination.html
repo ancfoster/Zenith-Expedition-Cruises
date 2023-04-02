@@ -11,8 +11,8 @@ Create a new Destination
 {% endblock %}
 
 {% block content %}
+<h1 class="admin_h1">Create a Destination</h1>
 <div class="admin_create_cont">
-    <h2 class="admin_h2">Create a Destination</h2>
     <div>
         <form class="flex flex-col flex-wrap bg-ad" method="POST" id="new_destination_form" enctype="multipart/form-data">
             {% csrf_token %}
@@ -22,7 +22,7 @@ Create a new Destination
             {% render_field new_destination_form.country class+="admin_field" %}
             <label class="admin_form_label" for="id_continent">Continent</label>
             {% render_field new_destination_form.continent class+="admin_field" %}
-            <label class="admin_form_label" for="id_description">Description</label>
+            <label class="admin_form_label" for="id_description">Description <span id="description_count" class="pl-3 font-light text-grey555 italic"></span></label>
             {% render_field new_destination_form.description class+="admin_field" %}
             <label class="admin_form_label" for="id_image">Image</label>
             <span class="mb-3 p-2 rounded-xl bg-blue-50 text-sm text-grey444">Tip: Destination image appears on cruise listing pages</span>
@@ -30,24 +30,24 @@ Create a new Destination
             <label class="admin_form_label">Coordinates</label>
             <span class="text-grey666 text-base mb-3">Drag the map to set the coordinate fields.</span>
             <div id='map' class="w-full h-[320px] mb-2"></div>
-            <div class="flex"><span class="pr-2 font-normal">Latitude:</span><span class="mr-4 font-medium" id="latitude_span">0.0000</span><span class="pr-2 font-normal">Longitude:0.0000</span><span id="longitude_span" class="font-medium">lo</span></div>
+            <div class="flex"><span class="pr-2 font-normal">Latitude:</span><span class="mr-4 font-medium" id="latitude_span">0.0000</span><span class="pr-2 font-normal">Longitude:</span><span id="longitude_span" class="font-medium">0.0000</span></div>
             {{ new_destination_form.latitude }}
             {{ new_destination_form.longitude }}
-
-            <button type="submit" class="admin_button">Add Destination</button>
+            <div class="m-auto pt-2">
+                <button type="submit" class="admin_button">Add Destination</button>
+            </div>
         </form>
     </div>
 </div>
 
 {% endblock %}
-
 {% block footerscripts %}
 <script>
 const LatitudeSpan = document.getElementById('latitude_span');
 const LongitudeSpan = document.getElementById('longitude_span');
 const IdLatitude = document.getElementById('id_latitude');
 const IdLongitude = document.getElementById('id_longitude');
-// This JS is kept in template file to hide mapkey from GitHUb repo
+// This JS is kept in template file to hide mapkey from GitHub repo
 mapboxgl.accessToken = '{{ mapkey }}';
     var map = new mapboxgl.Map({
       container: 'map',
@@ -85,8 +85,7 @@ mapboxgl.accessToken = '{{ mapkey }}';
                     }
                     });
     });
-    map.on('move', () => {
-        
+    map.on('move', () => {        
         let position = map.getCenter();
         let lat = position.lat.toFixed(4);
         let lon = position.lng.toFixed(4);
@@ -107,6 +106,15 @@ mapboxgl.accessToken = '{{ mapkey }}';
         ]
         });
     });
+window.addEventListener('load', () => {
+    if (IdLatitude.value) {
+        LatitudeSpan.innerHTML = IdLatitude.value;
+        LongitudeSpan.innerHTML = IdLongitude.value;
+        map.setCenter([IdLatitude,IdLongitude]);
+    }
+});
 </script>
-
+</script>
+<script src="{% static 'js/new_destination.js' %}">
+</script>
 {% endblock %}
