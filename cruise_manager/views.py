@@ -38,6 +38,22 @@ def NewDestination(request):
     }
     return render(request, 'cruise_manager/new_destination.html', context)
 
+@staff_member_required
+def Destinations(request):
+    '''
+    This view displays all destinations in the database
+    '''
+    destination_queryset = Destination.objects.all().order_by('name')
+
+    number_destinations = destination_queryset.count()
+
+    context = {
+        'number_destinations' : number_destinations,
+        'destinations': destination_queryset,
+
+    }
+    return render(request, 'cruise_manager/destinations.html', context)
+
 '''
 This function compresses uploaded imagaes for end user performance,
 SEO purposes. It also removes alpha channel from PNGs for JPEG conversion.
