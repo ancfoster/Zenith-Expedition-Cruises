@@ -7,22 +7,24 @@
 .nav_height {
     height: calc(100% - 3rem)!important;
 }
-
 .admin_nav_li {
     @apply w-full block pb-4 relative;
 }
 .admin_nav_a {
-    @apply flex items-center w-full hover:bg-black111 rounded-lg p-2 pr-3 text-black222 leading-4 text-base hover:text-white;
+    @apply flex items-center hover:bg-black111 rounded-lg p-2 pr-3 text-black222 leading-4 text-base hover:text-white;
 }
 .admin_create_cont {
-    @apply max-w-[760px] w-full ml-auto mr-auto p-5 mb-6 flex flex-col flex-wrap bg-admin_section_bg rounded-2xl border border-grey_b_light
+    @apply max-w-[760px] w-full ml-auto mr-auto mt-2 p-5 mb-6 flex flex-col flex-wrap bg-admin_section_bg rounded-2xl shadow /*border border-grey_b_light */
 }
 .admin_form_label {
     @apply text-base text-black333 mb-2 mt-2 font-medium
 }
-.admin_h2 {
-    @apply text-2xl mt-2 font-medium text-black333 text-center
+.admin_h1 {
+    @apply text-2xl mt-4 mb-4 font-medium text-black333 text-center
 }
 .admin_field {
     @apply bg-field_inactive rounded-lg p-2 mb-5 hover:bg-field_active_hover border-field_inactive_border border text-base text-grey666 active:bg-field_active_hover active:text-black333
+}
+.admin_button {
+    @apply  bg-black333 hover:bg-black111 inline-block text-white pl-8 pr-8 pt-2 rounded-xl pb-2 m-2;
 }
