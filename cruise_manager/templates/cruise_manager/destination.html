@@ -1,0 +1,55 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+Create a new Destination
+{% endblock %}
+{% block head_resources %}
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+{% endblock %}
+
+{% block content %}
+{% if destination %}
+<h1 class="admin_h1">{{ destination.name }}</h1>
+<div class="max-w-[760px] ml-auto mr-auto mb-3 flex">
+  <a href="{% url 'destinations' %}" class="text-black333 hover:text-black flex items-center"><span class="material-symbols-outlined pr-2">arrow_back</span><span class="font-light">Destinations</span></a>
+</div>
+<div class="max-w-[760px] w-full ml-auto mr-auto mt-2 mb-6 flex flex-col flex-wrap bg-admin_section_bg rounded-2xl shadow">
+        <img src="{{ destination.image.url }}" class="w-full object-cover h-[240px] rounded-t-2xl">
+        <div class="m-4 flex flex-col">
+            <span class="text-grey444 font-normal mb-4">{{ destination.description }}</span>
+            <div class="grid gap-4 grid-cols-1 md:grid-cols-3">
+              <div class="flex flex-col md:col-span-1 mb-4 md:mb-0">
+                <h3 class="font-medium text-black333 text-sm">Coordinates</h3>
+                <span class="font-normal text-grey444">Latitude: {{ destination.latitude }}</span>
+                <span class="font-normal text-grey444 mb-4">Longitude: {{ destination.longitude }}</span>
+                <h3 class="font-medium text-black333 text-sm">Country</h3>
+                <span class="font-normal text-grey444 mb-4">{{ destination.get_country_display }}</span>
+                <h3 class="font-medium text-black333 text-sm">Continent</h3>
+                <span class="font-normal text-grey444 mb-4">{{destination.continent }}</span>
+              </div>
+              <div class="md:col-span-2 min-h-[180px] overflow-hidden rounded-xl" id="map"></div>
+            </div>
+        </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block footerscripts %}
+<script>
+
+mapboxgl.accessToken = '{{ mapkey }}';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [{{ destination.longitude }}, {{ destination.latitude }}], // starting position
+      zoom: 7,
+    });
+    map.boxZoom.disable();
+    // This code comes from the MapBox docuentation
+
+</script>
+<script src="{% static 'js/new_destination.js' %}">
+</script>
+{% endblock %}

@@ -15,9 +15,13 @@ from .forms import NewDestinationForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
+
+mapkey = os.environ.get('MAPBOX')
+
+
+
 @staff_member_required
 def NewDestination(request):
-    mapkey = os.environ.get('MAPBOX')
     if request.method == 'POST':
         new_destination_form = NewDestinationForm(request.POST, request.FILES)
         if new_destination_form.is_valid():
@@ -61,6 +65,7 @@ def DestinationDetail(request, slug):
     destination = get_object_or_404(Destination, slug=slug)
     context = {
         'destination' : destination,
+        'mapkey': mapkey,
     }
     return render(request, 'cruise_manager/destination.html', context)
 
