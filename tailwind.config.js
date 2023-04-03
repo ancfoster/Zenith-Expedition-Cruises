@@ -25,6 +25,10 @@ module.exports = {
         field_inactive: '#f1f1f1',
         field_active_hover: '#fdfdfd',
         field_inactive_border: '#cdcdcd',
+        admin_table_grey_top: '#F4F4F4',
+        admin_table_border: '#DADADA',
+        admin_table_grey1: '#F0F0F0',
+        admin_table_grey2: '#E4E4E4',
       }
     },
   },
