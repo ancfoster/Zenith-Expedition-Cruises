@@ -44,22 +44,33 @@ def Destinations(request):
     This view displays all destinations in the database
     '''
     destination_queryset = Destination.objects.all().order_by('name')
-
     number_destinations = destination_queryset.count()
-
     context = {
         'number_destinations' : number_destinations,
         'destinations': destination_queryset,
-
     }
     return render(request, 'cruise_manager/destinations.html', context)
 
-'''
-This function compresses uploaded imagaes for end user performance,
-SEO purposes. It also removes alpha channel from PNGs for JPEG conversion.
-Uses PILLOW library.
-'''
+
+@staff_member_required
+def DestinationDetail(request, slug):
+    '''
+    In the cruise manager app this shows the details of a 
+    specific destination
+    '''
+    destination = get_object_or_404(Destination, slug=slug)
+    context = {
+        'destination' : destination,
+    }
+    return render(request, 'cruise_manager/destination.html', context)
+
+
 def compress_uploaded_images(image, image_name):
+    '''
+    This function compresses uploaded imagaes for end user performance,
+    SEO purposes. It also removes alpha channel from PNGs for JPEG conversion.
+    Uses PILLOW library.
+    '''
     image = Image.open(image)
     # Code snippet by Prahlad Yeri
     if image.mode in ("RGBA", "P"):
