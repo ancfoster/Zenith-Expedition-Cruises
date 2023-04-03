@@ -28,3 +28,6 @@
 .admin_button {
     @apply  bg-black333 hover:bg-black111 inline-block text-white pl-8 pr-8 pt-2 rounded-xl pb-2 m-2;
 }
+.admin_icon_button {
+    @apply flex pl-3 pt-1 pb-1 pr-4 items-center text-base font-normal text-white bg-black333 hover:bg-black111 rounded-lg;
+}

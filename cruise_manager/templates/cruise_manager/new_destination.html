@@ -29,7 +29,7 @@ Create a new Destination
             {% render_field new_destination_form.image class+="admin_field" %}
             <label class="admin_form_label">Coordinates</label>
             <span class="text-grey666 text-base mb-3">Drag the map to set the coordinate fields.</span>
-            <div id='map' class="w-full h-[320px] mb-2"></div>
+            <div id='map' class="w-full h-[320px] mb-2 overflow-hidden rounded-xl"></div>
             <div class="flex"><span class="pr-2 font-normal">Latitude:</span><span class="mr-4 font-medium" id="latitude_span">0.0000</span><span class="pr-2 font-normal">Longitude:</span><span id="longitude_span" class="font-medium">0.0000</span></div>
             {{ new_destination_form.latitude }}
             {{ new_destination_form.longitude }}
