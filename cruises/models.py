@@ -11,7 +11,7 @@ class Destination(models.Model):
     Model for different cruise destinations
     '''
     name = models.CharField(max_length=60, verbose_name="Destination Name")
-    country = CountryField(blank_label="(Select Nationality)")
+    country = CountryField(blank_label="(Destination Country)")
     ContinentChoices = [
         ('Antarctica', 'Antarctica'),
         ('Africa', 'Africa'),
@@ -27,6 +27,11 @@ class Destination(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Latitude")
     longitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Longitude")
     slug = slug = models.SlugField(blank=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
     def __str__(self):
@@ -60,7 +65,7 @@ class SuiteCategories(models.Model):
     suite_image = models.ImageField(verbose_name='Suite Image')
     suite_layout_image = models.ImageField(verbose_name='Ship Layout Image')
     suite_feature_list = models.CharField(blank=True, max_length=3000, default='', verbose_name="Suite Feature List")
-
+    category_deckplan = models.ImageField(verbose_name='Category Deckplan', null=True)
 
     def __str__(self):
         return self.name
@@ -89,6 +94,7 @@ class Tag(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
 
 class Cruises(models.Model):
     '''
@@ -121,12 +127,11 @@ class Fares(models.Model):
     '''
     This model is used to control the fares of cruises and apply offers
     '''
-    cruise = models.ForeignKey(Cruises, on_delete=models.SET_NULL, null=True, related_name="fares")
+    cruise = models.ForeignKey(Cruises, on_delete=models.CASCADE, null=True, related_name="fares")
     suite_category = models.ForeignKey(SuiteCategories, on_delete=models.PROTECT, related_name="fares")      
     price = models.DecimalField(max_digits=9, decimal_places=2)
     special_offer = models.BooleanField(default=False)
     offer_price = models.DecimalField(max_digits=9, decimal_places=2)
-
 
     def __str__(self):
         return self.cruise
@@ -177,11 +182,12 @@ class Bookings(models.Model):
     Booking ref is generated during the booking process.
     '''
     booking_ref = models.CharField(max_length=50, editable=False)
-    booked_by = models.ForeignKey(User, null=True, default=True, on_delete=models.SET_NULL, related_name='ticket')
+    booked_by = models.ForeignKey(User, null=True, default=True, on_delete=models.SET_NULL, related_name='booking_ticket')
     number_of_guests = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(3)], verbose_name="Number of guests")
     booking_price = models.DecimalField(max_digits=9, decimal_places=2)
     booked_on = models.DateTimeField(auto_now_add=True)
-    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, related_name="booking")
+    ticket = models.ForeignKey(Tickets, on_delete=models.SET_NULL, null=True, related_name="booking")
+    cruise_name_str = models.CharField(max_length=120, editable=False, null=True, verbose_name="Cruise Name")
 
     def __str__(self):
         return self.booking_ref
