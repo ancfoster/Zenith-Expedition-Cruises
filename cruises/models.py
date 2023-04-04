@@ -79,6 +79,7 @@ class Suites(models.Model):
     suite_num_name = models.CharField(max_length=30, verbose_name="Suite Name/Number")
     category = models.ForeignKey(SuiteCategories, on_delete=models.SET_NULL, null=True, related_name="suite")
 
+
     def __str__(self):
         return self.suite_num_name
 

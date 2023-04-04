@@ -36,3 +36,10 @@ class SuitesAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
             return False
+
+
+#Tag model
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    fields = ('name',)
