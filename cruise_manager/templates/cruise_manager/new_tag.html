@@ -1,0 +1,29 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+Create a new Destination
+{% endblock %}
+{% block head_resources %}
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+{% endblock %}
+
+{% block content %}
+<h1 class="admin_h1">Create a new Tag</h1>
+<div class="admin_create_cont">
+    <div>
+        <form class="flex flex-col flex-wrap bg-ad" method="POST" id="new_tag_form">
+            {% csrf_token %}
+            <label class="admin_form_label" for="id_name">Name</label>
+            {% render_field new_tag_form.name class+="admin_field" %}
+            <div class="m-auto pt-2">
+                <button type="submit" class="admin_button">Add Tag</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block footerscripts %}
+{% endblock %}

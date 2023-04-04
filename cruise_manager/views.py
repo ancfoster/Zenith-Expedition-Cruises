@@ -11,13 +11,12 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-from .forms import NewDestinationForm
+from .forms import NewDestinationForm, NewTagForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
 
 mapkey = os.environ.get('MAPBOX')
-
 
 
 @staff_member_required
@@ -32,7 +31,7 @@ def NewDestination(request):
             new_destination_form.instance.image.field.upload_to = 'destination_img/'
             form = new_destination_form.save()
             form.save()
-            return redirect('new_destination')
+            return redirect('destinations')
     else:
         new_destination_form = NewDestinationForm()
 
@@ -41,6 +40,7 @@ def NewDestination(request):
         'new_destination_form': new_destination_form
     }
     return render(request, 'cruise_manager/new_destination.html', context)
+
 
 @staff_member_required
 def Destinations(request):
@@ -54,6 +54,23 @@ def Destinations(request):
         'destinations': destination_queryset,
     }
     return render(request, 'cruise_manager/destinations.html', context)
+
+
+@staff_member_required
+def NewTag(request):
+    if request.method == 'POST':
+        new_tag_form = NewTagForm(request.POST)
+        if new_tag_form.is_valid():
+            new_tag_form.save()
+            return redirect('destinations')
+    else:
+        new_tag_form = NewTagForm()
+    
+    context = {
+        'new_tag_form': new_tag_form,
+    }
+    return render(request, 'cruise_manager/new_tag.html', context)
+
 
 
 @staff_member_required
