@@ -15,7 +15,7 @@ class DestinationAdmin(admin.ModelAdmin):
 #Ships model
 @admin.register(Ships)
 class ShipsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'ship_image')
+    list_display = ('id', 'name', 'ship_image')
     fields = ('name', 'total_suites', 'info_page', 'ship_image')
     readonly_fields = fields
 
@@ -23,7 +23,7 @@ class ShipsAdmin(admin.ModelAdmin):
 #Suite category model
 @admin.register(SuiteCategories)
 class CategoriesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
+    list_display = ('id','name', 'description')
     fields = ('name', 'description', 'sleeps', 'size', 'suite_image', 'suite_layout_image', 'suite_feature_list', 'category_deckplan')
 
 
@@ -33,3 +33,6 @@ class SuitesAdmin(admin.ModelAdmin):
     list_display = ('suite_num_name', 'ship', 'category')
     fields = ('suite_num_name', 'ship', 'category')
     readonly_fields = fields
+
+    def has_delete_permission(self, request, obj=None):
+            return False
