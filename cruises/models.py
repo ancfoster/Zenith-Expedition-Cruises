@@ -43,7 +43,7 @@ class Ships(models.Model):
     Model for each ship
     '''
     name = models.CharField(max_length=20)
-    total_suites = models.PositiveSmallIntegerField(verbose_name="Total number of suites on ship", validators=[MinValueValidator(1900), MaxValueValidator(2024)])
+    total_suites = models.PositiveSmallIntegerField(verbose_name="Total number of suites on ship", validators=[MinValueValidator(20), MaxValueValidator(100)])
     info_page = models.URLField(max_length=120, verbose_name="URL to information page")
     ship_image = models.ImageField(verbose_name='Ship Image')
 
