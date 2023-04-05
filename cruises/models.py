@@ -121,7 +121,7 @@ class Cruises(models.Model):
             #Slugs need to be unique, as there may be multiple cruises
             #with the same name the date is added to the end to make
             #the slug for each cruise unique.
-            formatted_start_date = start_date.strftime(%d-%m-%y)
+            formatted_start_date = start_date.strftime("%d-%m-%y")
             self.slug = f"{slugify(self.name)}-{formatted_start_date}"
         super().save(*args, **kwargs)
 
@@ -136,8 +136,6 @@ class Fares(models.Model):
     cruise = models.ForeignKey(Cruises, on_delete=models.CASCADE, null=True, related_name="fares")
     suite_category = models.ForeignKey(SuiteCategories, on_delete=models.PROTECT, related_name="fares")      
     price = models.DecimalField(max_digits=9, decimal_places=2)
-    special_offer = models.BooleanField(default=False)
-    offer_price = models.DecimalField(max_digits=9, decimal_places=2)
 
     def __str__(self):
         return self.cruise
