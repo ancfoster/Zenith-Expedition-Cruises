@@ -16,11 +16,15 @@ from .forms import NewDestinationForm, NewTagForm
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
 
+# maphey is the key used for mapbox maps
 mapkey = os.environ.get('MAPBOX')
 
 
 @staff_member_required
 def NewDestination(request):
+    '''
+    Allows staff to create new destinations for cruises
+    '''
     if request.method == 'POST':
         new_destination_form = NewDestinationForm(request.POST, request.FILES)
         if new_destination_form.is_valid():
@@ -58,11 +62,14 @@ def Destinations(request):
 
 @staff_member_required
 def NewTag(request):
+    '''
+    Displays the new tag form & template
+    '''
     if request.method == 'POST':
         new_tag_form = NewTagForm(request.POST)
         if new_tag_form.is_valid():
             new_tag_form.save()
-            return redirect('destinations')
+            return redirect('tags')
     else:
         new_tag_form = NewTagForm()
     
@@ -71,6 +78,19 @@ def NewTag(request):
     }
     return render(request, 'cruise_manager/new_tag.html', context)
 
+
+@staff_member_required
+def Tags(request):
+    '''
+    Shows a list of created tags in cruise manager
+    '''
+    tag_queryset = Tag.objects.all().order_by('name')
+    number_tags = tag_queryset.count()
+    context = {
+        'tags' : tag_queryset,
+        'number_tags' : number_tags,
+    }
+    return render(request, 'cruise_manager/tags.html', context)
 
 
 @staff_member_required
