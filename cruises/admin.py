@@ -43,3 +43,35 @@ class SuitesAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
     fields = ('name',)
+
+
+# Cruises model
+@admin.register(Cruises)
+class CruisesAdmin(admin.ModelAdmin):
+    list_display = ('name', 'ship', 'start_date', 'end_date', 'bookable', 'slug',)
+    fields = ('name', 'ship', 'created_on', 'duration', 'start_date', 'end_date', 'bookable', 'slug', 'description', 'results_image', 'listing_image', 'map_image', 'tags',)
+    readonly_fields = fields
+
+
+#Tickets model
+@admin.register(Tickets)
+class TicketAdmin(admin.ModelAdmin):
+    list_display = ('ticket_ref', 'cruise', 'suite', 'booked', 'created_on',)
+    fields = ('ticket_ref', 'ship', 'cruise', 'suite', 'booked', 'created_on',)
+    readonly_fields = fields
+
+
+#Movement model
+@admin.register(Movements)
+class Movements(admin.ModelAdmin):
+    list_display = ('cruise', 'date', 'type', 'destination', 'order',)
+    fields = ('cruise', 'date', 'type', 'order', 'description')
+    readonly_fields = fields
+
+
+#Fares model
+@admin.register(Fares)
+class Fares(admin.ModelAdmin):
+    list_display = ('cruise', 'suite_category', 'price')
+    fields = ('cruise', 'suite_category', 'price')
+    readonly_fields = ('cruise',)
