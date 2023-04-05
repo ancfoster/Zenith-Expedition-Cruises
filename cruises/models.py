@@ -3,6 +3,7 @@ from django_countries.fields import CountryField
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator, MaxLengthValidator  # noqa
 from django.utils.text import slugify
+from datetime import datetime
 
 # Create your models here.
 
@@ -117,7 +118,11 @@ class Cruises(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            #Slugs need to be unique, as there may be multiple cruises
+            #with the same name the date is added to the end to make
+            #the slug for each cruise unique.
+            formatted_start_date = start_date.strftime(%d-%m-%y)
+            self.slug = f"{slugify(self.name)}-{formatted_start_date}"
         super().save(*args, **kwargs)
 
     def __str__(self):
