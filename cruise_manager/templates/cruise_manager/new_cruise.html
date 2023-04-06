@@ -1,0 +1,43 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+Create a new cruise
+{% endblock %}
+{% block head_resources %}
+
+{% endblock %}
+
+{% block content %}
+<h1 class="admin_h1">Create a new cruise</h1>
+<div class="admin_create_cont">
+    <div>
+        <form class="flex flex-col flex-wrap bg-ad" method="POST" id="new_cruise_form">
+            {% csrf_token %}
+            <span class="ml-auto mr-auto text-[20px] text-grey444 pt-1 pb-1">Cruise Basics</span>
+            <label class="admin_form_label" for="id_name">Name</label>
+            {% render_field new_cruise_form.name class+="admin_field" %}
+            <label class="admin_form_label" for="id_ship">Ship</label>
+            {% render_field new_cruise_form.ship class+="admin_field" %}
+            <label class="admin_form_label" for="id_description">Cruise Description</label>
+            {% render_field new_cruise_form.description class+="admin_field" %}
+            <label class="admin_form_label" for="id_results_image">Results Image</label>
+            {% render_field new_cruise_form.results_image class+="admin_field" %}
+            <div class="admin_form_tip"><span class="material-symbols-outlined mr-2">info</span>Results Image appears on search results pages.</div>
+            <label class="admin_form_label" for="id_listing_image">Listing Image</label>
+            {% render_field new_cruise_form.listing_image class+="admin_field" %}
+            <div class="admin_form_tip"><span class="material-symbols-outlined mr-2">info</span>Listing Image appears on the specific cruise page.</div>
+            <label class="admin_form_label" for="id_tags">Tags</label>
+            {% render_field new_cruise_form.tags class+="" %}
+            <span class="ml-auto mr-auto text-[20px] text-grey444 pt-1 pb-1">Category Fares</span>
+            <div class="m-auto pt-2">
+                <button type="submit" class="admin_button">Create Cruise</button>
+            </div>
+        </form>
+    </div>
+</div>
+{{ destinations }}
+{% endblock %}
+{% block footerscripts %}
+{% endblock %}
