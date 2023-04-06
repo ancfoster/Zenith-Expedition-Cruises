@@ -29,6 +29,7 @@ module.exports = {
         admin_table_border: '#DADADA',
         admin_table_grey1: '#F0F0F0',
         admin_table_grey2: '#E4E4E4',
+        admin_form_tip: '#DEEBF1',
       }
     },
   },

@@ -31,3 +31,6 @@
 .admin_icon_button {
     @apply flex pl-3 pt-1 pb-1 pr-4 items-center text-base font-normal text-white bg-black333 hover:bg-black111 rounded-lg;
 }
+.admin_form_tip {
+    @apply flex p-2 mt-2 mb-2 bg-admin_form_tip text-grey444 leading-3 text-sm rounded-lg items-center;
+}

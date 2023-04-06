@@ -25,7 +25,7 @@ Create a new Destination
             <label class="admin_form_label" for="id_description">Description <span id="description_count" class="pl-3 font-light text-grey555 italic"></span></label>
             {% render_field new_destination_form.description class+="admin_field" %}
             <label class="admin_form_label" for="id_image">Image</label>
-            <span class="mb-3 p-2 rounded-xl bg-blue-50 text-sm text-grey444">Tip: Destination image appears on cruise listing pages</span>
+            <div class="admin_form_tip"><span class="material-symbols-outlined mr-2">info</span> Destination image appears on cruise listing pages</div>
             {% render_field new_destination_form.image class+="admin_field" %}
             <label class="admin_form_label">Coordinates</label>
             <span class="text-grey666 text-base mb-3">Drag the map to set the coordinate fields.</span>
