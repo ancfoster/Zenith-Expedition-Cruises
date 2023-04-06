@@ -1,23 +1,74 @@
 import os
+import json
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login as auth_login
+from django.db.models import F
 from PIL import Image
+from django_countries import countries
 from django.views import generic, View
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-from .forms import NewDestinationForm, NewTagForm
+from .forms import NewDestinationForm, NewTagForm, NewCruiseForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
 
 # maphey is the key used for mapbox maps
 mapkey = os.environ.get('MAPBOX')
+
+
+
+@staff_member_required
+def NewCruise(request):
+    '''
+    This function creates a new cruise
+    '''
+    #Get a list of all destinations which will be passed to template
+    destinations = get_destinations()
+    if request.method == 'POST':
+        new_cruise_form = NewCruiseForm(request.POST, request.FILES)
+    else:
+        new_cruise_form = NewCruiseForm()
+    
+    context = {
+        'new_cruise_form': NewCruiseForm,
+        'destinations': destinations,
+    }
+    return render(request, 'cruise_manager/new_cruise.html', context)
+
+
+def get_destinations():
+    '''
+    This function gets a list of all the destinations
+    in the destination model and returns JSON which is
+    then returned as a variable in NewCruise and 
+    sent to the new cruise template
+    '''
+    destinations = list(Destination.objects.all().order_by('name').values('id', 'name', 'country'))
+    '''
+    Country returns country as two-letter code,
+    this needs converting to full country name.
+    '''
+    for destination in destinations:
+        destination['country'] = get_country_name(destination['country'])
+    #convert to json
+    destinations_json = json.dumps(destinations)
+    return destinations_json
+
+
+def get_country_name(code):
+    '''
+    Uses django-countries libray to get full country name
+    from two letter country code
+    '''
+    return dict(countries)[code]
 
 
 @staff_member_required
