@@ -15,6 +15,7 @@ Create a new cruise
     <div>
         <form class="flex flex-col flex-wrap bg-ad" method="POST" id="new_cruise_form">
             {% csrf_token %}
+            {{ new_cruise_form.duration }}
             <span class="ml-auto mr-auto text-[20px] text-grey444 pt-1 pb-1">Cruise Basics</span>
             <label class="admin_form_label" for="id_name">Name</label>
             {% render_field new_cruise_form.name class+="admin_field" %}
@@ -28,9 +29,32 @@ Create a new cruise
             <label class="admin_form_label" for="id_listing_image">Listing Image</label>
             {% render_field new_cruise_form.listing_image class+="admin_field" %}
             <div class="admin_form_tip"><span class="material-symbols-outlined mr-2">info</span>Listing Image appears on the specific cruise page.</div>
+            <label class="admin_form_label" for="id_map_image">Itinerary Map</label>
+            {% render_field new_cruise_form.map_image class+="admin_field" %}
             <label class="admin_form_label" for="id_tags">Tags</label>
             {% render_field new_cruise_form.tags class+="" %}
             <span class="ml-auto mr-auto text-[20px] text-grey444 pt-1 pb-1">Category Fares</span>
+            <label class="admin_form_label" for="id_verandah_suite_fare">Verandah Suite Fare</label>
+            <div class="flex items-start w-full"><span class="pr-2 text-2xl pt-1">£ </span>{% render_field new_cruise_form.verandah_suite_fare class+="admin_field w-full" %}</div>
+            <label class="admin_form_label" for="id_deluxe_verandah_suite_fare">Deluxe Verandah Suite Fare</label>
+            <div class="flex items-start w-full"><span class="pr-2 text-2xl pt-1">£ </span>{% render_field new_cruise_form.deluxe_verandah_suite_fare class+="admin_field w-full" %}</div>
+            <label class="admin_form_label" for="id_spa_verandah_suite_fare">Spa Suite Fare</label>
+            <div class="flex items-start w-full"><span class="pr-2 text-2xl pt-1">£ </span>{% render_field new_cruise_form.spa_suite_fare class+="admin_field w-full" %}</div>
+            <label class="admin_form_label" for="id_owner_suite_fare">Owner's Suite Fare</label>
+            <div class="flex items-start w-full"><span class="pr-2 text-2xl pt-1">£ </span>{% render_field new_cruise_form.owner_suite_fare class+="admin_field w-full" %}</div>
+            <span class="ml-auto mr-auto text-[20px] text-grey444 pt-1 pb-1">Dates & Duration</span>
+            <label class="admin_form_label" for="id_start_date">Start Date</label>
+            {% render_field new_cruise_form.start_date class+="admin_field" %}
+            <span class="admin_form_label">Cruise Duration</span>
+            <div class="flex justify-center items-center mt-2 mb-2">
+                <div role="button" class="h-[32px] w-[32px] bg-black333 hover:bg-black111 rounded-2xl justify-center flex text-white items-center text-xl leading-5" id="duration-minus">-</div>
+                <span class="text-xl leading-5 ml-3 mr-3"><span id="duration-span"></span> days</span>
+                <div role="button" class="h-[32px] w-[32px] bg-black333 hover:bg-black111 rounded-2xl justify-center flex text-white items-center text-xl leading-5" id="duration-plus">+</div>
+
+            </div>
+            <span class="admin_form_label">Cruise End Date</span>
+            <span id="cruise-end"></span>
+
             <div class="m-auto pt-2">
                 <button type="submit" class="admin_button">Create Cruise</button>
             </div>
@@ -40,4 +64,6 @@ Create a new cruise
 {{ destinations }}
 {% endblock %}
 {% block footerscripts %}
+<script>var raw_destinations = "{{ destinations }}"</script>
+<script src="{% static 'js/new_cruise.js' %}"></script>
 {% endblock %}
