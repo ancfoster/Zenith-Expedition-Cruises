@@ -7,9 +7,12 @@ const durationSpan = document.getElementById('duration-span');
 const cruiseEndSpan = document.getElementById('cruise-end');
 const cruiseStartField = document.getElementById('id_start_date');
 const cruiseEndField = document.getElementById('id_end_date');
-let cruiseStartDate = new Date();
+const movements = document.getElementById('movements');
+const movementsCont = document.getElementById('movements-container');
+var cruiseStartDate = new Date();
 let cruiseEndDate = new Date();
-let duration;
+var duration;
+let movementsJSON;
 
 // Extract hidden field values
 window.onload = loadValues;
@@ -19,6 +22,8 @@ function loadValues() {
     durationSpan.innerText = duration;
     cruiseStartDate = new Date(cruiseStartField.value);
     calculateEndDate();
+    loadDestinations();
+    //loadMovements();
 }
 
 // Calculates the end date of the cruise using start date and duration
@@ -35,10 +40,12 @@ function calculateEndDate() {
 
 
 // When the user changes the start date in the picker update hidden field value, recalculate end date
-cruiseStartField.addEventListener('change', () => {
+cruiseStartField.onchange = () => {
     cruiseStartDate = new Date(cruiseStartField.value);
+    cruiseEndDate = new Date(cruiseStartDate.getTime());
     calculateEndDate();
-})
+    alert(cruiseEndDate)
+}
 
 // These two functions respond to the + - buttons being pressed then recalculate the cruise end date
 durationMinus.addEventListener('click', () => {
@@ -63,3 +70,36 @@ durationPlus.addEventListener('click', () => {
         calculateEndDate();
     }
 })
+
+// Get destinations and convert to JSON
+function loadDestinations() {
+    // rawDestinations is generated in the Django template
+    let destinationsString = rawDestinations;
+    let destinations = JSON.parse(destinationsString);
+    var destinationSelects = '';    
+    for(let i = 0; i < destinations.length; i++) {
+        let destinationObject = destinations[i];
+        let destId = destinationObject.id;
+        let destName = destinationObject.name;
+        let destCountry = destinationObject.country;
+        let select = `<option>value="${destId}">${destName}, ${destCountry}</option>`;
+        destinationSelects += select;
+    }
+}
+
+let movementSelects = `
+<select>
+    <option value='D'>Destination</option>
+    <option value='SD'>Sea Day</option>
+    <option value='SC'>Scenic Cruising</option>
+</select>
+
+`;
+
+// function loadMovements()
+//     if (movements.value) {
+//         // do nothing
+//     }
+//     else {
+
+//     }
