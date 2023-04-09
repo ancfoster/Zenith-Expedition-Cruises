@@ -23,7 +23,7 @@
     @apply text-2xl mt-4 mb-4 font-medium text-black333 text-center
 }
 .admin_field {
-    @apply bg-field_inactive rounded-lg p-2 mb-5 hover:bg-field_active_hover border-field_inactive_border border text-base text-grey666 active:bg-field_active_hover active:text-black333
+    @apply bg-field_inactive rounded-lg p-2 mb-4 hover:bg-field_active_hover border-field_inactive_border border text-base text-grey666 active:bg-field_active_hover active:text-black333
 }
 .admin_button {
     @apply  bg-black333 hover:bg-black111 inline-block text-white pl-8 pr-8 pt-2 rounded-xl pb-2 m-2;
@@ -33,4 +33,25 @@
 }
 .admin_form_tip {
     @apply flex p-2 mt-2 mb-2 bg-admin_form_tip text-grey444 leading-3 text-sm rounded-lg items-center;
+}
+.mc_cont {
+    @apply flex flex-col p-4 mb-4 bg-admin_grey_bg rounded-lg;
+}
+.mc_row_top {
+    @apply flex justify-between items-center pb-2;
+}
+.mc_day {
+    @apply text-xl leading-5 font-normal;
+}
+.mc_date {
+    @apply text-base text-grey444 font-normal;
+}
+/* Removes up down increment arrows from numercial form fields
+Code snippet from StackOverflow user Clerni
+https://stackoverflow.com/questions/72789466/remove-the-up-down-increment-decrement-buttons-on-number-inputs-using-css
+*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
