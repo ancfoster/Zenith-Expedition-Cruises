@@ -16,6 +16,8 @@ Create a new cruise
         <form class="flex flex-col flex-wrap bg-ad" method="POST" id="new_cruise_form">
             {% csrf_token %}
             {{ new_cruise_form.duration }}
+            {{ new_cruise_form.end_date }}
+            {{ new_cruise_form.movements }}
             <span class="ml-auto mr-auto text-[20px] text-grey444 pt-1 pb-1">Cruise Basics</span>
             <label class="admin_form_label" for="id_name">Name</label>
             {% render_field new_cruise_form.name class+="admin_field" %}
@@ -50,20 +52,22 @@ Create a new cruise
                 <div role="button" class="h-[32px] w-[32px] bg-black333 hover:bg-black111 rounded-2xl justify-center flex text-white items-center text-xl leading-5" id="duration-minus">-</div>
                 <span class="text-xl leading-5 ml-3 mr-3"><span id="duration-span"></span> days</span>
                 <div role="button" class="h-[32px] w-[32px] bg-black333 hover:bg-black111 rounded-2xl justify-center flex text-white items-center text-xl leading-5" id="duration-plus">+</div>
-
             </div>
             <span class="admin_form_label">Cruise End Date</span>
-            <span id="cruise-end"></span>
-
-            <div class="m-auto pt-2">
+            <span id="cruise-end" class="text-grey666 ml-4"></span>
+            <span class="ml-auto mr-auto text-[20px] text-grey444 pt-1 pb-1">Destinations & Movements</span>
+            <div class="admin_form_tip"><span class="material-symbols-outlined mr-2">info</span>Each day of a cruise is represented by a ship movement.</div>
+            <div class="m-auto pt-2 mb-4">
                 <button type="submit" class="admin_button">Create Cruise</button>
+            </div>
+            <div id="movements-container" class="flex flex-col">
+
             </div>
         </form>
     </div>
 </div>
-{{ destinations }}
 {% endblock %}
 {% block footerscripts %}
-<script>var raw_destinations = "{{ destinations }}"</script>
+<script>var rawDestinations = '{{ destinations|safe }}';</script>
 <script src="{% static 'js/new_cruise.js' %}"></script>
 {% endblock %}
