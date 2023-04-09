@@ -7,8 +7,9 @@ const durationSpan = document.getElementById('duration-span');
 const cruiseEndSpan = document.getElementById('cruise-end');
 const cruiseStartField = document.getElementById('id_start_date');
 const cruiseEndField = document.getElementById('id_end_date');
-const movements = document.getElementById('movements');
+const movements = document.getElementById('id_movements');
 const movementsCont = document.getElementById('movements-container');
+var destinationSelects = '';    
 var cruiseStartDate = new Date();
 let cruiseEndDate = new Date();
 var duration;
@@ -23,7 +24,7 @@ function loadValues() {
     cruiseStartDate = new Date(cruiseStartField.value);
     calculateEndDate();
     loadDestinations();
-    //loadMovements();
+    loadMovements();
 }
 
 // Calculates the end date of the cruise using start date and duration
@@ -38,13 +39,11 @@ function calculateEndDate() {
     cruiseEndField.value = `${cruiseEndDateYear}-${cruiseEndDateMonth}-${cruiseEndDateDay}`;
 }
 
-
 // When the user changes the start date in the picker update hidden field value, recalculate end date
 cruiseStartField.onchange = () => {
     cruiseStartDate = new Date(cruiseStartField.value);
     cruiseEndDate = new Date(cruiseStartDate.getTime());
     calculateEndDate();
-    alert(cruiseEndDate)
 }
 
 // These two functions respond to the + - buttons being pressed then recalculate the cruise end date
@@ -76,30 +75,81 @@ function loadDestinations() {
     // rawDestinations is generated in the Django template
     let destinationsString = rawDestinations;
     let destinations = JSON.parse(destinationsString);
-    var destinationSelects = '';    
     for(let i = 0; i < destinations.length; i++) {
         let destinationObject = destinations[i];
         let destId = destinationObject.id;
         let destName = destinationObject.name;
         let destCountry = destinationObject.country;
-        let select = `<option>value="${destId}">${destName}, ${destCountry}</option>`;
-        destinationSelects += select;
+        if (i === 0) {
+            let select = `<option selected value="${destId}">${destName}, ${destCountry}</option>`;
+            destinationSelects += select;
+        }
+        else {
+            let select = `<option value="${destId}">${destName}, ${destCountry}</option>`;
+            destinationSelects += select;
+        }
     }
 }
 
 let movementSelects = `
-<select>
-    <option value='D'>Destination</option>
+    <option value='D' selected >Destination</option>
     <option value='SD'>Sea Day</option>
     <option value='SC'>Scenic Cruising</option>
-</select>
-
 `;
 
-// function loadMovements()
-//     if (movements.value) {
-//         // do nothing
-//     }
-//     else {
+// Build movement containers 
+function loadMovements() {
+    if (movements.value) {
+        alert(movements.value);
+    }
+    else {
+        createDefaultMovements();
+    }
+}
 
-//     }
+function createDefaultMovements() {
+    for(let i = 0; i < duration; i++ ) {
+        // Calculate movement day
+        let day = i + 1;
+        // Create new movement div container and give it the class mc_cont
+        let newMcCont = document.createElement('div');
+        newMcCont.setAttribute('class', 'mc_cont');
+        newMcCont.setAttribute('id', day);
+        let movementDate = new Date()
+        movementDate.setDate(cruiseStartDate.getDate() + i);
+        let movementDateDay = `${movementDate.getDate().toString().padStart(2, '0')}`;
+        let movementDateMonth = `${(movementDate.getMonth() + 1).toString().padStart(2, '0')}`;
+        let movementDateYear = `${movementDate.getFullYear().toString()}`;
+        // Front End Date
+        frontEndDate = `${movementDateDay}-${movementDateMonth}-${movementDateYear}`;
+        // Back End Date
+        backEndDate = `${movementDateYear}-${movementDateMonth}-${movementDateDay}`;
+        //Create top row of cruise movement container
+        let newRowTop = document.createElement('div');
+        // Add contents of top row (contains day and date values)
+        newRowTop.setAttribute('class', 'mc_row_top');
+        newRowTop.innerHTML = `
+        <span class="mc_day">Day <span class="day">${day}</span></span><span class="mc_date">${frontEndDate}</span>
+        `;
+        // Create movement type select field and label
+        let newTypeSelectLabel = document.createElement('label');
+        newTypeSelectLabel.setAttribute('class', 'admin_form_label');
+        newTypeSelectLabel.setAttribute('for', `${day}_Type`);
+        newTypeSelectLabel.innerText = 'Movement Type';
+        let newTypeSelect = document.createElement('select');
+        newTypeSelect.setAttribute('class', 'admin_field');
+        newTypeSelect.setAttribute('id', `${day}_Type`);
+        newTypeSelect.innerHTML = movementSelects;
+        let newDestinationLabel = document.createElement('label');
+        newDestinationLabel.setAttribute('class', 'admin_form_label');
+        newDestinationLabel.setAttribute('for', `${day}_Destination`);
+        newDestinationLabel.innerText = 'Destination';
+        let newDestinationSelect = document.createElement('select');
+        newDestinationSelect.setAttribute('class', 'admin_field');
+        newDestinationSelect.setAttribute('id', `${day}_Destination`);
+        newDestinationSelect.innerHTML = destinationSelects;
+        newMcCont.append(newRowTop, newTypeSelectLabel, newTypeSelect, newDestinationLabel, newDestinationSelect);
+        movementsCont.appendChild(newMcCont);
+
+    }
+}
