@@ -34,10 +34,13 @@ class NewCruiseModelForm(forms.ModelForm):
             'results_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
             'map_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
             'listing_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
-            'start_date': DateInput(attrs={'min': f"{two_days_time}"}),
+            'start_date': DateInput(attrs={'min': f"{two_days_time}", 'value': f"{two_days_time}"}),
+            'duration': forms.HiddenInput(attrs={'value': '2'}),
+            'end_date': forms.HiddenInput(),
         }
         fields = ('name', 'ship', 'duration', 'start_date', 'description',
-        'results_image', 'listing_image', 'map_image', 'bookable', 'tags',)
+        'results_image', 'listing_image', 'map_image', 'bookable', 'tags',
+        'end_date',)
 
 
 class NewCruiseOtherFields(forms.Form):
@@ -62,6 +65,9 @@ class NewCruiseOtherFields(forms.Form):
     max_digits=8,
     decimal_places=2,
     widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    #Movement JSON field
+    movements = forms.CharField(widget=forms.HiddenInput())
 
 
 class NewCruiseForm(forms.Form):
