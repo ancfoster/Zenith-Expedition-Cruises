@@ -13,7 +13,8 @@ var destinationSelects = '';
 var cruiseStartDate = new Date();
 let cruiseEndDate = new Date();
 var duration;
-let movementsJSON;
+let movementsJSON = [];
+let destinations = {};
 
 // Extract hidden field values
 window.onload = loadValues;
@@ -74,7 +75,7 @@ durationPlus.addEventListener('click', () => {
 function loadDestinations() {
     // rawDestinations is generated in the Django template
     let destinationsString = rawDestinations;
-    let destinations = JSON.parse(destinationsString);
+    destinations = JSON.parse(destinationsString);
     for(let i = 0; i < destinations.length; i++) {
         let destinationObject = destinations[i];
         let destId = destinationObject.id;
@@ -103,8 +104,35 @@ function loadMovements() {
         alert(movements.value);
     }
     else {
-        createDefaultMovements();
+        createMovementJSON();
     }
+}
+
+
+function createMovementJSON() {
+    for(let i=0; i < duration; i++) {
+        let day = i + 1;
+        let movementDate = new Date()
+        movementDate.setDate(cruiseStartDate.getDate() + i);
+        let movementDateDay = `${movementDate.getDate().toString().padStart(2, '0')}`;
+        let movementDateMonth = `${(movementDate.getMonth() + 1).toString().padStart(2, '0')}`;
+        let movementDateYear = `${movementDate.getFullYear().toString()}`;
+        // Front End Date
+        frontEndDate = `${movementDateDay}-${movementDateMonth}-${movementDateYear}`;
+        // Back End Date
+        backEndDate = `${movementDateYear}-${movementDateMonth}-${movementDateDay}`;
+        let firstDestination = destinations[0];
+        let newMovement = {
+            'day': day,
+            'frontEndDate': frontEndDate,
+            'backEndDate': backEndDate,
+            'type': 'D',
+            'destination': firstDestination.id,
+            'description': ''
+        }
+        movementsJSON.push(newMovement);
+    }
+    console.log(movementsJSON);
 }
 
 function createDefaultMovements() {
