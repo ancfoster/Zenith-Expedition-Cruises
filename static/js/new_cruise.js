@@ -45,6 +45,7 @@ cruiseStartField.onchange = () => {
     cruiseStartDate = new Date(cruiseStartField.value);
     cruiseEndDate = new Date(cruiseStartDate.getTime());
     calculateEndDate();
+    updateDates();
 }
 
 // These two functions respond to the + - buttons being pressed then recalculate the cruise end date
@@ -132,6 +133,24 @@ function createMovementJSON(daysToCreate, dayFrom) {
             'description': ''
         }
         movementsJSON.push(newMovement);
+    }
+    console.log(movementsJSON);
+}
+
+
+function updateDates() {
+    for (i = 0; i < movementsJSON.length; i++) {
+        let movementDate = new Date()
+        movementDate.setDate(cruiseStartDate.getDate() + i);
+        let movementDateDay = `${movementDate.getDate().toString().padStart(2, '0')}`;
+        let movementDateMonth = `${(movementDate.getMonth() + 1).toString().padStart(2, '0')}`;
+        let movementDateYear = `${movementDate.getFullYear().toString()}`;
+        // Front End Date
+        frontEndDate = `${movementDateDay}-${movementDateMonth}-${movementDateYear}`;
+        // Back End Date
+        backEndDate = `${movementDateYear}-${movementDateMonth}-${movementDateDay}`;
+        movementsJSON[i].frontEndDate = frontEndDate;
+        movementsJSON[i].backEndDate = backEndDate;
     }
     console.log(movementsJSON);
 }
