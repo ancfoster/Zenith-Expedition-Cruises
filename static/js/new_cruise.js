@@ -68,6 +68,7 @@ durationPlus.addEventListener('click', () => {
         durationField.value = duration;
         durationSpan.innerText = duration;
         calculateEndDate();
+        createMovementJSON(1, movementsJSON.length);
     }
 })
 
@@ -104,16 +105,16 @@ function loadMovements() {
         alert(movements.value);
     }
     else {
-        createMovementJSON();
+        createMovementJSON(duration, 0);
     }
 }
 
 
-function createMovementJSON() {
-    for(let i=0; i < duration; i++) {
-        let day = i + 1;
+function createMovementJSON(daysToCreate, dayFrom) {
+    for(let i=0; i < daysToCreate; i++) {
+        let day = dayFrom + (i + 1);
         let movementDate = new Date()
-        movementDate.setDate(cruiseStartDate.getDate() + i);
+        movementDate.setDate(cruiseStartDate.getDate() + (day - 1));
         let movementDateDay = `${movementDate.getDate().toString().padStart(2, '0')}`;
         let movementDateMonth = `${(movementDate.getMonth() + 1).toString().padStart(2, '0')}`;
         let movementDateYear = `${movementDate.getFullYear().toString()}`;
