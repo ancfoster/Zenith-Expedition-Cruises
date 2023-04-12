@@ -96,8 +96,14 @@ function loadDestinations() {
 }
 
 let movementSelects = `
-    <option value='D' selected >Destination</option>
+    <option value='D'>Destination</option>
     <option value='SD'>Sea Day</option>
+    <option value='SC'>Scenic Cruising</option>
+`;
+
+let sdSelects = `
+    <option value='D'>Destination</option>
+    <option value='SD' selected>Sea Day</option>
     <option value='SC'>Scenic Cruising</option>
 `;
 
@@ -110,7 +116,6 @@ function loadMovements() {
         createMovementJSON(duration, 0);
     }
 }
-
 
 function createMovementJSON(daysToCreate, dayFrom) {
     for(let i=0; i < daysToCreate; i++) {
@@ -158,7 +163,6 @@ function updateDates() {
 
 
 function createMovementContainers() {
-    console.log('Create movement cont')
     for(i = 0; i < movementsJSON.length; i++) {
         // Create new movement div container and give it the class mc_cont
         let newMcCont = document.createElement('div');
@@ -169,7 +173,7 @@ function createMovementContainers() {
         // Add contents of top row (contains day and date values)
         newRowTop.setAttribute('class', 'mc_row_top');
         newRowTop.innerHTML = `
-        <span class="mc_day">Day <span class="day">${movementsJSON[i].day}</span></span><span class="mc_date">${movementsJSON[i].frontEndDate}</span>
+        <span class="mc_day">Day <span class="day">${movementsJSON[i].day}</span></span><span class="mc_date" id="${movementsJSON[i]}_Date">${movementsJSON[i].frontEndDate}</span>
         `;
         // Create label for movement type select element
         let newTypeSelectLabel = document.createElement('label');
@@ -205,14 +209,85 @@ function createMovementContainers() {
 
 movementsCont.addEventListener('change', function(e){
     const target = e.target;
+    //Create array from target element ID
     const elementId = target.id.split('_');
     let movementId = parseInt(elementId[0]);
-    movementId -= 1;
+    console.log(`Movement ID: ${movementId}`);
+    let movementsJsonId = movementId;
+    movementsJsonId -= 1;
+    // Element type is obtained from elementId array
     const elementType = elementId[1];
     switch (elementType) {
         case 'Destination':
-            movementsJSON[movementId].destination = parseInt(target.value);
-            console.log(target.value)
+            // Update the movementJSON value when a destination is changed
+            movementsJSON[movementsJsonId].destination = parseInt(target.value);
+            break;
+        case 'Type':
+            if(target.value == 'SD') {
+                if (movementsJSON[movementsJsonId].type == 'D') {
+                    let elementsToRemove = `${movementId}_Destination`;
+                    // Remove destination list for movement div
+                    target.remove();
+                    let selectRemove = document.getElementById(elementsToRemove);
+                    selectRemove.remove();
+                    // Remove label - get the label to remove using its for attribute
+                    let labelRemove = document.querySelector(`label[for="${elementsToRemove}"]`);
+                    labelRemove.remove();
+                    // Add new description field and label
+                    let parentCont = document.getElementById(movementId);
+                    let newElements = `
+                    <select class="admin_field" id="${movementId}_Type">
+                    ${sdSelects}
+                    </select>
+                    <label class="admin_form_label" for="${movementId}_Description">Description (optional)</label>
+                    <input type="text" maxlength="120" class="admin_field" id="${movementId}_Description">
+                    `;
+                    parentCont.innerHTML += newElements;
+                    // Update movementsJSON
+                    movementsJSON[movementsJsonId].destination = "";
+                    movementsJSON[movementsJsonId].type = "SD";
+                    movementsJSON[movementsJsonId].description = "";
+                }
+            } else if (target.value == 'D') {
+                let elementsToRemove = `${movementId}_Description`;
+                    // Remove destination list for movement div
+                    target.remove();
+                    let selectRemove = document.getElementById(elementsToRemove);
+                    selectRemove.remove();
+                    // Remove label - get the label to remove using its for attribute
+                    let labelRemove = document.querySelector(`label[for="${elementsToRemove}"]`);
+                    labelRemove.remove();
+                    // Add new description field and label
+                    let parentCont = document.getElementById(movementId);
+                    let newElements = `
+                    <select class="admin_field" id="${movementId}_Type">
+                    ${movementSelects}
+                    </select>
+                    <label class="admin_form_label" for"${movementId}_Destination">Destination</label>
+                    <select class="admin_field" id="${movementId}_Destination">
+                    ${destinationSelects}
+                    </select>
+                    `;
+                    parentCont.innerHTML += newElements;
+                    // Update movementsJSON
+                    let firstDestination = destinations[0];
+                    movementsJSON[movementsJsonId].destination = parseInt(firstDestination.id);
+                    movementsJSON[movementsJsonId].type = "D";
+                    movementsJSON[movementsJsonId].description = "";
+            }
             break;
         }
-})
+    })
+
+
+    movementsCont.addEventListener('input', function(e) {
+        const target = e.target;
+        //Create array from target element ID
+        const elementId = target.id.split('_');
+        let movementId = parseInt(elementId[0]);
+        let movementsJsonId = movementId;
+        movementsJsonId -= 1;
+        // Element type is obtained from elementId array
+        let text = e.target.value;
+        movementsJSON[movementsJsonId].description = text;
+    })
