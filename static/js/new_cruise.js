@@ -57,10 +57,14 @@ durationMinus.addEventListener('click', () => {
         alert('Cruise duration cannot be less than two days')
     } 
     else {
+        let contRemove = document.getElementById(duration)
+        contRemove.remove();
         duration -= 1;
         durationField.value = duration;
         durationSpan.innerText = duration;
         calculateEndDate();
+        movementsJSON.pop();
+
     }
 })
 durationPlus.addEventListener('click', () => {
