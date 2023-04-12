@@ -25,13 +25,15 @@ function loadValues() {
     cruiseStartDate = new Date(cruiseStartField.value);
     calculateEndDate();
     loadDestinations();
-    loadMovements();
-    createMovementContainers();
+    loadMovements();    
+    for(let movement = 0; movement < movementsJSON.length; movement++) {
+        createMovementContainer(movement);
+    }
 }
 
 // Calculates the end date of the cruise using start date and duration
 function calculateEndDate() {
-    cruiseEndDate.setDate(cruiseStartDate.getDate() + duration);
+    cruiseEndDate.setDate(cruiseStartDate.getDate() + (duration - 1));
     let cruiseEndDateDay = `${cruiseEndDate.getDate().toString().padStart(2, '0')}`;
     let cruiseEndDateMonth = `${(cruiseEndDate.getMonth() + 1).toString().padStart(2, '0')}`;
     let cruiseEndDateYear = `${cruiseEndDate.getFullYear().toString()}`;
@@ -66,11 +68,14 @@ durationPlus.addEventListener('click', () => {
         alert('Cruise duration cannot exceed 199 days')
     } 
     else {
-        duration += 1;
+        duration++;
         durationField.value = duration;
         durationSpan.innerText = duration;
         calculateEndDate();
         createMovementJSON(1, movementsJSON.length);
+        let newDayJsonId = duration;
+        newDayJsonId--;
+        createMovementContainer(newDayJsonId)
     }
 })
 
@@ -157,54 +162,58 @@ function updateDates() {
         backEndDate = `${movementDateYear}-${movementDateMonth}-${movementDateDay}`;
         movementsJSON[i].frontEndDate = frontEndDate;
         movementsJSON[i].backEndDate = backEndDate;
+        let count = i
+        count++;
+        let mcDate = document.getElementById(`${count}_Date`);
+        mcDate.innerText = frontEndDate;
     }
-    console.log(movementsJSON);
+
 }
 
 
-function createMovementContainers() {
-    for(i = 0; i < movementsJSON.length; i++) {
-        // Create new movement div container and give it the class mc_cont
-        let newMcCont = document.createElement('div');
-        newMcCont.setAttribute('class', 'mc_cont');
-        newMcCont.setAttribute('id', movementsJSON[i].day);
-        //Create top row of cruise movement container
-        let newRowTop = document.createElement('div');
-        // Add contents of top row (contains day and date values)
-        newRowTop.setAttribute('class', 'mc_row_top');
-        newRowTop.innerHTML = `
-        <span class="mc_day">Day <span class="day">${movementsJSON[i].day}</span></span><span class="mc_date" id="${movementsJSON[i]}_Date">${movementsJSON[i].frontEndDate}</span>
-        `;
-        // Create label for movement type select element
-        let newTypeSelectLabel = document.createElement('label');
-        newTypeSelectLabel.setAttribute('class', 'admin_form_label');
-        newTypeSelectLabel.setAttribute('for', `${movementsJSON[i].day}_Type`);
-        newTypeSelectLabel.innerText = 'Movement Type';
-        // Create movement type select element
-        let newTypeSelect = document.createElement('select');
-        newTypeSelect.setAttribute('class', 'admin_field');
-        newTypeSelect.setAttribute('id', `${movementsJSON[i].day}_Type`);
-        newTypeSelect.innerHTML = movementSelects;
-        newMcCont.append(newRowTop, newTypeSelectLabel, newTypeSelect);
-        switch (movementsJSON[i].type) {
-            case 'D':
-                newTypeSelect.value = 'D'
-                let newDestinationLabel = document.createElement('label');
-                newDestinationLabel.setAttribute('class', 'admin_form_label');
-                newDestinationLabel.setAttribute('for', `${movementsJSON[i].day}_Destination`);
-                newDestinationLabel.innerText = 'Destination';
-                let newDestinationSelect = document.createElement('select');
-                newDestinationSelect.setAttribute('class', 'admin_field');
-                newDestinationSelect.setAttribute('id', `${movementsJSON[i].day}_Destination`);
-                newDestinationSelect.innerHTML = destinationSelects;
-                newDestinationSelect.value = movementsJSON[i].destination;
-                newMcCont.append(newDestinationLabel, newDestinationSelect);
-                break;
-            default:
-                console.log("Error when creating movement containers")                
-        }
-        movementsCont.appendChild(newMcCont);        
+function createMovementContainer(day) {    
+    let i = day
+    // Create new movement div container and give it the class mc_cont
+    let newMcCont = document.createElement('div');
+    newMcCont.setAttribute('class', 'mc_cont');
+    newMcCont.setAttribute('id', movementsJSON[i].day);
+    //Create top row of cruise movement container
+    let newRowTop = document.createElement('div');
+    // Add contents of top row (contains day and date values)
+    newRowTop.setAttribute('class', 'mc_row_top');
+    newRowTop.innerHTML = `
+    <span class="mc_day">Day <span class="day">${movementsJSON[i].day}</span></span><span class="mc_date" id="${movementsJSON[i].day}_Date">${movementsJSON[i].frontEndDate}</span>
+    `;
+    // Create label for movement type select element
+    let newTypeSelectLabel = document.createElement('label');
+    newTypeSelectLabel.setAttribute('class', 'admin_form_label');
+    newTypeSelectLabel.setAttribute('for', `${movementsJSON[i].day}_Type`);
+    newTypeSelectLabel.innerText = 'Movement Type';
+    // Create movement type select element
+    let newTypeSelect = document.createElement('select');
+    newTypeSelect.setAttribute('class', 'admin_field');
+    newTypeSelect.setAttribute('id', `${movementsJSON[i].day}_Type`);
+    newTypeSelect.innerHTML = movementSelects;
+    newMcCont.append(newRowTop, newTypeSelectLabel, newTypeSelect);
+    switch (movementsJSON[i].type) {
+        case 'D':
+            newTypeSelect.value = 'D'
+            let newDestinationLabel = document.createElement('label');
+            newDestinationLabel.setAttribute('class', 'admin_form_label');
+            newDestinationLabel.setAttribute('for', `${movementsJSON[i].day}_Destination`);
+            newDestinationLabel.innerText = 'Destination';
+            let newDestinationSelect = document.createElement('select');
+            newDestinationSelect.setAttribute('class', 'admin_field');
+            newDestinationSelect.setAttribute('id', `${movementsJSON[i].day}_Destination`);
+            newDestinationSelect.innerHTML = destinationSelects;
+            newDestinationSelect.value = movementsJSON[i].destination;
+            newMcCont.append(newDestinationLabel, newDestinationSelect);
+            break;
+        default:
+            console.log("Error when creating movement containers")                
     }
+    movementsCont.appendChild(newMcCont);        
+    
 }
 
 movementsCont.addEventListener('change', function(e){
@@ -212,7 +221,6 @@ movementsCont.addEventListener('change', function(e){
     //Create array from target element ID
     const elementId = target.id.split('_');
     let movementId = parseInt(elementId[0]);
-    console.log(`Movement ID: ${movementId}`);
     let movementsJsonId = movementId;
     movementsJsonId -= 1;
     // Element type is obtained from elementId array
@@ -278,7 +286,6 @@ movementsCont.addEventListener('change', function(e){
             break;
         }
     })
-
 
     movementsCont.addEventListener('input', function(e) {
         const target = e.target;
