@@ -7,7 +7,7 @@ const durationSpan = document.getElementById('duration-span');
 const cruiseEndSpan = document.getElementById('cruise-end');
 const cruiseStartField = document.getElementById('id_start_date');
 const cruiseEndField = document.getElementById('id_end_date');
-let movements = document.getElementById('id_movements');
+const movements = document.getElementById('id_movements');
 const movementsCont = document.getElementById('movements-container');
 var destinationSelects = '';    
 var cruiseStartDate = new Date();
@@ -126,7 +126,7 @@ let scSelects = `
 // Build movement containers 
 function loadMovements() {
     if (movements.value) {
-        alert(movements.value);
+        movementsJSON = JSON.parse(movements);
     }
     else {
         createMovementJSON(duration, 0);
@@ -216,7 +216,7 @@ function createMovementContainer(day) {
             <select class="admin_field" id="${movementsJSON[i].day}_Type">
             ${sdSelects}
             </select>
-            <label class="admin_form_label" for="${movementsJSON[i].day}_Description">Description (optional)</label>
+            <label class="admin_form_label" for="${movementsJSON[i].day}_Description">Description</label>
             <input type="text" maxlength="120" class="admin_field" id="${movementsJSON[i].day}}_Description">
             `
             newMcCont.innerHTML = newTopRow + seaDayUiElements;
@@ -228,8 +228,8 @@ function createMovementContainer(day) {
             <select class="admin_field" id="${movementsJSON[i].day}_Type">
             ${scSelects}
             </select>
-            <label class="admin_form_label" for="${movementsJSON[i].day}_Description">Description (required)</label>
-            <input type="text" maxlength="120" class="admin_field" required id="${movementsJSON[i].day}}_Description">
+            <label class="admin_form_label" for="${movementsJSON[i].day}_Description">Description</label>
+            <input type="text" maxlength="120" class="admin_field" id="${movementsJSON[i].day}}_Description">
             `
             newMcCont.innerHTML = newTopRow + scenicCruisingUiElements;
             movementsCont.append(newMcCont);
@@ -271,7 +271,7 @@ movementsCont.addEventListener('change', function(e){
                     <select class="admin_field" id="${movementId}_Type">
                     ${sdSelects}
                     </select>
-                    <label class="admin_form_label" for="${movementId}_Description">Description (optional)</label>
+                    <label class="admin_form_label" for="${movementId}_Description">Description</label>
                     <input type="text" maxlength="120" class="admin_field" id="${movementId}_Description">
                     `;
                     parentCont.innerHTML += newElements;
@@ -279,6 +279,11 @@ movementsCont.addEventListener('change', function(e){
                     movementsJSON[movementsJsonId].destination = "";
                     movementsJSON[movementsJsonId].type = "SD";
                     movementsJSON[movementsJsonId].description = "";
+                } else {
+                    movementsJSON[movementsJsonId].type = "SD";
+                    movementsJSON[movementsJsonId].destination = "";
+                    let descriptionGet = document.getElementById(`${movementId}_Description`);
+                    movementsJSON[movementsJsonId].description = descriptionGet.value;
                 }
             } else if (target.value == 'D') {
                 let elementsToRemove = `${movementId}_Description`;
@@ -322,14 +327,19 @@ movementsCont.addEventListener('change', function(e){
                     <select class="admin_field" id="${movementId}_Type">
                     ${scSelects}
                     </select>
-                    <label class="admin_form_label" for="${movementId}_Description">Description (required)</label>
-                    <input type="text" maxlength="120" class="admin_field" required id="${movementId}_Description">
+                    <label class="admin_form_label" for="${movementId}_Description">Description</label>
+                    <input type="text" maxlength="120" class="admin_field" id="${movementId}_Description">
                     `;
                     parentCont.innerHTML += newElements;
                     // Update movementsJSON
                     movementsJSON[movementsJsonId].destination = "";
                     movementsJSON[movementsJsonId].type = "SC";
                     movementsJSON[movementsJsonId].description = "";
+                } else {
+                    movementsJSON[movementsJsonId].type = "SC";
+                    movementsJSON[movementsJsonId].destination = "";
+                    let descriptionGet = document.getElementById(`${movementId}_Description`);
+                    movementsJSON[movementsJsonId].description = descriptionGet.value;
                 }
             }
             jsonToString();
