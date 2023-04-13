@@ -162,8 +162,9 @@ function createMovementJSON(daysToCreate, dayFrom) {
 // Updates the movement JSON objects when the cruise date is changed.
 function updateDates() {
     for (i = 0; i < movementsJSON.length; i++) {
-        let movementDate = new Date()
-        movementDate.setDate(cruiseStartDate.getDate() + i);
+        let movementDate = new Date(cruiseStartDate);
+        movementDate.setDate(movementDate.getDate() + i);
+        // movementDate.setDate(cruiseStartDate.getDate() + i);
         let movementDateDay = `${movementDate.getDate().toString().padStart(2, '0')}`;
         let movementDateMonth = `${(movementDate.getMonth() + 1).toString().padStart(2, '0')}`;
         let movementDateYear = `${movementDate.getFullYear().toString()}`;
