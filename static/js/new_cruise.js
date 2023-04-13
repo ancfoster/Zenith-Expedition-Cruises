@@ -7,7 +7,7 @@ const durationSpan = document.getElementById('duration-span');
 const cruiseEndSpan = document.getElementById('cruise-end');
 const cruiseStartField = document.getElementById('id_start_date');
 const cruiseEndField = document.getElementById('id_end_date');
-const movements = document.getElementById('id_movements');
+let movements = document.getElementById('id_movements');
 const movementsCont = document.getElementById('movements-container');
 var destinationSelects = '';    
 var cruiseStartDate = new Date();
@@ -64,7 +64,7 @@ durationMinus.addEventListener('click', () => {
         durationSpan.innerText = duration;
         calculateEndDate();
         movementsJSON.pop();
-
+        jsonToString();
     }
 })
 durationPlus.addEventListener('click', () => {
@@ -77,9 +77,10 @@ durationPlus.addEventListener('click', () => {
         durationSpan.innerText = duration;
         calculateEndDate();
         createMovementJSON(1, movementsJSON.length);
+        jsonToString();
         let newDayJsonId = duration;
         newDayJsonId--;
-        createMovementContainer(newDayJsonId)
+        createMovementContainer(newDayJsonId);
     }
 })
 
@@ -129,6 +130,7 @@ function loadMovements() {
     }
     else {
         createMovementJSON(duration, 0);
+        jsonToString();
     }
 }
 
@@ -176,6 +178,7 @@ function updateDates() {
         let mcDate = document.getElementById(`${count}_Date`);
         mcDate.innerText = frontEndDate;
     }
+    jsonToString();
 }
 
 // This function creates the HTML elements that represent each movement/day of the cruise and allows the user to modify them
@@ -195,7 +198,7 @@ function createMovementContainer(day) {
     switch (movementsJSON[i].type) {
         case 'D':
             let destinationUiElements = `
-            <label class="admin_form_label" for="${movementsJSON[i].type}_Type">Movement Type</label>
+            <label class="admin_form_label" for="${movementsJSON[i].day}_Type">Movement Type</label>
             <select class="admin_field" id="${movementsJSON[i].day}_Type">
             ${movementSelects}
             </select>
@@ -207,9 +210,33 @@ function createMovementContainer(day) {
             newMcCont.innerHTML = newTopRow + destinationUiElements;
             movementsCont.append(newMcCont);
         break;
-    }
-
-    
+        case 'SD':
+            let seaDayUiElements = `
+            <label class="admin_form_label" for="${movementsJSON[i].day}_Type">Movement Type</label>
+            <select class="admin_field" id="${movementsJSON[i].day}_Type">
+            ${sdSelects}
+            </select>
+            <label class="admin_form_label" for="${movementsJSON[i].day}_Description">Description (optional)</label>
+            <input type="text" maxlength="120" class="admin_field" id="${movementsJSON[i].day}}_Description">
+            `
+            newMcCont.innerHTML = newTopRow + seaDayUiElements;
+            movementsCont.append(newMcCont);
+        break;
+        case 'SC':
+            let scenicCruisingUiElements = `
+            <label class="admin_form_label" for="${movementsJSON[i].day}_Type">Movement Type</label>
+            <select class="admin_field" id="${movementsJSON[i].day}_Type">
+            ${scSelects}
+            </select>
+            <label class="admin_form_label" for="${movementsJSON[i].day}_Description">Description (required)</label>
+            <input type="text" maxlength="120" class="admin_field" required id="${movementsJSON[i].day}}_Description">
+            `
+            newMcCont.innerHTML = newTopRow + scenicCruisingUiElements;
+            movementsCont.append(newMcCont);
+        break;
+        default:
+            console.log("Error when creating movement containers") 
+    }    
 }
 
 movementsCont.addEventListener('change', function(e){
@@ -225,6 +252,7 @@ movementsCont.addEventListener('change', function(e){
         case 'Destination':
             // Update the movementJSON value when a destination is changed
             movementsJSON[movementsJsonId].destination = parseInt(target.value);
+            jsonToString();
             break;
         case 'Type':
             if(target.value == 'SD') {
@@ -304,18 +332,26 @@ movementsCont.addEventListener('change', function(e){
                     movementsJSON[movementsJsonId].description = "";
                 }
             }
+            jsonToString();
             break;
         }
     })
 
-    movementsCont.addEventListener('input', function(e) {
-        const target = e.target;
-        //Create array from target element ID
-        const elementId = target.id.split('_');
-        let movementId = parseInt(elementId[0]);
-        let movementsJsonId = movementId;
-        movementsJsonId -= 1;
-        // Element type is obtained from elementId array
-        let text = e.target.value;
-        movementsJSON[movementsJsonId].description = text;
-    })
+movementsCont.addEventListener('input', function(e) {
+    const target = e.target;
+    //Create array from target element ID
+    const elementId = target.id.split('_');
+    let movementId = parseInt(elementId[0]);
+    let movementsJsonId = movementId;
+    movementsJsonId -= 1;
+    // Element type is obtained from elementId array
+    let text = e.target.value;
+    movementsJSON[movementsJsonId].description = text;
+    jsonToString();
+})
+
+
+function jsonToString() {
+    let movementsString = JSON.stringify(movementsJSON);
+    movements.value = movementsString;
+}
