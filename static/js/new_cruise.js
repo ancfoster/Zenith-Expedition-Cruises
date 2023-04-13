@@ -116,6 +116,12 @@ let sdSelects = `
     <option value='SC'>Scenic Cruising</option>
 `;
 
+let scSelects = `
+    <option value='D'>Destination</option>
+    <option value='SD'>Sea Day</option>
+    <option value='SC' selected>Scenic Cruising</option>
+`;
+
 // Build movement containers 
 function loadMovements() {
     if (movements.value) {
@@ -149,7 +155,6 @@ function createMovementJSON(daysToCreate, dayFrom) {
         }
         movementsJSON.push(newMovement);
     }
-    console.log(movementsJSON);
 }
 
 // Updates the movement JSON objects when the cruise date is changed.
@@ -171,52 +176,39 @@ function updateDates() {
         let mcDate = document.getElementById(`${count}_Date`);
         mcDate.innerText = frontEndDate;
     }
-
 }
 
-
-function createMovementContainer(day) {    
+// This function creates the HTML elements that represent each movement/day of the cruise and allows the user to modify them
+function createMovementContainer(day) {  
+    // Create the movement container  
     let i = day
-    // Create new movement div container and give it the class mc_cont
     let newMcCont = document.createElement('div');
     newMcCont.setAttribute('class', 'mc_cont');
     newMcCont.setAttribute('id', movementsJSON[i].day);
-    //Create top row of cruise movement container
-    let newRowTop = document.createElement('div');
-    // Add contents of top row (contains day and date values)
-    newRowTop.setAttribute('class', 'mc_row_top');
-    newRowTop.innerHTML = `
+    // Create top row of container
+    let newTopRow = `
+    <div class="mc_row_top">
     <span class="mc_day">Day <span class="day">${movementsJSON[i].day}</span></span><span class="mc_date" id="${movementsJSON[i].day}_Date">${movementsJSON[i].frontEndDate}</span>
+    </div>
     `;
-    // Create label for movement type select element
-    let newTypeSelectLabel = document.createElement('label');
-    newTypeSelectLabel.setAttribute('class', 'admin_form_label');
-    newTypeSelectLabel.setAttribute('for', `${movementsJSON[i].day}_Type`);
-    newTypeSelectLabel.innerText = 'Movement Type';
-    // Create movement type select element
-    let newTypeSelect = document.createElement('select');
-    newTypeSelect.setAttribute('class', 'admin_field');
-    newTypeSelect.setAttribute('id', `${movementsJSON[i].day}_Type`);
-    newTypeSelect.innerHTML = movementSelects;
-    newMcCont.append(newRowTop, newTypeSelectLabel, newTypeSelect);
+    // Determine movement type and create UI accordingly
     switch (movementsJSON[i].type) {
         case 'D':
-            newTypeSelect.value = 'D'
-            let newDestinationLabel = document.createElement('label');
-            newDestinationLabel.setAttribute('class', 'admin_form_label');
-            newDestinationLabel.setAttribute('for', `${movementsJSON[i].day}_Destination`);
-            newDestinationLabel.innerText = 'Destination';
-            let newDestinationSelect = document.createElement('select');
-            newDestinationSelect.setAttribute('class', 'admin_field');
-            newDestinationSelect.setAttribute('id', `${movementsJSON[i].day}_Destination`);
-            newDestinationSelect.innerHTML = destinationSelects;
-            newDestinationSelect.value = movementsJSON[i].destination;
-            newMcCont.append(newDestinationLabel, newDestinationSelect);
-            break;
-        default:
-            console.log("Error when creating movement containers")                
+            let destinationUiElements = `
+            <label class="admin_form_label" for="${movementsJSON[i].type}_Type">Movement Type</label>
+            <select class="admin_field" id="${movementsJSON[i].day}_Type">
+            ${movementSelects}
+            </select>
+            <label class="admin_form_label" for="${movementsJSON[i].day}_Destination">Destination</label>
+            <select class="admin_field" id="${movementsJSON[i].day}_Destination">
+            ${destinationSelects}
+            </select>
+            `
+            newMcCont.innerHTML = newTopRow + destinationUiElements;
+            movementsCont.append(newMcCont);
+        break;
     }
-    movementsCont.appendChild(newMcCont);        
+
     
 }
 
@@ -275,7 +267,7 @@ movementsCont.addEventListener('change', function(e){
                     <select class="admin_field" id="${movementId}_Type">
                     ${movementSelects}
                     </select>
-                    <label class="admin_form_label" for"${movementId}_Destination">Destination</label>
+                    <label class="admin_form_label" for="${movementId}_Destination">Destination</label>
                     <select class="admin_field" id="${movementId}_Destination">
                     ${destinationSelects}
                     </select>
@@ -286,6 +278,31 @@ movementsCont.addEventListener('change', function(e){
                     movementsJSON[movementsJsonId].destination = parseInt(firstDestination.id);
                     movementsJSON[movementsJsonId].type = "D";
                     movementsJSON[movementsJsonId].description = "";
+            } else if (target.value == 'SC') {
+                if (movementsJSON[movementsJsonId].type == 'D') {
+                    let elementsToRemove = `${movementId}_Destination`;
+                    // Remove destination list for movement div
+                    target.remove();
+                    let selectRemove = document.getElementById(elementsToRemove);
+                    selectRemove.remove();
+                    // Remove label - get the label to remove using its for attribute
+                    let labelRemove = document.querySelector(`label[for="${elementsToRemove}"]`);
+                    labelRemove.remove();
+                    // Add new description field and label
+                    let parentCont = document.getElementById(movementId);
+                    let newElements = `
+                    <select class="admin_field" id="${movementId}_Type">
+                    ${scSelects}
+                    </select>
+                    <label class="admin_form_label" for="${movementId}_Description">Description (required)</label>
+                    <input type="text" maxlength="120" class="admin_field" required id="${movementId}_Description">
+                    `;
+                    parentCont.innerHTML += newElements;
+                    // Update movementsJSON
+                    movementsJSON[movementsJsonId].destination = "";
+                    movementsJSON[movementsJsonId].type = "SC";
+                    movementsJSON[movementsJsonId].description = "";
+                }
             }
             break;
         }
