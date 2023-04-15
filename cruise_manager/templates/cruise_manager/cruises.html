@@ -12,7 +12,7 @@ Cruises
 
 <h1 class="admin_h1">Cruises</h1>
 <div class="flex justify-between items-center ml-auto mr-auto max-w-[900px]">
-    <a href="{% url 'new_tag' %}">
+    <a href="{% url 'new_cruise' %}">
         <div class="admin_icon_button bg-black333 hover:bg-black111 text-base flex items-center text-white pl-2 pr-3 pt-1 pb-1 rounded-lg"><i class="material-symbols-outlined pr-2">add</i><span>Create Cruise</span></div>
     </a>
     <span class="font-light text-grey666">
@@ -20,7 +20,7 @@ Cruises
     </span>
 </div>
 <div class="flex flex-col mt-4 max-w-[900px] ml-auto mr-auto">
-    <div class="text-grey444 h-[40px] w-full font-medium text-sm bg-admin_table_grey_top pl-2 pr-2 flex items-center border border-admin_table_border rounded-tl-xl rounded-tr-xl">Tag Name</div>
+    <div class="text-grey444 h-[40px] w-full font-medium text-sm bg-admin_table_grey_top pl-2 pr-2 flex items-center border border-admin_table_border rounded-tl-xl rounded-tr-xl">Cruises</div>
     <div class="flex-col">
         <ul>
         {% for cruise in cruises %}

@@ -13,7 +13,7 @@ Create a new cruise
 <h1 class="admin_h1">Create a new cruise</h1>
 <div class="admin_create_cont">
     <div>
-        <form class="flex flex-col flex-wrap bg-ad" method="POST" id="new_cruise_form">
+        <form class="flex flex-col flex-wrap bg-ad" method="POST" id="new_cruise_form" enctype="multipart/form-data">
             {% csrf_token %}
             {{ new_cruise_form.duration }}
             {{ new_cruise_form.end_date }}
