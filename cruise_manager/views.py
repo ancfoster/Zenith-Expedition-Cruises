@@ -20,9 +20,8 @@ from .forms import NewDestinationForm, NewTagForm, NewCruiseForm
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
 
-# maphey is the key used for mapbox maps
+# mapkey is the key used for mapbox maps
 mapkey = os.environ.get('MAPBOX')
-
 
 
 @staff_member_required
@@ -65,7 +64,7 @@ def get_destinations():
 
 def get_country_name(code):
     '''
-    Uses django-countries libray to get full country name
+    Uses django-countries library to get full country name
     from two letter country code
     '''
     return dict(countries)[code]
@@ -81,7 +80,8 @@ def NewDestination(request):
         if new_destination_form.is_valid():
             image = new_destination_form.cleaned_data['image']
             image_name = new_destination_form.cleaned_data['name'].replace(" ", "")
-            compressed_image = compress_uploaded_images(image, image_name)
+            # 960 is the maximum dimension in px
+            compressed_image = compress_uploaded_images(image, image_name, 960)
             new_destination_form.instance.image = compressed_image
             new_destination_form.instance.image.field.upload_to = 'destination_img/'
             form = new_destination_form.save()
@@ -158,7 +158,7 @@ def DestinationDetail(request, slug):
     return render(request, 'cruise_manager/destination.html', context)
 
 
-def compress_uploaded_images(image, image_name):
+def compress_uploaded_images(image, image_name, max_dimension):
     '''
     This function compresses uploaded imagaes for end user performance,
     SEO purposes. It also removes alpha channel from PNGs for JPEG conversion.
@@ -169,7 +169,7 @@ def compress_uploaded_images(image, image_name):
     if image.mode in ("RGBA", "P"):
         image = image.convert('RGB')
     # .thumbnail method resizes the uploaded images, values are max height & width  # noqa
-    image.thumbnail((1024, 1024))
+    image.thumbnail((max_dimension, max_dimension))
     image_io = BytesIO()
     image.save(image_io, format='JPEG', quality=71)
     # listing name consist of listing create form, make + model + pk fields
