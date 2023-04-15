@@ -81,6 +81,20 @@ def NewCruise(request):
     return render(request, 'cruise_manager/new_cruise.html', context)
 
 
+@staff_member_required
+def DisplayCruises(request):
+    '''
+    Dipslays cruises in the cruise manager
+    '''
+    cruises_queryset = Cruises.objects.all().order_by('name')
+    number_cruises = cruises_queryset.count()
+    context = {
+        'number_cruises' : number_cruises,
+        'cruises': cruises,
+    }
+    return render(request, 'cruise_manager/cruises.html', context)
+
+
 def get_destinations():
     '''
     This function gets a list of all the destinations
