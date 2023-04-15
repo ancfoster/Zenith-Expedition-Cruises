@@ -9,10 +9,11 @@ Cruises
 {% endblock %}
 
 {% block content %}
-<h1 class="admin_h1">Tags</h1>
+
+<h1 class="admin_h1">Cruises</h1>
 <div class="flex justify-between items-center ml-auto mr-auto max-w-[900px]">
     <a href="{% url 'new_tag' %}">
-        <div class="admin_icon_button bg-black333 hover:bg-black111 text-base flex items-center text-white pl-2 pr-3 pt-1 pb-1 rounded-lg"><i class="material-symbols-outlined pr-2">add</i><span>New Tag</span></div>
+        <div class="admin_icon_button bg-black333 hover:bg-black111 text-base flex items-center text-white pl-2 pr-3 pt-1 pb-1 rounded-lg"><i class="material-symbols-outlined pr-2">add</i><span>Create Cruise</span></div>
     </a>
     <span class="font-light text-grey666">
     {{ number_cruises }}&nbsp;&nbsp;Cruises
@@ -27,8 +28,6 @@ Cruises
         {% endfor %}
         </ul>
     </div>
-
-
 </div>
 </div>
 

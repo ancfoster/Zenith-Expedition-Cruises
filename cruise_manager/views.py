@@ -90,7 +90,7 @@ def DisplayCruises(request):
     number_cruises = cruises_queryset.count()
     context = {
         'number_cruises' : number_cruises,
-        'cruises': cruises,
+        'cruises': cruises_queryset,
     }
     return render(request, 'cruise_manager/cruises.html', context)
 
