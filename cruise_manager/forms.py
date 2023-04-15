@@ -65,22 +65,26 @@ class NewCruiseOtherFields(forms.Form):
     verandah_suite_fare = forms.DecimalField(
     max_digits=8,
     decimal_places=2,
-    widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    widget=forms.NumberInput(attrs={'class': 'form-control',
+    'required': 'required'}))
 
     deluxe_verandah_suite_fare = forms.DecimalField(
     max_digits=8,
     decimal_places=2,
-    widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    widget=forms.NumberInput(attrs={'class': 'form-control',
+    'required': 'required'}))
 
     spa_suite_fare = forms.DecimalField(
     max_digits=8,
     decimal_places=2,
-    widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    widget=forms.NumberInput(attrs={'class': 'form-control',
+    'required': 'required'}))
 
     owner_suite_fare = forms.DecimalField(
     max_digits=8,
     decimal_places=2,
-    widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    widget=forms.NumberInput(attrs={'class': 'form-control',
+    'required': 'required'}))
 
     #Movement JSON field
     movements = forms.CharField(widget=forms.HiddenInput())
