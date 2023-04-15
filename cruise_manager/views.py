@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login as auth_login
+from django.utils.text import slugify
 from django.db.models import F
 from PIL import Image
 from django_countries import countries
@@ -36,13 +37,12 @@ def NewCruise(request):
         if new_cruise_form.is_valid():
             # Create cruise
             name = new_cruise_form.cleaned_data['name']
-            ship_id = new_cruise_form.cleaned_data['ship']
-            ship = get_object_or_404(Ships, id=ship_id)
+            ship = new_cruise_form.cleaned_data['ship']
             duration = new_cruise_form.cleaned_data['duration']
             start_date = new_cruise_form.cleaned_data['start_date']
             end_date = new_cruise_form.cleaned_data['end_date']
             description = new_cruise_form.cleaned_data['description']
-            tag_ids = new_cruise_form.cleaned_data.getlist('tags')
+            tag_ids = new_cruise_form.cleaned_data['tags']
             tags = Tag.objects.filter(id__in=tag_ids)
             slug_text = f"{slugify(name)}-{start_date}"
             slug = slug_text
@@ -59,10 +59,17 @@ def NewCruise(request):
             compressed_map_image = compress_uploaded_images(results_image_file, f"{slug_text}_map", 800)
             compressed_map_image.upload_to = f"cruises/{slug_text}"
             # Save cruise
-            new_cruise = Cruises.objects.create(name, ship, duration, start_date, end_date, description, slug, results_image=compressed_results_image, listing_image=compressed_listing_image, map_image=compressed_map_image)
-            new_cruise.set(tags)
-
-            my_model.tags.set(tags)
+            new_cruise = Cruises.objects.create(
+            name=name,
+            ship=ship,
+            duration=duration,
+            start_date=start_date,
+            end_date=end_date,
+            description=description,
+            slug=slug,
+            results_image=compressed_results_image,
+            listing_image=compressed_listing_image,
+            map_image=compressed_map_image,)           
 
             # Create fares
 
@@ -71,6 +78,9 @@ def NewCruise(request):
             # Create ship movements
 
             # Return to cruises list in cruise manager
+            return redirect('diaplay_cruises_manager')
+        else:
+            print(new_cruise_form.errors)
     else:
         new_cruise_form = NewCruiseForm()
     
