@@ -68,19 +68,50 @@ def NewCruise(request):
             slug=slug,
             results_image=compressed_results_image,
             listing_image=compressed_listing_image,
-            map_image=compressed_map_image,)
-
+            map_image=compressed_map_image,
+            )
+                #Adds tags
             tags = new_cruise_form.cleaned_data['tags']
             for tag in tags:
-                new_cruise.tags.add(tag)           
+                new_cruise.tags.add(tag)
 
+                #Get ID of newly created cruise for use in creating fares, tickets           
+            cruise_id = new_cruise.id
             # Create fares
-
+                #Verandah suite fare
+            verandah_suite_fare = new_cruise_form.cleaned_data['verandah_suite_fare']
+            new_verandah_suite_fare = Fares.objects.create(
+                suite_category=SuiteCategories.objects.get(id=1),
+                cruise=Cruises.objects.get(id=cruise_id),
+                price=verandah_suite_fare,
+            )
+                #Deluxe verandah fare
+            deluxe_verandah_suite_fare = new_cruise_form.cleaned_data['deluxe_verandah_suite_fare']
+            new_deluxe_verandah_suite_fare = Fares.objects.create(
+                suite_category=SuiteCategories.objects.get(id=2),
+                cruise=Cruises.objects.get(id=cruise_id),
+                price=deluxe_verandah_suite_fare,
+            )
+                #Spa suite fare
+            spa_suite_fare = new_cruise_form.cleaned_data['spa_suite_fare']
+            new_spa_suite_fare = Fares.objects.create(
+                suite_category=SuiteCategories.objects.get(id=3),
+                cruise=Cruises.objects.get(id=cruise_id),
+                price=spa_suite_fare,
+            )
+                #owner suite fare
+            owner_suite_fare = new_cruise_form.cleaned_data['owner_suite_fare']
+            new_owner_suite_fare = Fares.objects.create(
+                suite_category=SuiteCategories.objects.get(id=4),
+                cruise=Cruises.objects.get(id=cruise_id),
+                price=owner_suite_fare,
+            )
             # Create tickets
 
             # Create ship movements
 
             # Return to cruises list in cruise manager
+            print(new_cruise_form.cleaned_data['verandah_suite_fare'])
             return redirect('display_cruises_manager')
         else:
             new_cruise_form = NewCruiseForm()
