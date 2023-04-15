@@ -42,8 +42,7 @@ def NewCruise(request):
             start_date = new_cruise_form.cleaned_data['start_date']
             end_date = new_cruise_form.cleaned_data['end_date']
             description = new_cruise_form.cleaned_data['description']
-            tag_ids = new_cruise_form.cleaned_data['tags']
-            tags = Tag.objects.filter(id__in=tag_ids)
+            # tags = new_cruise_form.cleaned_data['tags']
             slug_text = f"{slugify(name)}-{start_date}"
             slug = slug_text
                 #Upload results image and process
@@ -69,7 +68,11 @@ def NewCruise(request):
             slug=slug,
             results_image=compressed_results_image,
             listing_image=compressed_listing_image,
-            map_image=compressed_map_image,)           
+            map_image=compressed_map_image,)
+
+            tags = new_cruise_form.cleaned_data['tags']
+            for tag in tags:
+                new_cruise.tags.add(tag)           
 
             # Create fares
 
@@ -78,9 +81,9 @@ def NewCruise(request):
             # Create ship movements
 
             # Return to cruises list in cruise manager
-            return redirect('diaplay_cruises_manager')
+            return redirect('display_cruises_manager')
         else:
-            print(new_cruise_form.errors)
+            new_cruise_form = NewCruiseForm()
     else:
         new_cruise_form = NewCruiseForm()
     
