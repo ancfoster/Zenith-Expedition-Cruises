@@ -3,11 +3,15 @@ from cruises.models import Destination, Tag, Cruises
 from datetime import date, timedelta
 
 
+# This class creates a HTML 5 date picker element for a form field
 class DateInput(forms.DateInput):
     input_type = 'date'
 
 
 class NewDestinationForm(forms.ModelForm):
+    '''
+    Class for the form that creates a new cruise destination
+    '''
     class Meta:
         model = Destination
         widgets = {
@@ -20,12 +24,19 @@ class NewDestinationForm(forms.ModelForm):
 
 
 class NewTagForm(forms.ModelForm):
+    '''
+    Form for creating new cruise tags
+    '''
     class Meta:
         model = Tag
         fields = ('name',)
 
 
 class NewCruiseModelForm(forms.ModelForm):
+    '''
+    Model form class for new cruise. New cruise is form is made up
+    of model form and a regular form.
+    '''
     class Meta:
         model = Cruises
         two_days_time = date.today() + timedelta(days=2)
@@ -44,7 +55,12 @@ class NewCruiseModelForm(forms.ModelForm):
 
 
 class NewCruiseOtherFields(forms.Form):
-
+    '''
+    Regular form used in creating a new cruise. 
+    This form class contains fields not in the model
+    but that are used for creating a new cruise, cruise
+    tickets and fares.
+    '''
     #Fares for each category
     verandah_suite_fare = forms.DecimalField(
     max_digits=8,
