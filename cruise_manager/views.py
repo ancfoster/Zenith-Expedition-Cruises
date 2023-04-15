@@ -27,12 +27,50 @@ mapkey = os.environ.get('MAPBOX')
 @staff_member_required
 def NewCruise(request):
     '''
-    This function creates a new cruise
+    This function creates a new cruise, fares, tickets and movements
     '''
     #Get a list of all destinations which will be passed to template
     destinations = get_destinations()
     if request.method == 'POST':
         new_cruise_form = NewCruiseForm(request.POST, request.FILES)
+        if new_cruise_form.is_valid():
+            # Create cruise
+            name = new_cruise_form.cleaned_data['name']
+            ship_id = new_cruise_form.cleaned_data['ship']
+            ship = get_object_or_404(Ships, id=ship_id)
+            duration = new_cruise_form.cleaned_data['duration']
+            start_date = new_cruise_form.cleaned_data['start_date']
+            end_date = new_cruise_form.cleaned_data['end_date']
+            description = new_cruise_form.cleaned_data['description']
+            tag_ids = new_cruise_form.cleaned_data.getlist('tags')
+            tags = Tag.objects.filter(id__in=tag_ids)
+            slug_text = f"{slugify(name)}-{start_date}"
+            slug = slug_text
+                #Upload results image and process
+            results_image_file = new_cruise_form.cleaned_data['results_image']
+            compressed_results_image = compress_uploaded_images(results_image_file, f"{slug_text}_r", 400)
+            compressed_results_image.upload_to = f"cruises/{slug_text}"
+                #Upload listing image and process
+            listing_image_file = new_cruise_form.cleaned_data['listing_image']
+            compressed_listing_image = compress_uploaded_images(results_image_file, f"{slug_text}_l", 1400)
+            compressed_listing_image.upload_to = f"cruises/{slug_text}"
+                #Upload map image and process 
+            map_image_file = new_cruise_form.cleaned_data['map_image']
+            compressed_map_image = compress_uploaded_images(results_image_file, f"{slug_text}_map", 800)
+            compressed_map_image.upload_to = f"cruises/{slug_text}"
+            # Save cruise
+            new_cruise = Cruises.objects.create(name, ship, duration, start_date, end_date, description, slug, results_image=compressed_results_image, listing_image=compressed_listing_image, map_image=compressed_map_image)
+            new_cruise.set(tags)
+
+            my_model.tags.set(tags)
+
+            # Create fares
+
+            # Create tickets
+
+            # Create ship movements
+
+            # Return to cruises list in cruise manager
     else:
         new_cruise_form = NewCruiseForm()
     
