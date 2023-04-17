@@ -48,7 +48,7 @@ class TagAdmin(admin.ModelAdmin):
 # Cruises model
 @admin.register(Cruises)
 class CruisesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'ship', 'start_date', 'end_date', 'bookable', 'slug',)
+    list_display = ('name', 'ship', 'start_date', 'end_date', 'bookable', 'slug', 'port_number',)
     fields = ('name', 'ship', 'created_on', 'duration', 'start_date', 'end_date', 'bookable', 'slug', 'description', 'results_image', 'listing_image', 'map_image', 'tags',)
     readonly_fields = fields
 
@@ -74,4 +74,4 @@ class Movements(admin.ModelAdmin):
 class Fares(admin.ModelAdmin):
     list_display = ('cruise', 'suite_category', 'price')
     fields = ('cruise', 'suite_category', 'price')
-    readonly_fields = ('cruise',)
+    # readonly_fields = ('cruise',)
