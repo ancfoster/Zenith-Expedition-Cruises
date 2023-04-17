@@ -140,9 +140,6 @@ class Fares(models.Model):
     suite_category = models.ForeignKey(SuiteCategories, on_delete=models.PROTECT, related_name="fares")      
     price = models.DecimalField(max_digits=9, decimal_places=2)
 
-    def __str__(self):
-        return self.cruise
-
 
 class Movements(models.Model):
     '''
@@ -160,9 +157,6 @@ class Movements(models.Model):
     cruise = models.ForeignKey(Cruises, on_delete=models.CASCADE, related_name="movement")
     order = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(200)])
     description = models.CharField(max_length=120, null=True, blank=True, default=None, verbose_name="Movement Description")
-
-    def __str__(self):
-        return self.date
 
 
 class Tickets(models.Model):
