@@ -43,6 +43,7 @@ def NewCruise(request):
             start_date = new_cruise_form.cleaned_data['start_date']
             end_date = new_cruise_form.cleaned_data['end_date']
             description = new_cruise_form.cleaned_data['description']
+            port_number = 0
             # tags = new_cruise_form.cleaned_data['tags']
             slug_text = f"{slugify(name)}-{start_date}"
             slug = slug_text
@@ -67,6 +68,7 @@ def NewCruise(request):
             end_date=end_date,
             description=description,
             slug=slug,
+            port_number = port_number,
             results_image=compressed_results_image,
             listing_image=compressed_listing_image,
             map_image=compressed_map_image,
@@ -143,6 +145,10 @@ def NewCruise(request):
                     description = description,
                     ship = ship,
                 )
+            cruise = Cruises.objects.get(id=cruise_id)
+            destination_count = Movements.objects.filter(cruise=cruise, type='D').values('destination').distinct().count()
+            cruise.port_number = destination_count
+            cruise.save()
             # Return to cruises list in cruise manager
             return redirect('display_cruises_manager')
         else:
