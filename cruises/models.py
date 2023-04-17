@@ -117,6 +117,7 @@ class Cruises(models.Model):
     map_image = models.ImageField(verbose_name='Map Image')
     bookable = models.BooleanField(default=True)
     tags = models.ManyToManyField(Tag, related_name="Cruise", blank=True)
+    port_number = models.PositiveSmallIntegerField(verbose_name="Number of Ports")
     slug = models.SlugField(blank=True, unique=True)
 
     def save(self, *args, **kwargs):
