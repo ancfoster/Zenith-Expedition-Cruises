@@ -9,6 +9,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login as auth_login
 from django.utils.text import slugify
 from django.db.models import F
+import uuid
 from PIL import Image
 from django_countries import countries
 from django.views import generic, View
@@ -107,6 +108,16 @@ def NewCruise(request):
                 price=owner_suite_fare,
             )
             # Create tickets
+                #Get the number of suites for the required ship
+            suite_tickets = Suites.objects.filter(ship=ship)
+
+            for suite_ticket in suite_tickets:
+                new_ticket = Tickets.objects.create(
+                    ship = ship,
+                    cruise = Cruises.objects.get(id=cruise_id),
+                    suite = suite_ticket,
+                    ticket_ref = str(uuid.uuid4())[:8],
+                )
 
             # Create ship movements
                 # Convert JSON movements to Python dictionary
