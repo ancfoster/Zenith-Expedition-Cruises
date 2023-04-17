@@ -109,9 +109,30 @@ def NewCruise(request):
             # Create tickets
 
             # Create ship movements
+                # Convert JSON movements to Python dictionary
+            movements_json = new_cruise_form.cleaned_data['movements']
+            movements_dict = json.loads(movements_json)
+            for movement in movements_dict:
+                order = movement['day']
+                date = movement['backEndDate']
+                type = movement['type']
+                if type != 'D':
+                    destination = None
+                    description = movement['description']
+                else:
+                    destination = Destination.objects.get(id=movement['destination'])
+                    description = None
 
+                new_movement = Movements.objects.create(
+                    cruise = Cruises.objects.get(id=cruise_id),
+                    order = order,
+                    date = date,
+                    type = type,
+                    destination = destination,
+                    description = description,
+                    ship = ship,
+                )
             # Return to cruises list in cruise manager
-            print(new_cruise_form.cleaned_data['verandah_suite_fare'])
             return redirect('display_cruises_manager')
         else:
             new_cruise_form = NewCruiseForm()
