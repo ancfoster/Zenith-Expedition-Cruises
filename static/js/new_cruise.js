@@ -9,6 +9,10 @@ const cruiseStartField = document.getElementById('id_start_date');
 const cruiseEndField = document.getElementById('id_end_date');
 const movements = document.getElementById('id_movements');
 const movementsCont = document.getElementById('movements-container');
+const nameCount = document.getElementById('name_count');
+const descriptionCount = document.getElementById('description_count');
+const nameField = document.getElementById('id_name');
+const descriptionField = document.getElementById('id_description');
 var destinationSelects = '';    
 var cruiseStartDate = new Date();
 let cruiseEndDate = new Date();
@@ -361,8 +365,17 @@ movementsCont.addEventListener('input', function(e) {
     jsonToString();
 })
 
-
 function jsonToString() {
     let movementsString = JSON.stringify(movementsJSON);
     movements.value = movementsString;
+}
+
+// Displays a count of the title & description input fields
+nameField.addEventListener('input', countName);
+function countName(e) {
+   nameCount.textContent = `${e.target.value.length} / 120`;
+}
+descriptionField.addEventListener('input', countDescription);
+function countDescription(e) {
+   descriptionCount.textContent = `${e.target.value.length} / 2000`;
 }
