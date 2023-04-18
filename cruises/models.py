@@ -111,7 +111,7 @@ class Cruises(models.Model):
     duration = models.PositiveSmallIntegerField(verbose_name="Cruise Duration", validators=[MinValueValidator(2), MaxValueValidator(199)])  # noqa
     start_date = models.DateField(verbose_name="Cruise Start Date")
     end_date = models.DateField(verbose_name="Cruise End Date")
-    description = models.TextField(max_length=2000, verbose_name="Cruise Description")
+    description = models.TextField(max_length=360, verbose_name="Cruise Description")
     results_image = models.ImageField(verbose_name='Results Image')
     listing_image = models.ImageField(verbose_name='Listing Image')
     map_image = models.ImageField(verbose_name='Map Image')

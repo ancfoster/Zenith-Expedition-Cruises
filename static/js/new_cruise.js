@@ -377,5 +377,5 @@ function countName(e) {
 }
 descriptionField.addEventListener('input', countDescription);
 function countDescription(e) {
-   descriptionCount.textContent = `${e.target.value.length} / 2000`;
+   descriptionCount.textContent = `${e.target.value.length} / 360`;
 }
