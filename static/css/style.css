@@ -1,5 +1,7 @@
 @import url("https://use.typekit.net/nxl7rat.css");
 
+@import url("https://use.typekit.net/qrh8tzf.css");
+
 /*
 ! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com
 */
@@ -739,6 +741,18 @@ select{
   z-index: 40;
 }
 
+.col-span-2{
+  grid-column: span 2 / span 2;
+}
+
+.row-span-1{
+  grid-row: span 1 / span 1;
+}
+
+.m-2{
+  margin: 0.5rem;
+}
+
 .m-4{
   margin: 1rem;
 }
@@ -795,6 +809,10 @@ select{
   margin-right: auto;
 }
 
+.mt-0{
+  margin-top: 0px;
+}
+
 .mt-12{
   margin-top: 3rem;
 }
@@ -809,6 +827,14 @@ select{
 
 .mt-8{
   margin-top: 2rem;
+}
+
+.mt-\[64px\]{
+  margin-top: 64px;
+}
+
+.mt-3{
+  margin-top: 0.75rem;
 }
 
 .block{
@@ -851,6 +877,10 @@ select{
   height: 40px;
 }
 
+.h-\[64px\]{
+  height: 64px;
+}
+
 .h-full{
   height: 100%;
 }
@@ -869,6 +899,14 @@ select{
 
 .w-full{
   width: 100%;
+}
+
+.w-\[\]{
+  width: ;
+}
+
+.w-\[33\%\]{
+  width: 33%;
 }
 
 .max-w-\[760px\]{
@@ -897,6 +935,14 @@ select{
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.grid-cols-2{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-rows-2{
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
 .flex-row{
   flex-direction: row;
 }
@@ -907,6 +953,10 @@ select{
 
 .flex-wrap{
   flex-wrap: wrap;
+}
+
+.content-center{
+  align-content: center;
 }
 
 .items-start{
@@ -935,6 +985,10 @@ select{
 
 .overflow-hidden{
   overflow: hidden;
+}
+
+.text-clip{
+  text-overflow: clip;
 }
 
 .rounded-2xl{
@@ -989,6 +1043,11 @@ select{
   border-right-color: rgb(218 218 218 / var(--tw-border-opacity));
 }
 
+.bg-\[\#F2F2F2\]{
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 242 242 / var(--tw-bg-opacity));
+}
+
 .bg-admin_bar_bg{
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
@@ -1012,6 +1071,11 @@ select{
 .bg-admin_table_grey_top{
   --tw-bg-opacity: 1;
   background-color: rgb(244 244 244 / var(--tw-bg-opacity));
+}
+
+.bg-black111{
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 17 17 / var(--tw-bg-opacity));
 }
 
 .bg-black333{
@@ -1072,13 +1136,26 @@ select{
   padding-top: 1.5rem;
 }
 
+.align-middle{
+  vertical-align: middle;
+}
+
 .font-admin{
   font-family: forma-djr-micro;
+}
+
+.font-zenith_b{
+  font-family: neue-haas-grotesk-display;
 }
 
 .text-2xl{
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-\[20px\]{
@@ -1098,6 +1175,11 @@ select{
 .text-xl{
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .font-light{
@@ -1122,6 +1204,19 @@ select{
 
 .leading-5{
   line-height: 1.25rem;
+}
+
+.tracking-wide{
+  letter-spacing: 0.025em;
+}
+
+.tracking-wider{
+  letter-spacing: 0.05em;
+}
+
+.text-black111{
+  --tw-text-opacity: 1;
+  color: rgb(17 17 17 / var(--tw-text-opacity));
 }
 
 .text-black222{
@@ -1152,6 +1247,11 @@ select{
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-black{
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .shadow{
@@ -1356,6 +1456,10 @@ select{
   color: rgb(68 68 68 / var(--tw-text-opacity));
 }
 
+.fh{
+  font-family: termina;
+}
+
 /* Removes up down increment arrows from numercial form fields
 Code snippet from StackOverflow user Clerni
 https://stackoverflow.com/questions/72789466/remove-the-up-down-increment-decrement-buttons-on-number-inputs-using-css
@@ -1397,9 +1501,56 @@ input[type=number]::-webkit-outer-spin-button {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+.hover\:text-black333:hover{
+  --tw-text-opacity: 1;
+  color: rgb(51 51 51 / var(--tw-text-opacity));
+}
+
 .hover\:text-white:hover{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+@media (min-width: 640px){
+  .sm\:col-span-1{
+    grid-column: span 1 / span 1;
+  }
+
+  .sm\:col-start-1{
+    grid-column-start: 1;
+  }
+
+  .sm\:col-start-2{
+    grid-column-start: 2;
+  }
+
+  .sm\:row-span-2{
+    grid-row: span 2 / span 2;
+  }
+
+  .sm\:row-start-1{
+    grid-row-start: 1;
+  }
+
+  .sm\:ml-0{
+    margin-left: 0px;
+  }
+
+  .sm\:ml-2{
+    margin-left: 0.5rem;
+  }
+
+  .sm\:mt-0{
+    margin-top: 0px;
+  }
+
+  .sm\:mt-5{
+    margin-top: 1.25rem;
+  }
+
+  .sm\:max-w-\[960px\]{
+    max-width: 960px;
+  }
 }
 
 @media (min-width: 768px){
@@ -1415,6 +1566,18 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 0px;
   }
 
+  .md\:mt-0{
+    margin-top: 0px;
+  }
+
+  .md\:ml-0{
+    margin-left: 0px;
+  }
+
+  .md\:mr-0{
+    margin-right: 0px;
+  }
+
   .md\:w-auto{
     width: auto;
   }
@@ -1425,5 +1588,24 @@ input[type=number]::-webkit-outer-spin-button {
 
   .md\:justify-start{
     justify-content: flex-start;
+  }
+
+  .md\:text-\[40px\]{
+    font-size: 40px;
+  }
+
+  .md\:text-6xl{
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .md\:text-4xl{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .md\:text-5xl{
+    font-size: 3rem;
+    line-height: 1;
   }
 }

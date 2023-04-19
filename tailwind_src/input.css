@@ -1,4 +1,5 @@
 @import url("https://use.typekit.net/nxl7rat.css");
+@import url("https://use.typekit.net/qrh8tzf.css");
 
 @tailwind base;
 @tailwind components;
@@ -45,6 +46,10 @@
 }
 .mc_date {
     @apply text-base text-grey444 font-normal;
+}
+
+.fh {
+    @apply font-zenith_h;
 }
 /* Removes up down increment arrows from numercial form fields
 Code snippet from StackOverflow user Clerni
