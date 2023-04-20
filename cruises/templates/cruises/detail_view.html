@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load widget_tweaks %}
+
+{% block title %}
+{{ cruise.name }}
+{% endblock %}
+
+{% block content %}
+<div id="cruise_flex_top">
+    <div id="listing_image">
+        <img src="{{ cruise.listing_image.url }}" alt="{{ cruise.name }}">
+    </div>
+    <div id="cruise_title_desc">
+        <a href="#" id="back_to"><span></span> Back to cruises</a>
+        <h1>{{ cruise.name }}</h1>
+        <span id="cruise_description">{{ cruise.description }}</span>
+    </div>
+</div>
+<div id="cruise_flex_mid">
+<span id="cruise_date">
+    {{ cruise.start_date|date:"d/m/Y" }} - {{cruise.end_date|date:"d/m/Y"}}
+</span>
+<div id="cruise_info_row">
+    <span><span class="material-symbols-outlined info_icon">directions_boat</span>{{cruise.ship}}</span>
+    <span id="icon_centre"><span class="material-symbols-outlined info_icon">clear_night</span>{{cruise.duration|sub:1}} nights</span>
+    <span><span class="material-symbols-outlined info_icon">distance</span>{{cruise.port_number}} destinations</span>
+</div>
+<div class="horizontal"></div>
+ {% if cruise.bookable == True %}
+    <h2>Suites and Pricing</h2>
+    <div id="fares_cont">
+    {% for fare in fares %}
+        <div class="suite">
+            <span class="suite_cat">{{ fare.suite_category.name }}</span>
+            <img src="{{ fare.suite_category.suite_image.url }}" alt="{{ fare.suite_category.name }}">
+            <span class="price_from">Price from</span>
+                <div class="price_box">
+                    <span class="price_figure">£{{ fare.price }}</span>
+                    <a href="#" class="book_now">Book Now <span class="material-symbols-outlined">arrow_right_alt</span></a>
+                </div>
+        </div>
+    {% endfor %}
+
+{% endif %}
+    </div>
+
+<div class="horizontal"></div>
+<h2>Itinerary</h2>
+
+</div>
+{% endblock %}
