@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'cruises',
     'site_pages',
     'cruise_manager',
+    'booking',
 ]
 
 AUTHENTICATION_BACKENDS = [
