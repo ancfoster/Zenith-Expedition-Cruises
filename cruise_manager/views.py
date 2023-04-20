@@ -125,6 +125,7 @@ def NewCruise(request):
                 # Convert JSON movements to Python dictionary
             movements_json = new_cruise_form.cleaned_data['movements']
             movements_dict = json.loads(movements_json)
+                # For each dictionary item create a movement
             for movement in movements_dict:
                 order = movement['day']
                 date = movement['backEndDate']
@@ -135,7 +136,7 @@ def NewCruise(request):
                 else:
                     destination = Destination.objects.get(id=movement['destination'])
                     description = None
-
+                #Create each movement object
                 new_movement = Movements.objects.create(
                     cruise = Cruises.objects.get(id=cruise_id),
                     order = order,
@@ -146,6 +147,11 @@ def NewCruise(request):
                     ship = ship,
                 )
             cruise = Cruises.objects.get(id=cruise_id)
+            '''
+            Now that the movements have been created, the number of
+            unique destinations can be calculated. This number can then
+            be applued to the cruise that was created in this function.
+            '''
             destination_count = Movements.objects.filter(cruise=cruise, type='D').values('destination').distinct().count()
             cruise.port_number = destination_count
             cruise.save()
