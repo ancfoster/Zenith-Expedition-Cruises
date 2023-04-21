@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load widget_tweaks %}
+
+{% block title %}
+Cruises
+{% endblock %}
+
+{% block content %}
+    <h1>Cruises</h1>
+{% for cruise in cruises %}
+    <div>
+        <h3>{{ cruise.name }}</h3>
+        <a href="{% url 'cruise_detail' slug=cruise.slug %}">View cruise</a>
+    </div>
+{% endfor %}
+{% endblock %}

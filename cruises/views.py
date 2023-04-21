@@ -21,13 +21,14 @@ def CruiseDetail(request, slug):
     return render(request, 'cruises/detail_view.html', context)
 
 
-def Cruises(request):
+def CruiseResults(request):
     '''
     Display list of bookable cruises
     '''
     cruises = Cruises.objects.filter(bookable=True)
+    print(cruises)
 
     context = {
         'cruises' : cruises,
     }
-    return render(request, 'cruises/results_view.html')
+    return render(request, 'cruises/results_view.html', context)
