@@ -25,16 +25,16 @@
     <nav id="adminNav" class="flex flex-row fixed top-0 p-4 left-0 mt-12 z-30 w-full md:w-auto transition-transform -translate-x-full nav_height bg-admin_bar_bg shadow-l">
         <ul class="w-full">
             <li class="admin_nav_li">
-                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">dashboard</span><span class="ml-2">Dashboard</span></a>
+                <a href="{% url 'dashboard' %}" class="admin_nav_a"><span class="material-symbols-outlined">dashboard</span><span class="ml-2">Dashboard</span></a>
             </li>
             <li class="admin_nav_li">
-                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">directions_boat</span><span class="ml-2">Cruises</span></a>
+                <a href="{% url 'display_cruises_manager' %}" class="admin_nav_a"><span class="material-symbols-outlined">directions_boat</span><span class="ml-2">Cruises</span></a>
             </li>
             <li class="admin_nav_li">
-                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">explore</span><span class="ml-2">Destnations</span></a>
+                <a href="{% url 'destinations' %}" class="admin_nav_a"><span class="material-symbols-outlined">explore</span><span class="ml-2">Destinations</span></a>
             </li>
             <li class="admin_nav_li">
-                <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">label</span><span class="ml-2">Tags</span></a>
+                <a href="{% url 'tags' %}" class="admin_nav_a"><span class="material-symbols-outlined">label</span><span class="ml-2">Tags</span></a>
             </li>
             <li class="admin_nav_li">
                 <a href="#" class="admin_nav_a"><span class="material-symbols-outlined">confirmation_number</span><span class="ml-2">Bookings</span></a>
