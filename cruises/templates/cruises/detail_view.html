@@ -38,7 +38,7 @@
             <span class="price_from">Price from</span>
                 <div class="price_box">
                     <span class="price_figure">£{{ fare.price }}</span>
-                    <a href="#" class="book_now">Book Now <span class="material-symbols-outlined">arrow_right_alt</span></a>
+                    <a href="{% url 'new_booking' slug=cruise.slug %}" class="book_now">Book Now <span class="material-symbols-outlined">arrow_right_alt</span></a>
                 </div>
         </div>
     {% endfor %}
