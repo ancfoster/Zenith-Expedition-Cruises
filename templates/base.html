@@ -6,17 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %} | Zenith Expedition Cruises - luxury small ship voyages</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200" rel="stylesheet" />
     {% block head_resources %}
 
     {% endblock %}
 </head>
-<body class="font-zenith_b bg-[#F2F2F2]">
-<nav class="h-[64px] bg-black111 fixed top-0 left-0 w-full">
-
+<body>
+<nav>
+<a href="{% url 'cruise_results' %}">Cruises</a>
+<a href="#">The Experience</a>
+<a href="#">Contact</a>
 </nav>
-<main class="w-full mt-[64px] flex flex-col items-center">
+<main>
     {% block content %}
     {% endblock %}
 </main>
