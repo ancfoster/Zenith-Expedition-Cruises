@@ -27,7 +27,7 @@ Book {{ cruise.name }}
 
 <div id="increment_cont">
     <div role="button" id="minus" class="passenger_increment">-</div>
-    <span id="passenger_count_span">2</span>
+    <span id="passenger_span_count">2</span>
     <div role="button" id="plus" class="passenger_increment">+</div>
 
 </div>
@@ -35,8 +35,12 @@ Book {{ cruise.name }}
 <form method="POST" id="passenger_number_form">
     {% csrf_token %}
     {{ passenger_number_form.passengers_for_booking }}
+    <button class="booking_button" type="submit">
+        Suite Category <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
 </form>
 {% endblock %}
 
 {% block footerscripts %}
+<script src="{% static 'js/number_guests.js' %}"></script>
 {% endblock %}

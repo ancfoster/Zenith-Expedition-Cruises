@@ -284,7 +284,7 @@ main {
 }
 #increment_cont {
     width: 240px;
-    margin: 16px;
+    margin: 16px 0 24px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -299,9 +299,31 @@ main {
     font-size: 48px;
     line-height: 48px;
     border-radius: 52px;
+    transform: translateY(-2px);
+}
+.passenger_increment:hover {
+    background-color: #cdcdcd;
+    cursor: pointer;
 }
 #passenger_span_count {
     font-size: 48px;
     margin: 0 8px;
     color: var(--black111);
+}
+.booking_button {
+    padding: 10px 10px 10px 16px;
+    background-color: var(--black333);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: neue-haas-grotesk-display, sans-serif, Arial;
+    margin: 16px 8px;
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+.booking_button:hover {
+    background-color: var(--black111);
+    border: none;
 }
