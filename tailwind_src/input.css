@@ -51,6 +51,9 @@
 .fh {
     @apply font-zenith_h;
 }
+.main-h1-lh {
+    line-height: 48px !important;
+}
 /* Removes up down increment arrows from numercial form fields
 Code snippet from StackOverflow user Clerni
 https://stackoverflow.com/questions/72789466/remove-the-up-down-increment-decrement-buttons-on-number-inputs-using-css

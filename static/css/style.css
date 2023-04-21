@@ -749,10 +749,6 @@ select{
   grid-row: span 1 / span 1;
 }
 
-.m-2{
-  margin: 0.5rem;
-}
-
 .m-4{
   margin: 1rem;
 }
@@ -793,6 +789,10 @@ select{
   margin-left: auto;
 }
 
+.mr-1{
+  margin-right: 0.25rem;
+}
+
 .mr-2{
   margin-right: 0.5rem;
 }
@@ -821,6 +821,10 @@ select{
   margin-top: 0.5rem;
 }
 
+.mt-3{
+  margin-top: 0.75rem;
+}
+
 .mt-4{
   margin-top: 1rem;
 }
@@ -831,10 +835,6 @@ select{
 
 .mt-\[64px\]{
   margin-top: 64px;
-}
-
-.mt-3{
-  margin-top: 0.75rem;
 }
 
 .block{
@@ -897,6 +897,10 @@ select{
   width: 64px;
 }
 
+.w-auto{
+  width: auto;
+}
+
 .w-full{
   width: 100%;
 }
@@ -905,8 +909,16 @@ select{
   width: ;
 }
 
-.w-\[33\%\]{
-  width: 33%;
+.w-\[calc\(\)\]{
+  width: calc();
+}
+
+.w-\[calc\(100\%\)\]{
+  width: calc(100%);
+}
+
+.max-w-\[480px\]{
+  max-width: 480px;
 }
 
 .max-w-\[760px\]{
@@ -915,6 +927,14 @@ select{
 
 .max-w-\[900px\]{
   max-width: 900px;
+}
+
+.max-w-\[960px\]{
+  max-width: 960px;
+}
+
+.max-w-\[\]{
+  max-width: ;
 }
 
 .-translate-x-full{
@@ -953,10 +973,6 @@ select{
 
 .flex-wrap{
   flex-wrap: wrap;
-}
-
-.content-center{
-  align-content: center;
 }
 
 .items-start{
@@ -1020,6 +1036,10 @@ select{
   border-width: 1px;
 }
 
+.border-b{
+  border-bottom-width: 1px;
+}
+
 .border-b-\[1px\]{
   border-bottom-width: 1px;
 }
@@ -1028,9 +1048,18 @@ select{
   border-right-width: 1px;
 }
 
+.border-solid{
+  border-style: solid;
+}
+
 .border-admin_table_border{
   --tw-border-opacity: 1;
   border-color: rgb(218 218 218 / var(--tw-border-opacity));
+}
+
+.border-main_border_grey{
+  --tw-border-opacity: 1;
+  border-color: rgb(205 205 205 / var(--tw-border-opacity));
 }
 
 .border-b-grey_b_light{
@@ -1206,10 +1235,6 @@ select{
   line-height: 1.25rem;
 }
 
-.tracking-wide{
-  letter-spacing: 0.025em;
-}
-
 .tracking-wider{
   letter-spacing: 0.05em;
 }
@@ -1247,11 +1272,6 @@ select{
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-black{
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .shadow{
@@ -1460,6 +1480,10 @@ select{
   font-family: termina;
 }
 
+.main-h1-lh {
+  line-height: 48px !important;
+}
+
 /* Removes up down increment arrows from numercial form fields
 Code snippet from StackOverflow user Clerni
 https://stackoverflow.com/questions/72789466/remove-the-up-down-increment-decrement-buttons-on-number-inputs-using-css
@@ -1536,10 +1560,6 @@ input[type=number]::-webkit-outer-spin-button {
     margin-left: 0px;
   }
 
-  .sm\:ml-2{
-    margin-left: 0.5rem;
-  }
-
   .sm\:mt-0{
     margin-top: 0px;
   }
@@ -1548,8 +1568,24 @@ input[type=number]::-webkit-outer-spin-button {
     margin-top: 1.25rem;
   }
 
-  .sm\:max-w-\[960px\]{
-    max-width: 960px;
+  .sm\:mr-0{
+    margin-right: 0px;
+  }
+
+  .sm\:pl-4{
+    padding-left: 1rem;
+  }
+
+  .sm\:pr-4{
+    padding-right: 1rem;
+  }
+
+  .sm\:text-\[32px\]{
+    font-size: 32px;
+  }
+
+  .sm\:text-\[40px\]{
+    font-size: 40px;
   }
 }
 
@@ -1566,16 +1602,16 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 0px;
   }
 
-  .md\:mt-0{
-    margin-top: 0px;
-  }
-
   .md\:ml-0{
     margin-left: 0px;
   }
 
   .md\:mr-0{
     margin-right: 0px;
+  }
+
+  .md\:mt-0{
+    margin-top: 0px;
   }
 
   .md\:w-auto{
@@ -1588,24 +1624,5 @@ input[type=number]::-webkit-outer-spin-button {
 
   .md\:justify-start{
     justify-content: flex-start;
-  }
-
-  .md\:text-\[40px\]{
-    font-size: 40px;
-  }
-
-  .md\:text-6xl{
-    font-size: 3.75rem;
-    line-height: 1;
-  }
-
-  .md\:text-4xl{
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-  }
-
-  .md\:text-5xl{
-    font-size: 3rem;
-    line-height: 1;
   }
 }

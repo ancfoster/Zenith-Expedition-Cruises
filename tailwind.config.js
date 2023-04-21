@@ -9,7 +9,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        admin: ['forma-djr-micro']
+        admin: ['forma-djr-micro'],
+        zenith_h: ['termina'],
+        zenith_b: ['neue-haas-grotesk-display'],
       },
       colors: {
         admin_bar_bg: '#F5F5F5',
@@ -30,6 +32,7 @@ module.exports = {
         admin_table_grey1: '#F0F0F0',
         admin_table_grey2: '#E4E4E4',
         admin_form_tip: '#DEEBF1',
+        main_border_grey: '#CDCDCD',
       }
     },
   },
