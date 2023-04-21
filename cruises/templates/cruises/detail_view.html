@@ -48,6 +48,21 @@
 
 <div class="horizontal"></div>
 <h2>Itinerary</h2>
+{% for movement in movements %}
+<div class="movement_cont">
+    <span class="movement_day">Day {{ movement.order }}</span>
+    {% if movement.type == 'D' %}
+    <span class="movement_dest"></span> {{movement.destination}}
+    <img class="dest_image" src="{{ movement.destination.image.url }}" alt="movement.destination">
 
+    {% elif movement.type == 'SD' or 'SC' %}
+    <span class="movement_dest"></span> {{movement.get_type_display}}
+    {% endif %}
+</div>
+
+{{movement.get_type_display}}
+{{movement.day}}
+
+{% endfor %}
 </div>
 {% endblock %}
