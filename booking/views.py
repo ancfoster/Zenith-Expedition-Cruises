@@ -17,14 +17,32 @@ def PassengerNumber(request, slug):
     if request.method == 'POST':
         passenger_number_form = PassengerNumberForm(request.POST)
         if passenger_number_form.is_valid():
-            print('valid')
+            booking = request.session.get('booking', {})
+            booking['cruise_id'] = cruise.id
+            booking['number_passengers'] = passenger_number_form.cleaned_data['passengers_for_booking']
+            request.session['booking'] = booking
+            return redirect('booking_suite_category')
 
     else:
         passenger_number_form = PassengerNumberForm()
+    context = {
+        'passenger_number_form' : passenger_number_form,
+    }
+    return render(request, 'booking/number_guests.html', context)
+
+
+def SuiteCategory(request):
+    '''
+    Allows the user to pick the suite category
+    '''
+    booking = request.session.get('booking', {})
+
+    if 'number_passengers' not in booking:
+        return redirect('cruise_results')
+    else:
+        number_passengers = booking.get('number_passengers')
 
     context = {
-        'cruise' : cruise,
-        'passenger_number_form': passenger_number_form
+        'number_of_passengers' : number_passengers
     }
-
-    return render(request, 'booking/number_guests.html', context)
+    return render(request, 'booking/suite_category.html', context)
