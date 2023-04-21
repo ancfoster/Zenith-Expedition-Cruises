@@ -214,3 +214,94 @@ main {
         margin-top: 16px;
     }
 }
+
+/* Booking app styles */
+#booking_nav {
+    background-color: #F2F2F2;
+    border-bottom: solid 1px #cdcdcd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#booking_nav img {
+    height: 48px;
+    width: auto;
+    margin: 1px auto 0 auto;
+}
+#booking_main {
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+    padding: 16px;
+    margin: 64px auto 0 auto;
+    display: flex;
+    flex-direction: col;
+    align-items: center;
+    justify-content: center;
+}
+.booking_h1 {
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--grey444);
+    display: block;
+    text-align: center;
+}
+.booking_cruise_title {
+    font-size: 20px;
+    padding: 8px 0 16px 0;
+    text-align: center;
+    border-bottom: 1px solid #cdcdcd;
+    width: 100%;
+}
+.booking_status_flex {
+    display: flex;
+    margin-bottom: 16px;
+    width: 100%;
+}
+.booking_status_flex span {
+    width: 33%;
+    display: inline-block;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cdcdcd;
+    font-family: var(--wide-font);
+    font-size: 14px;
+    color: #999999;
+    text-align: center;
+    padding: 8px 0;
+}
+#booking_status_current {
+    border-bottom: 2px solid var(--black111);
+    color: var(--black111);
+}
+.booking_h2 {
+    font-size: 20px;
+    line-height: 24px;
+    width: 100%;
+    color: var(--black111);
+    font-family: neue-haas-grotesk-display, sans-serif, Arial;
+    padding: 8px 0 16px 0;
+    text-align: center;
+}
+#increment_cont {
+    width: 240px;
+    margin: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.passenger_increment {
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--grey444);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    line-height: 48px;
+    border-radius: 52px;
+}
+#passenger_span_count {
+    font-size: 48px;
+    margin: 0 8px;
+    color: var(--black111);
+}
