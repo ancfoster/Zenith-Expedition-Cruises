@@ -298,6 +298,17 @@ def DestinationDetail(request, slug):
     return render(request, 'cruise_manager/destination.html', context)
 
 
+@staff_member_required
+def Dashboard(request):
+    '''
+    Displays dashboard in cruise manager
+    '''
+    context = {
+
+    }
+    return render(request, 'cruise_manager/dashboard.html', context)
+
+
 def compress_uploaded_images(image, image_name, max_dimension):
     '''
     This function compresses uploaded imagaes for end user performance,

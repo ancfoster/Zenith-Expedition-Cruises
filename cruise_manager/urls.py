@@ -9,4 +9,6 @@ urlpatterns = [
     path('manager/tags', views.Tags, name='tags'),
     path('manager/new-cruise', views.NewCruise, name='new_cruise'),
     path('manager/cruises', views.DisplayCruises, name='display_cruises_manager'),
+    path('manager/', views.Dashboard, name='dashboard'),
+
 ]
