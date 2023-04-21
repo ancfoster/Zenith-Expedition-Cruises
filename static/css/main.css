@@ -47,7 +47,8 @@ nav {
     z-index: 50;
     align-items: center;
     justify-content: center;
-    display: dlex;
+    display: flex;
+
 }
 nav a {
     padding: 0 8px;
@@ -226,6 +227,49 @@ main {
     #cruise-flex-mid {
         margin-top: 16px;
     }
+}
+
+.movement_cont {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+    align-items: center;
+    justify-content: center;
+}
+.vertical_split {
+    width: 1px;
+    min-height: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+    background-color: #cdcdcd;
+}
+.movement_day {
+    font-size: 24px;
+    color: var(--black333);
+    margin-bottom: 8px;
+}
+.movement_dest {
+    font-size: 20px;
+    color: var(--black333);
+    margin-bottom: 8px;
+}
+.movement_dest_country {
+    color: var(--grey555);
+}
+.dest_image {
+    width: 100%;
+    max-width: 440px;
+    height: 220px;
+    object-fit: cover;
+    margin-bottom: 16px;
+}
+.dest_description {
+    display: inline-block;
+    max-width: 440px;
+    background-color: #e7e7e7;
+    margin: 16px 0;
+    padding: 16px;
+    box-sizing: border-box;
 }
 
 /* Booking app styles */

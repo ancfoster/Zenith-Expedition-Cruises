@@ -50,18 +50,17 @@
 <h2>Itinerary</h2>
 {% for movement in movements %}
 <div class="movement_cont">
+    <div class="vertical_split"></div>
     <span class="movement_day">Day {{ movement.order }}</span>
     {% if movement.type == 'D' %}
-    <span class="movement_dest"></span> {{movement.destination}}
+    <span class="movement_dest">{{movement.destination}} - <span class="movement_dest_country">{{movement.destination.get_country_display }}</span></span> 
     <img class="dest_image" src="{{ movement.destination.image.url }}" alt="movement.destination">
+    <span class="dest_description">{{ movement.destination.description }}</span>
 
     {% elif movement.type == 'SD' or 'SC' %}
-    <span class="movement_dest"></span> {{movement.get_type_display}}
+    <span class="movement_dest">{{movement.get_type_display}}</span> 
     {% endif %}
 </div>
-
-{{movement.get_type_display}}
-{{movement.day}}
 
 {% endfor %}
 </div>
