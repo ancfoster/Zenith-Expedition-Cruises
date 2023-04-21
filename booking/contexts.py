@@ -3,25 +3,12 @@ from django.conf import settings
 
 def booking_context(request):
 
-    cruise = None
-
-    guests = None
-
-    suite_category = None
-
-    suite = None
-
-    guest_details = None
-
-    booking_status = None
+    cruise_booking = None
+    number_guests_booking = None
 
     context = {
-        cruise
-        guests
-        suite_category
-        suite
-        guest_details
-        booking_status
+        cruise_booking = cruise_booking
+        number_guests_booking = number_guests_booking
     }
 
     return context
