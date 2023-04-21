@@ -19,3 +19,15 @@ def CruiseDetail(request, slug):
         'fares': fares,
     }
     return render(request, 'cruises/detail_view.html', context)
+
+
+def Cruises(request):
+    '''
+    Display list of bookable cruises
+    '''
+    cruises = Cruises.objects.filter(bookable=True)
+
+    context = {
+        'cruises' : cruises,
+    }
+    return render(request, 'cruises/results_view.html')
