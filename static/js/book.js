@@ -1,12 +1,19 @@
 /* jshint esversion: 11 */
 // Init variables
+
+//Form field vars
 const numberField = document.getElementById('id_number_guests');
+const selectedCategoryField = document.getElementById('id_selected_category');
+
 const guestNumberSpan = document.getElementById('guest_span_count');
 const plus = document.getElementById('plus');
 const minus = document.getElementById('minus');
 const suiteCategoryButton = document.getElementById('suite_category_button');
 
+const categoryCont = document.getElementById('category_cont');
+
 let numberGuests = 0;
+let categorySelected = null;
 let suiteSelected = null;
 
 // Price variables
@@ -14,8 +21,6 @@ const totalPriceVerandah = document.getElementById('total_price_verandah');
 const totalPriceDeluxe = document.getElementById('total_price_deluxe');
 const totalPriceSpa = document.getElementById('total_price_spa');
 const totalPriceOwner = document.getElementById('total_price_owner');
-
-
 
 window.onload = set;
 
@@ -84,4 +89,28 @@ minus.addEventListener('click', () => {
         }
         updateTotalPrice();
     }
+})
+
+// Select and update category
+categoryCont.addEventListener('click', (e) => {
+  let categoryButtonSelected = e.target.closest('.suite_category');
+  switch (categoryButtonSelected.id){
+    case 'verandah':
+        categorySelected = 1;
+        selectedCategoryField.value = 1;
+        break;
+    case 'deluxe':
+        categorySelected = 2;
+        selectedCategoryField.value = 2;
+        break;
+    case 'spa':
+        categorySelected = 3;
+        selectedCategoryField.value = 3;
+        break;
+    case 'owner':
+        categorySelected = 4;
+        selectedCategoryField.value = 4;
+        break;
+  }
+
 })
