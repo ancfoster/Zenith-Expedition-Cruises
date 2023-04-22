@@ -222,13 +222,9 @@ class Guests(models.Model):
     first_name = models.CharField(max_length=25, verbose_name="First Name")
     last_name = models.CharField(max_length=25, verbose_name="Last Name")
     dob = models.DateField(max_length=25, verbose_name="Date of Birth")
-    nationality = CountryField(blank_label="(Select Nationality)")
     passport_number = models.CharField(max_length=20, verbose_name="Passport Number")
     passport_expiry = models.DateField(verbose_name="Passport Expiry Date")
-    address_line_1 = models.CharField(max_length=50, verbose_name="Address Line 1")
-    town_city = models.CharField(max_length=50, verbose_name="Town/City")
-    zip_postcode = models.CharField(max_length=12, verbose_name="Zip/Post Code")
-    country_residence = CountryField(blank_label="(Select Country)")
+    phone_number = models.CharField(max_length=16, verbose_name="Phone Number")
     booking = models.ForeignKey(Bookings, on_delete=models.CASCADE, related_name="guest")
 
     def __str__(self):
