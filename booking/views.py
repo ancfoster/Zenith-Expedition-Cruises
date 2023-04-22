@@ -1,48 +1,66 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 from django.db.models import Count, Case, When, BooleanField
+import json
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.views import generic, View
 
-from .forms import PassengerNumberForm
+# from .forms import BookingForm
 
-# Create your views here.
-def PassengerNumber(request, slug):
+@login_required
+def NewBooking(request, slug):
     '''
-    Gets the cruise from the slug,
-    allows user to select number of passengers
+    Renders booking template form,
+    receieves form input
     '''
     cruise = get_object_or_404(Cruises, slug=slug)
-    if request.method == 'POST':
-        passenger_number_form = PassengerNumberForm(request.POST)
-        if passenger_number_form.is_valid():
-            booking = request.session.get('booking', {})
-            booking['cruise_id'] = cruise.id
-            booking['number_passengers'] = passenger_number_form.cleaned_data['passengers_for_booking']
-            request.session['booking'] = booking
-            return redirect('booking_suite_category')
-
-    else:
-        passenger_number_form = PassengerNumberForm()
-    context = {
-        'passenger_number_form' : passenger_number_form,
-    }
-    return render(request, 'booking/number_guests.html', context)
-
-
-def SuiteCategory(request):
-    '''
-    Allows the user to pick the suite category
-    '''
-    booking = request.session.get('booking', {})
-
-    if 'number_passengers' not in booking:
+    if cruise.bookable == False:
         return redirect('cruise_results')
-    else:
-        number_passengers = booking.get('number_passengers')
+    
+    movements = Movements.objects.filter(cruise=cruise)
+    #Check availability of suites
+    #Check availability of veranda category
+    number_verandah = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=1).count
+    #Check availability of deluxe veranda category
+    number_deluxe = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=2).count
+    #Check availability of spa suites
+    number_spa = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=3).count
+    #Check availability of owner suites
+    number_owner = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=4).count
+    # Get suite categories to make available in model
+    suite_categories = SuiteCategories.objects.all()
+    # Get cruise fares
+    fare_verandah = Fares.objects.filter(cruise=cruise, suite_category=1)
+    fare_deluxe = Fares.objects.filter(cruise=cruise, suite_category=2)
+    fare_spa = Fares.objects.filter(cruise=cruise, suite_category=3)
+    fare_owner = Fares.objects.filter(cruise=cruise, suite_category=4)
+
+    #Get all bookable tickets and conver to JSON
+    ticket_list = []
+    available_tickets = Tickets.objects.filter(cruise=cruise, booked=False)
+    for ticket in available_tickets:
+        dict = {}
+        dict['suite_number'] = ticket.suite.suite_num_name
+        dict['category'] = ticket.suite.category.id
+        ticket_list.append(dict)
+
+    tickets = json.dumps(ticket_list)
 
     context = {
-        'number_of_passengers' : number_passengers
+        'cruise': cruise,
+        'movements': movements,
+        'number_verandah' : number_verandah,
+        'number_deluxe' : number_deluxe,
+        'number_spa' : number_spa,
+        'number_owner' : number_owner,
+        'fare_verandah': fare_verandah,
+        'fare_deluxe': fare_deluxe,
+        'fare_spa': fare_spa,
+        'fare_owner': fare_owner,
+        'suite_categories' : suite_categories,
+        'tickets': tickets,
     }
-    return render(request, 'booking/suite_category.html', context)
+
+    return render(request, 'booking/booking.html', context)
+ 
