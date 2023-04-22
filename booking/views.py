@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 from django.db.models import Count, Case, When, BooleanField
 import json
+from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.views import generic, View
@@ -36,6 +37,10 @@ def NewBooking(request, slug):
     fare_spa = get_object_or_404(Fares, cruise=cruise, suite_category=3)
     fare_owner = get_object_or_404(Fares, cruise=cruise, suite_category=4)
 
+    #Passport expiry date minimum
+    cruise_end_date = cruise.end_date
+    passport_min_expire = (cruise_end_date + timedelta(days=30)).strftime('%Y-%m-%d')
+
     if request.method == 'POST':
         print('post')
 
@@ -67,6 +72,7 @@ def NewBooking(request, slug):
         'suite_categories' : suite_categories,
         'suites': suites,
         'booking_form': booking_form,
+        'passport_min_expire': passport_min_expire,
     }
 
     return render(request, 'booking/booking.html', context)
