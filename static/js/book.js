@@ -4,7 +4,10 @@ const numberField = document.getElementById('id_number_guests');
 const guestNumberSpan = document.getElementById('guest_span_count');
 const plus = document.getElementById('plus');
 const minus = document.getElementById('minus');
+const suiteCategoryButton = document.getElementById('suite_category_button');
+
 let numberGuests = 0;
+let suiteSelected = null;
 
 // Price variables
 const totalPriceVerandah = document.getElementById('total_price_verandah');
@@ -42,13 +45,13 @@ function updateTotalPrice() {
         totalPriceVerandah.innerText = (verandah_price * multiplier).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
     if (totalPriceDeluxe) {
-        totalPriceVerandah.innerText = (deluxe_price * multiplier).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        totalPriceDeluxe.innerText = (deluxe_price * multiplier).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
     if (totalPriceSpa) {
-        totalPriceVerandah.innerText = (spa_price * multiplier).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        totalPriceSpa.innerText = (spa_price * multiplier).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
     if (totalPriceOwner) {
-        totalPriceVerandah.innerText = (owner_price * multiplier).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        totalPriceOwner.innerText = (owner_price * multiplier).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 }
 

@@ -13,6 +13,7 @@ Book {{ cruise.name }}
 </div>
 {% if cruise.bookable == True %}
 <div class="booking_status_flex">
+    <!-- Progress indicator -->
     <span id="progress_suite" class="booking_status_current">
         Suite
     </span>
@@ -30,15 +31,118 @@ Book {{ cruise.name }}
         <span id="guest_span_count">2</span>
         <div role="button" id="plus" class="passenger_increment">+</div>
     </div>
+    <button class="booking_button" id="number_guests_button" type="button">
+        Suite Category <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+</div>
+<div class="journey_container" id="number_guests_container">
+    <h2 class="booking_h2">Select Suite Category</h2>
+    <div id="category_cont">
+       <!-- Check if tickets are available for each category. If not, category is greyed out and unselectable. -->
+        {% if number_verandah > 0 %}
+       <div class="suite_category" role="button" id="verandah_category">
+            <img class="suite_category_image" alt="Image of {{ fare_verandah.suite_category.name }}" src="{{ fare_verandah.suite_category.suite_image.url }}">
+            <div class="category_details">
+                <span class="category_title">{{ fare_verandah.suite_category.name }}</span>
+                <div class="category_price_box">
+                    <span class="category_total">Total</span>
+                    <span class="category_price">£ <span id="total_price_verandah"></span></span>
+                </div>
+            </div>
+       </div>
+        {% else %}
+        <div class="suite_category_unavailable" role="button">
+            <img class="suite_category_image" alt="Image of {{ fare_verandah.suite_category.name }}" src="{{ fare_verandah.suite_category.suite_image.url }}">
+            <div class="category_details">
+                <span class="category_title">{{ fare_verandah.suite_category.name }}</span>
+                <div class="category_price_box">
+                    <span class="category_price">Unavailable</span>
+                </div>
+            </div>
+       </div>
+        {% endif %}
+        {% if number_deluxe > 0 %}
+        <div class="suite_category" role="button" id="deluxe_category">
+             <img class="suite_category_image" alt="Image of {{ fare_verandah.suite_category.name }}" src="{{ fare_deluxe.suite_category.suite_image.url }}">
+             <div class="category_details">
+                 <span class="category_title">{{ fare_deluxe.suite_category.name }}</span>
+                 <div class="category_price_box">
+                     <span class="category_total">Total</span>
+                     <span class="category_price">£ <span id="total_price_deluxe"></span></span>
+                 </div>
+             </div>
+        </div>
+         {% else %}
+         <div class="suite_category_unavailable" role="button">
+             <img class="suite_category_image" alt="Image of {{ fare_deluxe.suite_category.name }}" src="{{ fare_deluxe.suite_category.suite_image.url }}">
+             <div class="category_details">
+                 <span class="category_title">{{ fare_deluxe.suite_category.name }}</span>
+                 <div class="category_price_box">
+                     <span class="category_price">Unavailable</span>
+                 </div>
+             </div>
+        </div>
+         {% endif %}
+         {% if number_spa > 0 %}
+         <div class="suite_category" role="button" id="spa_category">
+              <img class="suite_category_image" alt="Image of {{ fare_spa.suite_category.name }}" src="{{ fare_spa.suite_category.suite_image.url }}">
+              <div class="category_details">
+                  <span class="category_title">{{ fare_spa.suite_category.name }}</span>
+                  <div class="category_price_box">
+                      <span class="category_total">Total</span>
+                      <span class="category_price">£ <span id="total_price_spa"></span></span>
+                  </div>
+              </div>
+         </div>
+          {% else %}
+          <div class="suite_category_unavailable" role="button">
+              <img class="suite_category_image" alt="Image of {{ fare_spa.suite_category.name }}" src="{{ fare_spa.suite_category.suite_image.url }}">
+              <div class="category_details">
+                  <span class="category_title">{{ fare_spa.suite_category.name }}</span>
+                  <div class="category_price_box">
+                      <span class="category_price">Unavailable</span>
+                  </div>
+              </div>
+         </div>
+          {% endif %}
+          {% if number_owner > 0 %}
+          <div class="suite_category" role="button" id="owner_category">
+               <img class="suite_category_image" alt="Image of {{ fare_owner.suite_category.name }}" src="{{ fare_owner.suite_category.suite_image.url }}">
+               <div class="category_details">
+                   <span class="category_title">{{ fare_owner.suite_category.name }}</span>
+                   <div class="category_price_box">
+                       <span class="category_total">Total</span>
+                       <span class="category_price">£ <span id="total_price_owner"></span></span>
+                   </div>
+               </div>
+          </div>
+           {% else %}
+           <div class="suite_category_unavailable" role="button">
+               <img class="suite_category_image" alt="Image of {{ fare_owner.suite_category.name }}" src="{{ fare_owner.suite_category.suite_image.url }}">
+               <div class="category_details">
+                   <span class="category_title">{{ fare_owner.suite_category.name }}</span>
+                   <div class="category_price_box">
+                       <span class="category_price">Unavailable</span>
+                   </div>
+               </div>
+          </div>
+           {% endif %}
+
+    </div>
+    <button class="booking_button" id="suite_category_button" type="button">
+       Suite <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
 </div>
 
 
+
 <form method="POST" id="booking_form">
+    <button class="booking_button" id="suite_category_button" type="button">
+        Book <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
     {% csrf_token %}
     {{ booking_form.number_guests }}
-    <button class="booking_button" type="submit">
-        Suite Category <span class="material-symbols-outlined">arrow_forward</span>
-    </button>
+
 </form>
 
 {% else %}
@@ -46,9 +150,17 @@ This cruise can no longer be booked. Apologies.
 {% endif %}
 {% endblock %}
 
+{% if cruise.bookable == True %}
 {% block footerscripts %}
+<script>
+    let verandah_price = {{ fare_verandah.price }};
+    let deluxe_price = {{ fare_deluxe.price }};
+    let spa_price = {{ fare_spa.price }};
+    let owner_price = {{ fare_owner.price }};
+</script>
 <script>const suites = '{{ suites|safe }}';</script>
 <script src="{% static 'js/book.js' %}"></script>
 {% endblock %}
+{% endif %}
 
 
