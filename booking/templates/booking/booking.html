@@ -132,6 +132,7 @@ Book {{ cruise.name }}
     <div id="deck_plan">
         <img src="" alt="">
     </div>
+    <h3>Available Suites</h3>
     <div id="suite_selection_cont">
 
     </div>
@@ -145,6 +146,7 @@ Book {{ cruise.name }}
     {% csrf_token %}
     {{ booking_form.number_guests }}
     {{ booking_form.selected_category }}
+    {{ booking_form.selected_suite }}
 
 </form>
 

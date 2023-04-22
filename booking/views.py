@@ -68,7 +68,6 @@ def NewBooking(request, slug):
         'suites': suites,
         'booking_form': booking_form,
     }
-    print(suite_categories)
 
     return render(request, 'booking/booking.html', context)
  

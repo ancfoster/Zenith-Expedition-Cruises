@@ -17,4 +17,7 @@ class BookingForm(forms.Form):
     max_value=4,
     widget=forms.HiddenInput()
     )
+    selected_suite = forms.IntegerField(
+    widget=forms.HiddenInput()
+    )
 
