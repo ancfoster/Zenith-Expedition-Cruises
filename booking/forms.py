@@ -9,9 +9,19 @@ class PassengerNumberForm(forms.Form):
     passes on the passenger number 
     and cruise
     '''
-    #Fares for each category
     passengers_for_booking = forms.IntegerField(
     min_value=1,
     max_value=3,
     widget=forms.HiddenInput()
+    )
+
+
+class SuiteCategoryForm(forms.Form):
+    '''
+    Allows user to select suite category
+    during booking process
+    '''
+    suite_category = forms.IntegerField(
+        max_length=1,
+        widget=forms.HiddenInput()
     )
