@@ -1,0 +1,54 @@
+{% extends "booking_base.html" %}
+{% load static %}
+{% load mathfilters %}
+
+{% block title %}
+Book {{ cruise.name }}
+{% endblock %}
+
+{% block content %}
+<h1 class="booking_h1">Booking:</h1>
+<div class="booking_cruise_title">
+    {{ cruise.name }}
+</div>
+{% if cruise.bookable == True %}
+<div class="booking_status_flex">
+    <span id="progress_suite" class="booking_status_current">
+        Suite
+    </span>
+    <span id="progress_guests">
+       Guest Details
+    </span>
+    <span id="progress_payment">
+        Payment
+    </span>
+</div>
+<div class="journey_container" id="number_guests_container">
+    <h2 class="booking_h2">How many guests?</h2>
+    <div id="increment_cont">
+        <div role="button" id="minus" class="passenger_increment">-</div>
+        <span id="guest_span_count">2</span>
+        <div role="button" id="plus" class="passenger_increment">+</div>
+    </div>
+</div>
+
+
+<form method="POST" id="booking_form">
+    {% csrf_token %}
+    {{ booking_form.number_guests }}
+    <button class="booking_button" type="submit">
+        Suite Category <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+</form>
+
+{% else %}
+This cruise can no longer be booked. Apologies.
+{% endif %}
+{% endblock %}
+
+{% block footerscripts %}
+<script>const suites = '{{ suites|safe }}';</script>
+<script src="{% static 'js/book.js' %}"></script>
+{% endblock %}
+
+
