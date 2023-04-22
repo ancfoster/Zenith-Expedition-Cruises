@@ -31,13 +31,14 @@ def NewBooking(request, slug):
     # Get suite categories to make available in model
     suite_categories = SuiteCategories.objects.all()
     # Get cruise fares
-    fare_verandah = Fares.objects.filter(cruise=cruise, suite_category=1)
-    fare_deluxe = Fares.objects.filter(cruise=cruise, suite_category=2)
-    fare_spa = Fares.objects.filter(cruise=cruise, suite_category=3)
-    fare_owner = Fares.objects.filter(cruise=cruise, suite_category=4)
+    fare_verandah = get_object_or_404(Fares, cruise=cruise, suite_category=1)
+    fare_deluxe = get_object_or_404(Fares, cruise=cruise, suite_category=2)
+    fare_spa = get_object_or_404(Fares, cruise=cruise, suite_category=3)
+    fare_owner = get_object_or_404(Fares, cruise=cruise, suite_category=4)
 
     if request.method == 'POST':
-    
+        print('post')
+
     else:
         booking_form = BookingForm()
 
@@ -50,7 +51,7 @@ def NewBooking(request, slug):
         dict['category'] = ticket.suite.category.id
         ticket_list.append(dict)
 
-    tickets = json.dumps(ticket_list)
+    suites = json.dumps(ticket_list)
 
     context = {
         'cruise': cruise,
@@ -64,8 +65,10 @@ def NewBooking(request, slug):
         'fare_spa': fare_spa,
         'fare_owner': fare_owner,
         'suite_categories' : suite_categories,
-        'tickets': tickets,
+        'suites': suites,
+        'booking_form': booking_form,
     }
+    print(suite_categories)
 
     return render(request, 'booking/booking.html', context)
  
