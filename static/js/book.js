@@ -1,7 +1,7 @@
 /* jshint esversion: 11 */
 // Init variables
-const numberField = document.getElementById('id_passengers_for_booking');
-const passengerNumberSpan = document.getElementById('passenger_span_count');
+const numberField = document.getElementById('id_number_guests');
+const guestNumberSpan = document.getElementById('guest_span_count');
 const plus = document.getElementById('plus');
 const minus = document.getElementById('minus');
 let count = 0;
@@ -13,11 +13,12 @@ function setCount() {
     numberField.value = count
 }
 
+// Controls number of passengers increment buttons
 plus.addEventListener('click', () => {
     if (count < 3) {
         count++
         numberField.value = count
-        passengerNumberSpan.innerText = count;
+        guestNumberSpan.innerText = count;
         if (count === 3) {
             plus.style.cursor = "not-allowed";
         }
@@ -26,12 +27,12 @@ plus.addEventListener('click', () => {
         }
     }
 })
-
+// Minus number of guests
 minus.addEventListener('click', () => {
     if (count > 1) {
         count--
         numberField.value = count
-        passengerNumberSpan.innerText = count;
+        guestNumberSpan.innerText = count;
         if (count === 1) {
             minus.style.cursor = "not-allowed";
         }
