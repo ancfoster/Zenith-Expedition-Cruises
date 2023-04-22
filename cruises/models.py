@@ -71,6 +71,9 @@ class SuiteCategories(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Suite Categories"
+
 
 class Suites(models.Model):
     '''
@@ -80,9 +83,11 @@ class Suites(models.Model):
     suite_num_name = models.CharField(max_length=30, verbose_name="Suite Name/Number")
     category = models.ForeignKey(SuiteCategories, on_delete=models.SET_NULL, null=True, related_name="suite")
 
-
     def __str__(self):
         return self.suite_num_name
+
+    class Meta:
+        verbose_name_plural = "Suites"
 
 
 class Tag(models.Model):
@@ -132,6 +137,9 @@ class Cruises(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Cruises"
+
 
 class Fares(models.Model):
     '''
@@ -140,6 +148,9 @@ class Fares(models.Model):
     cruise = models.ForeignKey(Cruises, on_delete=models.CASCADE, null=True, related_name="fares")
     suite_category = models.ForeignKey(SuiteCategories, on_delete=models.PROTECT, related_name="fares")      
     price = models.DecimalField(max_digits=9, decimal_places=2)
+
+    class Meta:
+        verbose_name_plural = "Fares"
 
 
 class Movements(models.Model):
@@ -159,6 +170,9 @@ class Movements(models.Model):
     order = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(200)])
     description = models.CharField(max_length=120, null=True, blank=True, default=None, verbose_name="Movement Description")
 
+    class Meta:
+        verbose_name_plural = "Movements"
+
 
 class Tickets(models.Model):
     '''
@@ -174,6 +188,9 @@ class Tickets(models.Model):
 
     def __str__(self):
         return self.ticket_ref
+
+    class Meta:
+        verbose_name_plural = "Tickets"
 
 
 class Bookings(models.Model):
@@ -193,6 +210,9 @@ class Bookings(models.Model):
 
     def __str__(self):
         return self.booking_ref
+
+    class Meta:
+        verbose_name_plural = "Bookings"
 
 
 class Guests(models.Model):
@@ -219,6 +239,9 @@ class Guests(models.Model):
 
     def __str__(self):
         return self.first_name.last_name
+
+    class Meta:
+        verbose_name_plural = "Guests"
 
 
 
