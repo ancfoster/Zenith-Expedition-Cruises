@@ -4,6 +4,7 @@
 //Form field vars
 const numberField = document.getElementById('id_number_guests');
 const selectedCategoryField = document.getElementById('id_selected_category');
+const selectedSuiteField = document.getElementById('id_selected_suite');
 
 const guestNumberSpan = document.getElementById('guest_span_count');
 const plus = document.getElementById('plus');
@@ -12,7 +13,6 @@ const categoryCont = document.getElementById('category_cont');
 
 let numberGuests = 0;
 let categorySelected = null;
-let suiteSelected = null;
 
 // Suite selection vars
 const suiteSelectionCont = document.getElementById('suite_selection_cont');
@@ -121,7 +121,6 @@ categoryCont.addEventListener('click', (e) => {
   }
   generateSuiteSelection();
 })
-
 // Removes the category selected class from any div that has it
 function removeSelectedCategoryClass() {
     let toRemove = categoryCont.querySelectorAll('.category_selected');
@@ -131,7 +130,7 @@ function removeSelectedCategoryClass() {
 }
 
 // Suite selection functions
-// Generate suite numbers based on selection
+// Generate suite numbers based on category selection
 function generateSuiteSelection() {
     suiteSelectionCont.innerHTML = ''
     // Loop through and get available suites that match selected category
@@ -149,3 +148,20 @@ function generateSuiteItem(x) {
     `;
     return suiteButton;
 }
+// Suite selection
+suiteSelectionCont.addEventListener('click', (e) => {
+    if (e.target.classList.contains('suite_item')) {
+        removeSelectedSuiteClass()
+        const suiteSelectedId = e.target.id;
+        selectedSuiteField.value = parseInt(suiteSelectedId);
+        let toApply = document.getElementById(suiteSelectedId);
+        toApply.classList.add('suite_selected');
+    }
+  })
+  // Removes the category selected class from any div that has it
+  function removeSelectedSuiteClass() {
+      let toRemove = categoryCont.querySelectorAll('.suite_selected');
+      for (let i = 0; i < toRemove.length; i++) {
+      toRemove[i].classList.remove('suite_selected');
+      }
+  }
