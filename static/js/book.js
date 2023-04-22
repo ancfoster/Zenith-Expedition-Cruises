@@ -8,13 +8,14 @@ const selectedCategoryField = document.getElementById('id_selected_category');
 const guestNumberSpan = document.getElementById('guest_span_count');
 const plus = document.getElementById('plus');
 const minus = document.getElementById('minus');
-const suiteCategoryButton = document.getElementById('suite_category_button');
-
 const categoryCont = document.getElementById('category_cont');
 
 let numberGuests = 0;
 let categorySelected = null;
 let suiteSelected = null;
+
+// Suite selection vars
+const suiteSelectionCont = document.getElementById('suite_selection_cont');
 
 // Price variables
 const totalPriceVerandah = document.getElementById('total_price_verandah');
@@ -25,6 +26,8 @@ const totalPriceOwner = document.getElementById('total_price_owner');
 window.onload = set;
 
 function set() {
+    let suitesParse = JSON.parse(suites);
+    suites = suitesParse;
     numberGuests = 2;
     numberField.value = numberGuests
     updateTotalPrice()
@@ -116,7 +119,7 @@ categoryCont.addEventListener('click', (e) => {
         selectedCategoryField.value = 4;
         break;
   }
-
+  generateSuiteSelection();
 })
 
 // Removes the category selected class from any div that has it
@@ -125,4 +128,24 @@ function removeSelectedCategoryClass() {
     for (let i = 0; i < toRemove.length; i++) {
     toRemove[i].classList.remove('category_selected');
     }
+}
+
+// Suite selection functions
+// Generate suite numbers based on selection
+function generateSuiteSelection() {
+    suiteSelectionCont.innerHTML = ''
+    // Loop through and get available suites that match selected category
+    for(i = 0; i < suites.length; i++) {
+        if (suites[i].category == categorySelected) {
+            let suite = generateSuiteItem(suites[i].suite_number)
+            suiteSelectionCont.innerHTML += suite;
+        }
+    }
+}
+// Generate the div for each suite button
+function generateSuiteItem(x) {
+    let suiteButton = `
+    <div role="button" class="suite_item" id='${x}'>${x}</div>
+    `;
+    return suiteButton;
 }

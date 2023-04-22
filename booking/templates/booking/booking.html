@@ -24,18 +24,13 @@ Book {{ cruise.name }}
         Payment
     </span>
 </div>
-<div class="journey_container" id="number_guests_container">
+<div class="journey_container" id="number_and_category_cont">
     <h2 class="booking_h2">How many guests?</h2>
     <div id="increment_cont">
         <div role="button" id="minus" class="passenger_increment">-</div>
         <span id="guest_span_count">2</span>
         <div role="button" id="plus" class="passenger_increment">+</div>
     </div>
-    <button class="booking_button" id="number_guests_button" type="button">
-        Suite Category <span class="material-symbols-outlined">arrow_forward</span>
-    </button>
-</div>
-<div class="journey_container" id="number_guests_container">
     <h2 class="booking_h2">Select Suite Category</h2>
     <div id="category_cont">
        <!-- Check if tickets are available for each category. If not, category is greyed out and unselectable. -->
@@ -127,13 +122,20 @@ Book {{ cruise.name }}
                </div>
           </div>
            {% endif %}
-
     </div>
     <button class="booking_button" id="suite_category_button" type="button">
        Suite <span class="material-symbols-outlined">arrow_forward</span>
     </button>
 </div>
+<div class="journey_container" id="suite">
+    <h2 class="booking_h2">Select your suite</h2>
+    <div id="deck_plan">
+        <img src="" alt="">
+    </div>
+    <div id="suite_selection_cont">
 
+    </div>
+</div>
 
 
 <form method="POST" id="booking_form">
@@ -159,7 +161,7 @@ This cruise can no longer be booked. Apologies.
     let spa_price = {{ fare_spa.price }};
     let owner_price = {{ fare_owner.price }};
 </script>
-<script>const suites = '{{ suites|safe }}';</script>
+<script>let suites = '{{ suites|safe }}';</script>
 <script src="{% static 'js/book.js' %}"></script>
 {% endblock %}
 {% endif %}
