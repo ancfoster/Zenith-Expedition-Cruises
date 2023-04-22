@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.views import generic, View
 
-# from .forms import BookingForm
+from .forms import BookingForm
 
 @login_required
 def NewBooking(request, slug):
@@ -35,6 +35,11 @@ def NewBooking(request, slug):
     fare_deluxe = Fares.objects.filter(cruise=cruise, suite_category=2)
     fare_spa = Fares.objects.filter(cruise=cruise, suite_category=3)
     fare_owner = Fares.objects.filter(cruise=cruise, suite_category=4)
+
+    if request.method == 'POST':
+    
+    else:
+        booking_form = BookingForm()
 
     #Get all bookable tickets and conver to JSON
     ticket_list = []
