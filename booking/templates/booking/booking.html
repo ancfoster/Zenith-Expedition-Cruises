@@ -40,7 +40,7 @@ Book {{ cruise.name }}
     <div id="category_cont">
        <!-- Check if tickets are available for each category. If not, category is greyed out and unselectable. -->
         {% if number_verandah > 0 %}
-       <div class="suite_category" role="button" id="verandah_category">
+       <div class="suite_category" role="button" id="verandah">
             <img class="suite_category_image" alt="Image of {{ fare_verandah.suite_category.name }}" src="{{ fare_verandah.suite_category.suite_image.url }}">
             <div class="category_details">
                 <span class="category_title">{{ fare_verandah.suite_category.name }}</span>
@@ -62,7 +62,7 @@ Book {{ cruise.name }}
        </div>
         {% endif %}
         {% if number_deluxe > 0 %}
-        <div class="suite_category" role="button" id="deluxe_category">
+        <div class="suite_category" role="button" id="deluxe">
              <img class="suite_category_image" alt="Image of {{ fare_verandah.suite_category.name }}" src="{{ fare_deluxe.suite_category.suite_image.url }}">
              <div class="category_details">
                  <span class="category_title">{{ fare_deluxe.suite_category.name }}</span>
@@ -84,7 +84,7 @@ Book {{ cruise.name }}
         </div>
          {% endif %}
          {% if number_spa > 0 %}
-         <div class="suite_category" role="button" id="spa_category">
+         <div class="suite_category" role="button" id="spa">
               <img class="suite_category_image" alt="Image of {{ fare_spa.suite_category.name }}" src="{{ fare_spa.suite_category.suite_image.url }}">
               <div class="category_details">
                   <span class="category_title">{{ fare_spa.suite_category.name }}</span>
@@ -106,7 +106,7 @@ Book {{ cruise.name }}
          </div>
           {% endif %}
           {% if number_owner > 0 %}
-          <div class="suite_category" role="button" id="owner_category">
+          <div class="suite_category" role="button" id="owner">
                <img class="suite_category_image" alt="Image of {{ fare_owner.suite_category.name }}" src="{{ fare_owner.suite_category.suite_image.url }}">
                <div class="category_details">
                    <span class="category_title">{{ fare_owner.suite_category.name }}</span>
@@ -142,6 +142,7 @@ Book {{ cruise.name }}
     </button>
     {% csrf_token %}
     {{ booking_form.number_guests }}
+    {{ booking_form.selected_category }}
 
 </form>
 
