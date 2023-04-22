@@ -225,6 +225,7 @@ class Guests(models.Model):
     passport_number = models.CharField(max_length=20, verbose_name="Passport Number")
     passport_expiry = models.DateField(verbose_name="Passport Expiry Date")
     phone_number = models.CharField(max_length=16, verbose_name="Phone Number")
+    email = models.EmailField(max_length = 120, default='')
     booking = models.ForeignKey(Bookings, on_delete=models.CASCADE, related_name="guest")
 
     def __str__(self):
