@@ -94,6 +94,10 @@ minus.addEventListener('click', () => {
 // Select and update category
 categoryCont.addEventListener('click', (e) => {
   let categoryButtonSelected = e.target.closest('.suite_category');
+  removeSelectedCategoryClass()
+  let divId = categoryButtonSelected.id
+  let toApply = document.getElementById(divId);
+  toApply.classList.add('category_selected');
   switch (categoryButtonSelected.id){
     case 'verandah':
         categorySelected = 1;
@@ -114,3 +118,11 @@ categoryCont.addEventListener('click', (e) => {
   }
 
 })
+
+// Removes the category selected class from any div that has it
+function removeSelectedCategoryClass() {
+    let toRemove = categoryCont.querySelectorAll('.category_selected');
+    for (let i = 0; i < toRemove.length; i++) {
+    toRemove[i].classList.remove('category_selected');
+    }
+}
