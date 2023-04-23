@@ -24,6 +24,10 @@ const totalPriceDeluxe = document.getElementById('total_price_deluxe');
 const totalPriceSpa = document.getElementById('total_price_spa');
 const totalPriceOwner = document.getElementById('total_price_owner');
 
+// Guest form vars
+let numberForms = 0;
+const detailFormCont = document.getElementById('detail_form_cont');
+
 window.onload = set;
 
 function set() {
@@ -32,8 +36,9 @@ function set() {
     let deckplansParse = JSON.parse(deckplans);
     deckplans = deckplansParse;
     numberGuests = 2;
-    numberField.value = numberGuests
-    updateTotalPrice()
+    numberField.value = numberGuests;
+    updateTotalPrice();
+    createDetailForms();
 }
 // Updates total price based on number of passengers
 function updateTotalPrice() {
@@ -69,6 +74,7 @@ function updateTotalPrice() {
 // Controls number of passengers increment buttons
 plus.addEventListener('click', () => {
     if (numberGuests < 3) {
+        createDetailForms();
         numberGuests++
         numberField.value = numberGuests
         guestNumberSpan.innerText = numberGuests;
@@ -84,6 +90,7 @@ plus.addEventListener('click', () => {
 // Minus number of guests
 minus.addEventListener('click', () => {
     if (numberGuests > 1) {
+        deleteDetailForm();
         numberGuests--
         numberField.value = numberGuests
         guestNumberSpan.innerText = numberGuests;
@@ -166,12 +173,12 @@ suiteSelectionCont.addEventListener('click', (e) => {
     }
   })
   // Removes the category selected class from any div that has it
-  function removeSelectedSuiteClass() {
-      let toRemove = suiteSelectionCont.querySelectorAll('.suite_selected');
-      for (let i = 0; i < toRemove.length; i++) {
-      toRemove[i].classList.remove('suite_selected');
-      }
-  }
+function removeSelectedSuiteClass() {
+    let toRemove = suiteSelectionCont.querySelectorAll('.suite_selected');
+    for (let i = 0; i < toRemove.length; i++) {
+    toRemove[i].classList.remove('suite_selected');
+    }
+}
   // Update deckplan image
 function updateDeckplan() {
     for (let i = 0; i < deckplans.length; i++) {
@@ -180,4 +187,65 @@ function updateDeckplan() {
             return url;
         }
     }
+}
+
+// Guest Details
+function createDetailForms() {
+    switch (numberForms) {
+        case 0:
+            detailFormCont.innerHTML += detailsTemplate(1);
+            detailFormCont.innerHTML += detailsTemplate(2);
+            numberForms = 2;
+        break;
+        case 1:
+            detailFormCont.innerHTML += detailsTemplate(2);
+            numberForms = 2;
+        break;
+        case 2:
+            detailFormCont.innerHTML += detailsTemplate(3);
+            numberForms = 3;
+        break;
+        default:
+            break;
+    }
+}
+
+function deleteDetailForm(){
+    let formNumber = `guest${numberForms}`;
+    let formToDelete = document.getElementById(formNumber);
+    switch (numberForms) {
+        case 2:
+            formToDelete.remove()
+            numberForms--;
+            break;
+        case 3:
+            formToDelete.remove()
+            numberForms--;
+            break;
+        default:
+            break;
+    }
+}
+
+function detailsTemplate(guest_number) {
+    let formTemplate = `
+    <form method="POST" action="" class="booking_form" id="guest${guest_number}">
+        <h3 class="gf_center">Guest ${guest_number}</h3>
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" maxlength="25" required>
+        <label for="last_name">Last Name</label>
+        <input type="text" required id="last_name" maxlength="25">
+        <label for="dob">Date of Birth</label>
+        <input type="date" required id="dob">
+        <label for="passport_number" for="passport_number">Passport Number</label>
+        <input type="number" required maxlength="20" id="passport_number">
+        <label for="passport_expiry">Passport Expiry Date</label>
+        <input type="date" min="{{ passport_min_expire }}" required id="passport_expiry">
+        <label for="telephone">Telephone</label>
+        <input type="tel" maxlength="16" required id="telephone">
+        <label for="email">Email</label>
+        <input type="email" id="email" maxlength="120" required>
+    </form>
+    `
+    return formTemplate;
 }
