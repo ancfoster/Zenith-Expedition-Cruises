@@ -5,7 +5,7 @@
 const numberField = document.getElementById('id_number_guests');
 const selectedCategoryField = document.getElementById('id_selected_category');
 const selectedSuiteField = document.getElementById('id_selected_suite');
-
+const bookingForm = document.getElementById('booking_form');
 const guestNumberSpan = document.getElementById('guest_span_count');
 const plus = document.getElementById('plus');
 const minus = document.getElementById('minus');
@@ -28,6 +28,7 @@ const totalPriceOwner = document.getElementById('total_price_owner');
 let numberForms = 0;
 const detailFormCont = document.getElementById('detail_form_cont');
 let guestInfoList = []
+const guestInformationField = document.getElementById('id_guest_information');
 
 window.onload = set;
 
@@ -214,7 +215,7 @@ function createDetailForms() {
             break;
     }
 }
-
+// Delete guest information forms when number of guests is reduced
 function deleteDetailForm(){
     let formNumber = `guest${numberForms}`;
     let formToDelete = document.getElementById(formNumber);
@@ -233,7 +234,7 @@ function deleteDetailForm(){
             break;
     }
 }
-
+// Generates a new guest information form when guest number is increased
 function detailsTemplate(guest_number) {
     let formTemplate = `
     <form method="POST" action="" class="booking_form" id="guest${guest_number}">
@@ -256,12 +257,12 @@ function detailsTemplate(guest_number) {
     `;
     return formTemplate;
 }
-
+// Creates a new JSON object which is appended to the guestInfolist
 function createGuestJson() {
     let obj = {"first_name": "","last_name": "","dob": "", "passport_number": "","passport_expiry": "","telephone": "","email": ""};
     guestInfoList.push(obj);
 };
-
+// Looks for when the guest forms are edited, updates the guestInfoList with new information
 detailFormCont.addEventListener('input', e => {
     let target = e.target;
     if (target.tagName === 'INPUT' || target.tagName === 'SELECT' || target.tagName) {
@@ -295,4 +296,11 @@ detailFormCont.addEventListener('input', e => {
                 break;
         }
     }
+})
+
+bookingForm.addEventListener('submit', e => {
+    e.preventDefault();
+    let guestInformationStr = JSON.stringify(guestInfoList);
+    guestInformationField.value = guestInformationStr;
+    bookingForm.submit();
 })

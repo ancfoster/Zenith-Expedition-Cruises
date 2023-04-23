@@ -144,14 +144,14 @@ Book {{ cruise.name }}
     </div>
 </div>
 <form method="POST" id="booking_form">
-    <button class="booking_button" id="suite_category_button" type="button">
-        Book <span class="material-symbols-outlined">arrow_forward</span>
-    </button>
     {% csrf_token %}
     {{ booking_form.number_guests }}
     {{ booking_form.selected_category }}
     {{ booking_form.selected_suite }}
-
+    {{ booking_form.guest_information }}
+    <button class="booking_button" id="suite_category_button"  type="submit">
+        Payment<span class="material-symbols-outlined">arrow_forward</span>
+    </button>
 </form>
 {% else %}
 This cruise can no longer be booked. Apologies.
@@ -167,7 +167,6 @@ This cruise can no longer be booked. Apologies.
     let spa_price = {{ fare_spa.price }};
     let owner_price = {{ fare_owner.price }};
     let passportExp = '{{ passport_min_expire }}';
-
 </script>
 <script>let deckplans = '{{ deckplans|safe }}';</script>
 <script>let suites = '{{ suites|safe }}';</script>
