@@ -160,12 +160,14 @@ This cruise can no longer be booked. Apologies.
 
 {% if cruise.bookable == True %}
 {% block footerscripts %}
-</script>
+
 <script>
     let verandah_price = {{ fare_verandah.price }};
     let deluxe_price = {{ fare_deluxe.price }};
     let spa_price = {{ fare_spa.price }};
     let owner_price = {{ fare_owner.price }};
+    let passportExp = '{{ passport_min_expire }}';
+
 </script>
 <script>let deckplans = '{{ deckplans|safe }}';</script>
 <script>let suites = '{{ suites|safe }}';</script>

@@ -239,7 +239,7 @@ function detailsTemplate(guest_number) {
     <form method="POST" action="" class="booking_form" id="guest${guest_number}">
         <h3 class="gf_center">Guest ${guest_number}</h3>
         <label for="${guest_number}first_name">First Name</label>
-        <input type="text" id="${guest_number}first_name_" maxlength="25" required>
+        <input type="text" id="${guest_number}first_name" maxlength="25" required>
         <label for="${guest_number}last_name">Last Name</label>
         <input type="text" required id="${guest_number}last_name" maxlength="25">
         <label for="${guest_number}dob">Date of Birth</label>
@@ -247,7 +247,7 @@ function detailsTemplate(guest_number) {
         <label for="passport_number" for="${guest_number}passport_number">Passport Number</label>
         <input type="number" required maxlength="20" id="${guest_number}passport_number">
         <label for="${guest_number}passport_expiry">Passport Expiry Date</label>
-        <input type="date" min="{{ passport_min_expire }}" required id="${guest_number}passport_expiry">
+        <input type="date" min="${passportExp}" required id="${guest_number}passport_expiry">
         <label for="${guest_number}telephone">Telephone</label>
         <input type="tel" maxlength="16" required id="${guest_number}telephone">
         <label for="${guest_number}email">Email</label>
@@ -261,3 +261,38 @@ function createGuestJson() {
     let obj = {"first_name": "","last_name": "","dob": "", "passport_number": "","passport_expiry": "","telephone": "","email": ""};
     guestInfoList.push(obj);
 };
+
+detailFormCont.addEventListener('input', e => {
+    let target = e.target;
+    if (target.tagName === 'INPUT' || target.tagName === 'SELECT' || target.tagName) {
+        let targetId = String(target.id)
+        guest = targetId.charAt(0)
+        guest_number = parseInt(guest);
+        let field = targetId.substring(1)
+        switch (field) {
+            case 'first_name':
+                guestInfoList[(guest_number - 1)].first_name = target.value;
+                    break;
+                case 'last_name':
+                guestInfoList[(guest_number - 1)].last_name = target.value;
+                    break;
+                case 'dob':
+                guestInfoList[(guest_number - 1)].dob = target.value;
+                    break;
+                case 'passport_number':
+                guestInfoList[(guest_number - 1)].passport_number = target.value;
+                    break;
+                case 'passport_expiry':
+                guestInfoList[(guest_number - 1)].passport_expiry = target.value;
+                    break;
+                case 'telephone':
+                guestInfoList[(guest_number - 1)].telephone = target.value;
+                    break;
+                case 'email':
+                guestInfoList[(guest_number - 1)].email = target.value;
+                    break;            
+            default:
+                break;
+        }
+    }
+})
