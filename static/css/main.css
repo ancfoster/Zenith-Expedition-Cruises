@@ -521,3 +521,39 @@ main {
     color: var(--black333);
     margin: 16px 0;
 }
+
+.booking_form {
+    display: flex;
+    flex-direction: column;
+    margin: 16px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.booking_form input  {
+    padding: 8px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--black333);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #cdcdcd;
+    margin: 0 0 8px 0;
+    background-color: #F2F2F2;
+}
+.booking_form input:focus {
+    background-color: #f7f7f7;
+    color: var(--black111);
+    border-bottom: 1px solid black111;
+}
+.booking_form input:hover {
+    background-color: #f7f7f7;
+}
+.booking_form label{
+    margin: 4px 0;
+}
+.booking_form input[type="date"] {
+    font-family: neue-haas-grotesk-display, sans-serif, Arial;
+    font-weight: 400;
+}

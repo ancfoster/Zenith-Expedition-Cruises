@@ -139,10 +139,10 @@ Book {{ cruise.name }}
 </div>
 <div class="journey_container" id="guest_details">
     <h2 class="booking_h2">Enter the details for each guest</h2>
-    <form method="POST" action="" id="guest1">
-        <label for="first_name">First name</label>
+    <form method="POST" action="" class="booking_form" id="guest1">
+        <label for="first_name">First Name</label>
         <input type="text" id="first_name" maxlength="25" required>
-        <label for="last_name"></label>
+        <label for="last_name">Last Name</label>
         <input type="text" required id="last_name" maxlength="25">
         <label for="dob">Date of Birth</label>
         <input type="date" required id="dob">
@@ -157,6 +157,12 @@ Book {{ cruise.name }}
     </form>
 </div>
 
+<div class="journey_container" id="guest_details">
+    <h2 class="booking_h2">Payment Details</h2>
+    <h3>Payments securely processed by Stripe
+        
+    </h3>
+</div>
 <form method="POST" id="booking_form">
     <button class="booking_button" id="suite_category_button" type="button">
         Book <span class="material-symbols-outlined">arrow_forward</span>
