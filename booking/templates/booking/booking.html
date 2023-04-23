@@ -141,13 +141,19 @@ Book {{ cruise.name }}
     <h2 class="booking_h2">Enter the details for each guest</h2>
     <form method="POST" action="" id="guest1">
         <label for="first_name">First name</label>
-        <input type="text" id="first_name" required>
+        <input type="text" id="first_name" maxlength="25" required>
         <label for="last_name"></label>
-        <input type="text" required id="last_name">
+        <input type="text" required id="last_name" maxlength="25">
         <label for="dob">Date of Birth</label>
         <input type="date" required id="dob">
-        <label for="ped">Passport Expiry Date</label>
-        <input type="date" min="{{ passport_min_expire }}" required id="ped">
+        <label for="passport_number" for="passport_number">Passport Number</label>
+        <input type="number" required maxlength="20" id="passport_number">
+        <label for="passport_expiry">Passport Expiry Date</label>
+        <input type="date" min="{{ passport_min_expire }}" required id="passport_expiry">
+        <label for="telephone">Telephone</label>
+        <input type="tel" maxlength="16" required id="telephone">
+        <label for="email">Email</label>
+        <input type="email" id="email" maxlength="120" required>
     </form>
 </div>
 
@@ -175,6 +181,7 @@ This cruise can no longer be booked. Apologies.
     let spa_price = {{ fare_spa.price }};
     let owner_price = {{ fare_owner.price }};
 </script>
+<script>let deckplans = '{{ deckplans|safe }}';</script>
 <script>let suites = '{{ suites|safe }}';</script>
 <script src="{% static 'js/book.js' %}"></script>
 {% endblock %}

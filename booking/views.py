@@ -29,8 +29,17 @@ def NewBooking(request, slug):
     number_spa = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=3).count
     #Check availability of owner suites
     number_owner = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=4).count
-    # Get suite categories to make available in model
+    # Get suite categories
     suite_categories = SuiteCategories.objects.all()
+    # Get deckplans and make them available in template
+    deckplan_list = []
+    for suite_cat in suite_categories:
+        dict = {}
+        dict['category'] = suite_cat.id
+        dict['url'] = suite_cat.category_deckplan.url
+    
+    deckplans = json.dumps(deckplan_list)
+
     # Get cruise fares
     fare_verandah = get_object_or_404(Fares, cruise=cruise, suite_category=1)
     fare_deluxe = get_object_or_404(Fares, cruise=cruise, suite_category=2)
@@ -73,6 +82,7 @@ def NewBooking(request, slug):
         'suites': suites,
         'booking_form': booking_form,
         'passport_min_expire': passport_min_expire,
+        'deckplans': deckplans,
     }
 
     return render(request, 'booking/booking.html', context)
