@@ -37,6 +37,7 @@ def NewBooking(request, slug):
         dict = {}
         dict['category'] = suite_cat.id
         dict['url'] = suite_cat.category_deckplan.url
+        deckplan_list.append(dict)
     
     deckplans = json.dumps(deckplan_list)
 

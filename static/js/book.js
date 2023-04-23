@@ -16,6 +16,7 @@ let categorySelected = null;
 
 // Suite selection vars
 const suiteSelectionCont = document.getElementById('suite_selection_cont');
+const deckplan = document.getElementById('deckplan');
 
 // Price variables
 const totalPriceVerandah = document.getElementById('total_price_verandah');
@@ -28,6 +29,8 @@ window.onload = set;
 function set() {
     let suitesParse = JSON.parse(suites);
     suites = suitesParse;
+    let deckplansParse = JSON.parse(deckplans);
+    deckplans = deckplansParse;
     numberGuests = 2;
     numberField.value = numberGuests
     updateTotalPrice()
@@ -105,18 +108,22 @@ categoryCont.addEventListener('click', (e) => {
     case 'verandah':
         categorySelected = 1;
         selectedCategoryField.value = 1;
+        deckplan.src = updateDeckplan()
         break;
     case 'deluxe':
         categorySelected = 2;
         selectedCategoryField.value = 2;
+        deckplan.src = updateDeckplan()
         break;
     case 'spa':
         categorySelected = 3;
         selectedCategoryField.value = 3;
+        deckplan.src = updateDeckplan()
         break;
     case 'owner':
         categorySelected = 4;
         selectedCategoryField.value = 4;
+        deckplan.src = updateDeckplan()
         break;
   }
   generateSuiteSelection();
@@ -160,8 +167,17 @@ suiteSelectionCont.addEventListener('click', (e) => {
   })
   // Removes the category selected class from any div that has it
   function removeSelectedSuiteClass() {
-      let toRemove = categoryCont.querySelectorAll('.suite_selected');
+      let toRemove = suiteSelectionCont.querySelectorAll('.suite_selected');
       for (let i = 0; i < toRemove.length; i++) {
       toRemove[i].classList.remove('suite_selected');
       }
   }
+  // Update deckplan image
+function updateDeckplan() {
+    for (let i = 0; i < deckplans.length; i++) {
+        if (deckplans[i].category === categorySelected) {
+            let url = deckplans[i].url;
+            return url;
+        }
+    }
+}
