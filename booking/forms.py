@@ -20,4 +20,7 @@ class BookingForm(forms.Form):
     selected_suite = forms.IntegerField(
     widget=forms.HiddenInput()
     )
+    guest_information = forms.CharField(
+    widget=forms.HiddenInput()
+    )
 
