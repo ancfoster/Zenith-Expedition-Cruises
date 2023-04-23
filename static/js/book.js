@@ -27,6 +27,7 @@ const totalPriceOwner = document.getElementById('total_price_owner');
 // Guest form vars
 let numberForms = 0;
 const detailFormCont = document.getElementById('detail_form_cont');
+let guestInfoList = []
 
 window.onload = set;
 
@@ -194,15 +195,19 @@ function createDetailForms() {
     switch (numberForms) {
         case 0:
             detailFormCont.innerHTML += detailsTemplate(1);
+            createGuestJson();
             detailFormCont.innerHTML += detailsTemplate(2);
+            createGuestJson();
             numberForms = 2;
         break;
         case 1:
             detailFormCont.innerHTML += detailsTemplate(2);
+            createGuestJson();
             numberForms = 2;
         break;
         case 2:
             detailFormCont.innerHTML += detailsTemplate(3);
+            createGuestJson();
             numberForms = 3;
         break;
         default:
@@ -216,10 +221,12 @@ function deleteDetailForm(){
     switch (numberForms) {
         case 2:
             formToDelete.remove()
+            guestInfoList.pop();
             numberForms--;
             break;
         case 3:
             formToDelete.remove()
+            guestInfoList.pop();
             numberForms--;
             break;
         default:
@@ -231,21 +238,26 @@ function detailsTemplate(guest_number) {
     let formTemplate = `
     <form method="POST" action="" class="booking_form" id="guest${guest_number}">
         <h3 class="gf_center">Guest ${guest_number}</h3>
-        <label for="first_name">First Name</label>
-        <input type="text" id="first_name" maxlength="25" required>
-        <label for="last_name">Last Name</label>
-        <input type="text" required id="last_name" maxlength="25">
-        <label for="dob">Date of Birth</label>
-        <input type="date" required id="dob">
-        <label for="passport_number" for="passport_number">Passport Number</label>
-        <input type="number" required maxlength="20" id="passport_number">
-        <label for="passport_expiry">Passport Expiry Date</label>
-        <input type="date" min="{{ passport_min_expire }}" required id="passport_expiry">
-        <label for="telephone">Telephone</label>
-        <input type="tel" maxlength="16" required id="telephone">
-        <label for="email">Email</label>
-        <input type="email" id="email" maxlength="120" required>
+        <label for="${guest_number}first_name">First Name</label>
+        <input type="text" id="${guest_number}first_name_" maxlength="25" required>
+        <label for="${guest_number}last_name">Last Name</label>
+        <input type="text" required id="${guest_number}last_name" maxlength="25">
+        <label for="${guest_number}dob">Date of Birth</label>
+        <input type="date" required id="${guest_number}dob">
+        <label for="passport_number" for="${guest_number}passport_number">Passport Number</label>
+        <input type="number" required maxlength="20" id="${guest_number}passport_number">
+        <label for="${guest_number}passport_expiry">Passport Expiry Date</label>
+        <input type="date" min="{{ passport_min_expire }}" required id="${guest_number}passport_expiry">
+        <label for="${guest_number}telephone">Telephone</label>
+        <input type="tel" maxlength="16" required id="${guest_number}telephone">
+        <label for="${guest_number}email">Email</label>
+        <input type="email" id="${guest_number}email" maxlength="120" required>
     </form>
-    `
+    `;
     return formTemplate;
 }
+
+function createGuestJson() {
+    let obj = {"first_name": "","last_name": "","dob": "", "passport_number": "","passport_expiry": "","telephone": "","email": ""};
+    guestInfoList.push(obj);
+};
