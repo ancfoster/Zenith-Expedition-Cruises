@@ -145,7 +145,7 @@ def Payment(request):
         intent = stripe.PaymentIntent.create(
         amount=final_fare,
         currency="gbp",
-        metadata={'session_id': request.session.session_key}
+        metadata={'session_id': request.session.session_key},
         automatic_payment_methods={"enabled": True},
         )
         client_secret = intent.client_secret
