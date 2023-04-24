@@ -154,6 +154,7 @@ def Payment(request):
         'cruise': cruise,
         'final_fare_price': final_fare,
         'client_secret': client_secret,
+        'public_key': STRIPE_PUBLIC_KEY,
     }
     return render(request, 'booking/payment.html', context)
     
