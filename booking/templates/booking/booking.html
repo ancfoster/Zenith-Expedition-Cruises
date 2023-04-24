@@ -136,23 +136,27 @@ Book {{ cruise.name }}
     <div id="suite_selection_cont">
 
     </div>
+    <button class="booking_button" id="guest_details_button" type="button">
+        Guest Details <span class="material-symbols-outlined">arrow_forward</span>
+     </button>
 </div>
 <div class="journey_container" id="guest_details">
     <h2 class="booking_h2">Enter the details for each guest</h2>
     <div id="detail_form_cont">
 
     </div>
+    <form method="POST" id="booking_form">
+        {% csrf_token %}
+        {{ booking_form.number_guests }}
+        {{ booking_form.selected_category }}
+        {{ booking_form.selected_suite }}
+        {{ booking_form.guest_information }}
+        <button class="booking_button" id="suite_category_button"  type="submit">
+            Payment<span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+    </form>
 </div>
-<form method="POST" id="booking_form">
-    {% csrf_token %}
-    {{ booking_form.number_guests }}
-    {{ booking_form.selected_category }}
-    {{ booking_form.selected_suite }}
-    {{ booking_form.guest_information }}
-    <button class="booking_button" id="suite_category_button"  type="submit">
-        Payment<span class="material-symbols-outlined">arrow_forward</span>
-    </button>
-</form>
+
 {% else %}
 This cruise can no longer be booked. Apologies.
 {% endif %}

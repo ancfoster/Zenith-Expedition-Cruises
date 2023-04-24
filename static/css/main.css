@@ -557,3 +557,15 @@ main {
     font-family: neue-haas-grotesk-display, sans-serif, Arial;
     font-weight: 400;
 }
+#card-element {
+    width: 100%;
+}
+.gf_center {
+    text-align: center;
+}
+#detail_form_cont {
+    width: 100%;
+}
+.payment-form {
+    margin: 24px 0;
+}

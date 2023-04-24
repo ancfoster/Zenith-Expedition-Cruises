@@ -8,6 +8,9 @@ Book {{ cruise.name }}
 
 {% block content %}
 <h1 class="booking_h1">Booking:</h1>
+<div class="booking_cruise_title">
+  {{ cruise.name }}
+</div>
 <div class="booking_status_flex">
     <!-- Progress indicator -->
     <span id="progress_suite">
@@ -19,9 +22,6 @@ Book {{ cruise.name }}
     <span class="booking_status_current" id="progress_payment">
         Payment
     </span>
-</div>
-<div class="booking_cruise_title">
-    {{ cruise.name }}
 </div>
 
 <div class="journey_container" id="number_and_category_cont">

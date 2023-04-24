@@ -24,6 +24,16 @@ const totalPriceDeluxe = document.getElementById('total_price_deluxe');
 const totalPriceSpa = document.getElementById('total_price_spa');
 const totalPriceOwner = document.getElementById('total_price_owner');
 
+//Container vars
+const numberCategoryJourneyCont = document.getElementById('number_and_category_cont');
+const suiteJourneyCont = document.getElementById('suite');
+const guestDetailsCont = document.getElementById('guest_details');
+const suiteCategoryButton = document.getElementById('suite_category_button');
+const guestDetailsButton = document.getElementById('guest_details_button');
+//Progress indiccator vars
+const progressSuite = document.getElementById('progress_suite');
+const progressGuests = document.getElementById('progress_guests');
+
 // Guest form vars
 let numberForms = 0;
 const detailFormCont = document.getElementById('detail_form_cont');
@@ -41,6 +51,10 @@ function set() {
     numberField.value = numberGuests;
     updateTotalPrice();
     createDetailForms();
+    guestDetailsCont.style.display = 'none';
+    suiteJourneyCont.style.display = 'none';
+    suiteCategoryButton.style.display = 'none';
+    guestDetailsButton.style.display = 'none';
 }
 // Updates total price based on number of passengers
 function updateTotalPrice() {
@@ -136,6 +150,8 @@ categoryCont.addEventListener('click', (e) => {
         break;
   }
   generateSuiteSelection();
+  // Update form progress
+  suiteCategoryButton.style.display = 'flex';
 })
 // Removes the category selected class from any div that has it
 function removeSelectedCategoryClass() {
@@ -166,6 +182,7 @@ function generateSuiteItem(x) {
 }
 // Suite selection
 suiteSelectionCont.addEventListener('click', (e) => {
+    guestDetailsButton.style.display = 'flex';
     if (e.target.classList.contains('suite_item')) {
         removeSelectedSuiteClass()
         const suiteSelectedId = e.target.id;
@@ -303,4 +320,16 @@ bookingForm.addEventListener('submit', e => {
     let guestInformationStr = JSON.stringify(guestInfoList);
     guestInformationField.value = guestInformationStr;
     bookingForm.submit();
+})
+
+suiteCategoryButton.addEventListener('click', () => {
+    numberCategoryJourneyCont.style.display='none';
+    suiteJourneyCont.style.display='flex';
+})
+
+guestDetailsButton.addEventListener('click', () => {
+    suiteJourneyCont.style.display='none';
+    guestDetailsCont.style.display='flex';
+    progressSuite.classList.remove('booking_status_current');
+    progressGuests.classList.add('booking_status_current');
 })
