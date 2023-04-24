@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://zenith-cruises.s3.eu-west-2.amazonaws.com/static/css/email.css">
+  </head>
+  <body>
+    <table>
+        <tr>
+          <td id="logo">
+            <img src="https://zenith-cruises.s3.eu-west-2.amazonaws.com/email/logomark.png" height="64px" width="auto" alt="Zenith Expedition Cruises">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h1>Booking confirmed</h1>
+        </td>
+        </tr>
+        <tr>
+          <td>Thank you for booking {{ cruise_name }} with Zenith Cruises. We cannot wait to welcome you onboard {{ ship_name }}.</td>
+        </tr>
+        <tr>
+          <td>
+            <br>
+            Your card has been successfully charged: £ {{ fare }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <br>
+            <h3>Your booking details are as follows</h3>
+            <div class="info"><b>Suite Category:</b> {{ suite_category }}</div>
+            <div class="info"><b>Suite Number:</b> {{ suite_number }}</div>
+            <br>
+            <span>Kind regards</span>
+            <div>
+                <img height="24px" width="auto" src="https://zenith-cruises.s3.eu-west-2.amazonaws.com/email/logo.png" alt="">
+            </div>
+        </td>
+        </tr>
+      </table>
+  </body>
+</html>
