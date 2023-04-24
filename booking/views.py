@@ -142,10 +142,12 @@ def Payment(request):
         final_fare = final_fare.quantize(Decimal('0.01'))
         final_fare = int(final_fare * 100)
 
+        session_id = request.session.session_key
+
         intent = stripe.PaymentIntent.create(
         amount=final_fare,
         currency="gbp",
-        metadata={'session_id': request.session.session_key},
+        metadata={"session_id" : session_id},
         automatic_payment_methods={"enabled": True},
         )
         client_secret = intent.client_secret
@@ -164,36 +166,41 @@ def Payment(request):
 
 @csrf_exempt
 def stripe_webhook(request):
-    '''
-    Handles a successful booking
-    '''
-    payload = request.body
-    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
     event = None
+    payload = request.data
+
     try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, stripe.api_key
-        )
-    except ValueError as e:
-        return HttpResponse(status=400)
+        event = json.loads(payload)
+    except:
+        print('⚠️  Webhook error while parsing basic request.' + str(e))
+        return jsonify(success=False)
+    if endpoint_secret:
+        # Only verify the event if there is an endpoint secret defined
+        # Otherwise use the basic event deserialized with json
+        sig_header = request.headers.get('stripe-signature')
+        try:
+            event = stripe.Webhook.construct_event(
+                payload, sig_header, endpoint_secret
+            )
+        except stripe.error.SignatureVerificationError as e:
+            print('⚠️  Webhook signature verification failed.' + str(e))
+            return jsonify(success=False)
 
-    if event['type'] == 'payment_intent.succeeded':
-        payment_intent = event['data']['object']
-        metadata = event['data']['object']['metadata']
+    # Handle the event
+    if event and event['type'] == 'payment_intent.succeeded':
+        payment_intent = event['data']['object']  # contains a stripe.PaymentIntent
+        print('Payment for {} succeeded'.format(payment_intent['amount']))
+        # Then define and call a method to handle the successful payment intent.
+        # handle_payment_intent_succeeded(payment_intent)
+    elif event['type'] == 'payment_method.attached':
+        payment_method = event['data']['object']  # contains a stripe.PaymentMethod
+        # Then define and call a method to handle the successful attachment of a PaymentMethod.
+        # handle_payment_method_attached(payment_method)
+    else:
+        # Unexpected event type
+        print('Unhandled event type {}'.format(event['type']))
 
-        session_id = metadata[session_id]
-        # Do something with the payment_intent object
-        from django.core.mail import send_mail
-
-        subject = 'Success booking'
-        message = f"Success message; session id is {session_id}"
-        from_email = 'zenithexpeditioncruises@gmail.com'
-        recipient_list = ['a.foster@outlook.com']
-
-        send_mail(subject, message, from_email, recipient_list)
-
-
-    return HttpResponse(status=200)
+    return jsonify(success=True)
 
 
 @login_required
