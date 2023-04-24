@@ -1,13 +1,23 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 from django.db.models import Count, Case, When, BooleanField
 import json
+import os
 from datetime import timedelta
+from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.views import generic, View
-
 from .forms import BookingForm
+import stripe
+
+
+if os.path.isfile('env.py'):
+    import env
+
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 
 @login_required
 def NewBooking(request, slug):
@@ -52,7 +62,21 @@ def NewBooking(request, slug):
     passport_min_expire = (cruise_end_date + timedelta(days=30)).strftime('%Y-%m-%d')
 
     if request.method == 'POST':
-        print('post')
+        booking_form = BookingForm(request.POST)
+        if booking_form.is_valid():
+            booking_dict = request.session.get('booking_dict', None)
+            if booking_dict:
+                request.session['booking_dict'] = {}
+            else:
+                booking_dict = {}
+            booking_dict['cruise'] = cruise.id
+            booking_dict['number_guests'] = booking_form.cleaned_data['number_guests']
+            booking_dict['selected_category'] = booking_form.cleaned_data['selected_category']
+            booking_dict['selected_suite'] = booking_form.cleaned_data['selected_suite']
+            booking_dict['guest_information'] = booking_form.cleaned_data['guest_information']
+            request.session['booking_dict'] = booking_dict
+
+            return redirect('payment')            
 
     else:
         booking_form = BookingForm()
@@ -85,6 +109,51 @@ def NewBooking(request, slug):
         'passport_min_expire': passport_min_expire,
         'deckplans': deckplans,
     }
-
     return render(request, 'booking/booking.html', context)
- 
+
+
+@login_required
+def Payment(request):
+    '''
+    If there is a booking session display Stripe form and booking information
+    '''
+    booking_dict = request.session.get('booking_dict', None)
+    if booking_dict:
+        cruise_id = booking_dict['cruise']
+        number_guests = booking_dict['number_guests']
+        selected_category = booking_dict['selected_category']
+        selected_suite = booking_dict['selected_suite']
+        #Get cruise
+        cruise = get_object_or_404(Cruises, id=cruise_id)
+        #Get suite category
+        suite_category = get_object_or_404(SuiteCategories, id=selected_category)
+        #Getting base fare
+        base_fare = get_object_or_404(Fares, cruise=cruise, suite_category=suite_category)
+        base_fare_price = base_fare.price
+        #Work out price to charge customer
+        if number_guests == 1:
+            final_fare = base_fare_price * Decimal('0.75')
+        elif number_guests == 2:
+            final_fare = base_fare_price
+        elif number_guests == 3:
+            final_fare = base_fare_price * Decimal('1.5')
+        final_fare = final_fare.quantize(Decimal('0.01'))
+        final_fare = int(final_fare * 100)
+
+        intent = stripe.PaymentIntent.create(
+        amount=final_fare,
+        currency="gbp",
+        automatic_payment_methods={"enabled": True},
+        )
+        client_secret = intent.client_secret
+
+    else:
+        return redirect('cruise_results')
+    
+    context = {
+        'cruise': cruise,
+        'final_fare_price': final_fare,
+        'client_secret': client_secret,
+    }
+    return render(request, 'booking/payment.html', context)
+    

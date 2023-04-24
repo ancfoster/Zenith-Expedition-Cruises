@@ -1,0 +1,36 @@
+{% extends "booking_base.html" %}
+{% load static %}
+{% load mathfilters %}
+
+{% block title %}
+Book {{ cruise.name }}
+{% endblock %}
+
+{% block content %}
+<h1 class="booking_h1">Booking:</h1>
+<div class="booking_status_flex">
+    <!-- Progress indicator -->
+    <span id="progress_suite">
+        Suite
+    </span>
+    <span id="progress_guests">
+       Guest Details
+    </span>
+    <span class="booking_status_current" id="progress_payment">
+        Payment
+    </span>
+</div>
+<div class="booking_cruise_title">
+    {{ cruise.name }}
+</div>
+
+<div class="journey_container" id="number_and_category_cont">
+    <h2 class="booking_h2">How many guests? {{ final_fare_price }} {{ client_secret }}</h2>
+   
+</div>
+{% endblock %}
+{% block footerscripts %}
+
+{% endblock %}
+
+
