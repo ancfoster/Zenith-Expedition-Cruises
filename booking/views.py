@@ -4,6 +4,7 @@ from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cru
 from django.db.models import Count, Case, When, BooleanField
 import json
 import os
+from django.views.decorators.csrf import csrf_exempt
 from datetime import timedelta
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
@@ -11,6 +12,7 @@ from django.db.models import F
 from django.views import generic, View
 from .forms import BookingForm
 import stripe
+from django.core.mail import send_mail
 
 
 if os.path.isfile('env.py'):
@@ -157,4 +159,42 @@ def Payment(request):
         'public_key': STRIPE_PUBLIC_KEY,
     }
     return render(request, 'booking/payment.html', context)
-    
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    '''
+    Handles a successful booking
+    '''
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, stripe.api_key
+        )
+    except ValueError as e:
+        return HttpResponse(status=400)
+
+    if event['type'] == 'payment_intent.succeeded':
+        payment_intent = event['data']['object']
+        # Do something with the payment_intent object
+        from django.core.mail import send_mail
+
+        subject = 'Success booking'
+        message = 'Success message'
+        from_email = 'zenithexpeditioncruises@gmail.com'
+        recipient_list = ['a.foster@outlook.com']
+
+        send_mail(subject, message, from_email, recipient_list)
+
+
+    return HttpResponse(status=200)
+
+
+@login_required
+def Success(request):
+    context = {
+
+    }
+    return render(request, 'booking/success.html', context)
