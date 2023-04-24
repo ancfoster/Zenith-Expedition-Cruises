@@ -145,6 +145,7 @@ def Payment(request):
         intent = stripe.PaymentIntent.create(
         amount=final_fare,
         currency="gbp",
+        metadata={'session_id': request.session.session_key}
         automatic_payment_methods={"enabled": True},
         )
         client_secret = intent.client_secret
@@ -178,11 +179,14 @@ def stripe_webhook(request):
 
     if event['type'] == 'payment_intent.succeeded':
         payment_intent = event['data']['object']
+        metadata = event['data']['object']['metadata']
+
+        session_id = metadata[session_id]
         # Do something with the payment_intent object
         from django.core.mail import send_mail
 
         subject = 'Success booking'
-        message = 'Success message'
+        message = f"Success message; session id is {session_id}"
         from_email = 'zenithexpeditioncruises@gmail.com'
         recipient_list = ['a.foster@outlook.com']
 

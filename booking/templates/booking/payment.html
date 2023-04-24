@@ -55,11 +55,12 @@ const form = document.getElementById('payment-form');
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
+
   const {error} = await stripe.confirmPayment({
     //`Elements` instance that was used to create the Payment Element
     elements,
     confirmParams: {
-      return_url: 'https://8000-ancfoster-zenithexpedit-u52h9oe6x1v.ws-eu95.gitpod.io/cruises',
+      return_url: 'https://zenith-ci.herokuapp.com/payment/success',
     },
   });
 
