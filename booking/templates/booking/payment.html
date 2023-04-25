@@ -11,21 +11,9 @@ Book {{ cruise.name }}
 <div class="booking_cruise_title">
   {{ cruise.name }}
 </div>
-<div class="booking_status_flex">
-    <!-- Progress indicator -->
-    <span id="progress_suite">
-        Suite
-    </span>
-    <span id="progress_guests">
-       Guest Details
-    </span>
-    <span class="booking_status_current" id="progress_payment">
-        Payment
-    </span>
-</div>
-
 <div class="journey_container" id="number_and_category_cont">
     <form id="payment-form">
+      <br>
         <div id="payment-element">
           <!-- Elements will create form elements here -->
         </div>
@@ -55,12 +43,13 @@ const form = document.getElementById('payment-form');
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
+  const currentDomain = window.location.hostname;
 
   const {error} = await stripe.confirmPayment({
     //`Elements` instance that was used to create the Payment Element
     elements,
     confirmParams: {
-      return_url: '/payment/success',
+      return_url: `https://${currentDomain}/payment/status`,
     },
   });
 
