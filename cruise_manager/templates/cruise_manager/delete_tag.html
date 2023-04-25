@@ -1,0 +1,29 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+Delete Tag
+{% endblock %}
+{% block head_resources %}
+
+{% endblock %}
+
+{% block content %}
+<h1 class="admin_h1">Delete Tag</h1>
+<div class="admin_create_cont">
+    <div class="flex flex-col items-center justify-center">
+        <span class="pb-4">Are you sure you want to delete the tag {{ object.name }}? This cannot be undone.</span>
+        <form class="flex justify-center flex-wrap bg-ad" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Yes" class="admin_button max-w-[120px]">
+            <a id="cancel-a" href="{% url 'tags' %}">
+                <div class="admin_button w-[120px]" id="cancel-button">Cancel</div>
+            </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block footerscripts %}
+{% endblock %}

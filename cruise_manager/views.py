@@ -7,12 +7,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
 from django.utils.text import slugify
 from django.db.models import F
 import uuid
 from PIL import Image
 from django_countries import countries
 from django.views import generic, View
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
@@ -268,6 +272,22 @@ def NewTag(request):
         'new_tag_form': new_tag_form,
     }
     return render(request, 'cruise_manager/new_tag.html', context)
+
+
+#As this is a class view a different method is used to enforce staff access
+@method_decorator(user_passes_test(lambda u: u.is_staff), name='dispatch')
+class TagDelete(DeleteView):
+    '''
+    Deletes a tag
+    '''
+    template_name = 'cruise_manager/delete_tag.html'
+
+    def get_object(self):
+        id = self.kwargs.get("id")
+        return get_object_or_404(Tag, id=id)
+
+    def get_success_url(self):
+        return reverse('tags')
 
 
 @staff_member_required

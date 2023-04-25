@@ -1,5 +1,6 @@
 from . import views
 from django.urls import path
+from django.contrib.auth.decorators import permission_required
 
 urlpatterns = [
     path('manager/new-destination', views.NewDestination, name="new_destination"),
@@ -10,5 +11,5 @@ urlpatterns = [
     path('manager/new-cruise', views.NewCruise, name='new_cruise'),
     path('manager/cruises', views.DisplayCruises, name='display_cruises_manager'),
     path('manager/', views.Dashboard, name='dashboard'),
-
+    path('manager/delete-tag/<id>', views.TagDelete.as_view(), name='delete_tag'),
 ]
