@@ -1,9 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './cruises/templates/cruises/**/*.{html,js}',
     './templates/**/*.{html,js}',
-    './site_pages/templates/site_pages/**/*.{html,js}',
     './cruise_manager/templates/cruise_manager/**/*.{html,js}'
   ],
   theme: {
