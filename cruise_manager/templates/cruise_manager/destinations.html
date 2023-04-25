@@ -23,7 +23,7 @@ Destinations
     <div class="flex-col">
         <ul>
         {% for destination in destinations %}
-        <li class="h-[40px] w-full bg-admin_table_grey1 even:bg-admin_table_grey2 hover:bg-white pl-2 pr-2 border border-admin_table_border last:rounded-b-lg"><a href="{% url 'destination' id=destination.id %}" class="w-full h-[40px] flex items-center"><span>{{destination.name}},<span>&nbsp; {{destination.get_country_display}}</span></span></a></li>
+        <li class="h-[40px] w-full bg-admin_table_grey1 even:bg-admin_table_grey2 hover:bg-white pl-2 pr-2 border border-admin_table_border last:rounded-b-lg"><a href="{% url 'destination' destination.id %}" class="w-full h-[40px] flex items-center"><span>{{destination.name}},<span>&nbsp; {{destination.get_country_display}}</span></span></a></li>
         {% endfor %}
         </ul>
     </div>

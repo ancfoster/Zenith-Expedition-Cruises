@@ -34,10 +34,10 @@
             </div>
         </div>
         <div class="flex justify-end items-center mb-4 mr-4">
-          <a href="#">
+          <a href="{% url 'edit_destination' destination.id %}">
             <div class="admin_icon_button mr-2"><span class="material-symbols-outlined pr-1">edit</span><span class="translate-y-[1px]">Edit</span></div>
           </a>
-          <a href="#">
+          <a href="{% url 'delete_destination' destination.id %}">
             <div class="admin_icon_button"><span class="material-symbols-outlined pr-1">delete</span><span class="translate-y-[1px]">Delete</span></div>
           </a>
         </div>
@@ -58,6 +58,5 @@ mapboxgl.accessToken = '{{ mapkey }}';
     // This code comes from the MapBox docuentation
 
 </script>
-<script src="{% static 'js/new_destination.js' %}">
 </script>
 {% endblock %}
