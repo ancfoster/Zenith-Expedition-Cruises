@@ -27,13 +27,6 @@ class Destination(models.Model):
     image = models.ImageField(verbose_name='Destination Image')
     latitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Latitude")
     longitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name="Destination Longitude")
-    slug = slug = models.SlugField(blank=True, unique=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
 
     def __str__(self):
         return self.name
@@ -95,11 +88,6 @@ class Tag(models.Model):
     Tags are used to help with filtering
     '''
     name = models.CharField(max_length=25, verbose_name="Tag Name")
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
