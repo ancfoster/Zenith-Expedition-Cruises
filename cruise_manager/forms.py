@@ -18,7 +18,6 @@ class NewDestinationForm(forms.ModelForm):
             'latitude': forms.HiddenInput(),
             'longitude': forms.HiddenInput(),
         }
-
         fields = "__all__"
         exclude = ('slug',)
 
@@ -26,6 +25,15 @@ class NewDestinationForm(forms.ModelForm):
 class NewTagForm(forms.ModelForm):
     '''
     Form for creating new cruise tags
+    '''
+    class Meta:
+        model = Tag
+        fields = ('name',)
+
+
+class EditTagForm(forms.ModelForm):
+    '''
+    Form for editing existing tags
     '''
     class Meta:
         model = Tag

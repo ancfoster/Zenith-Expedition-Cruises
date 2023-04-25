@@ -5,11 +5,13 @@ from django.contrib.auth.decorators import permission_required
 urlpatterns = [
     path('manager/new-destination', views.NewDestination, name="new_destination"),
     path('manager/destinations', views.Destinations, name="destinations"),
-    path('manager/destination/<slug>/', views.DestinationDetail, name='destination'),
+    path('manager/destination/<id>/', views.DestinationDetail, name='destination'),
     path('manager/new-tag', views.NewTag, name="new_tag"),
     path('manager/tags', views.Tags, name='tags'),
     path('manager/new-cruise', views.NewCruise, name='new_cruise'),
     path('manager/cruises', views.DisplayCruises, name='display_cruises_manager'),
     path('manager/', views.Dashboard, name='dashboard'),
     path('manager/delete-tag/<id>', views.TagDelete.as_view(), name='delete_tag'),
+    path('manager/edit-tag/<id>', views.EditTag, name='edit_tag'),
+
 ]

@@ -17,11 +17,12 @@ from PIL import Image
 from django_countries import countries
 from django.views import generic, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.urls import reverse
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-from .forms import NewDestinationForm, NewTagForm, NewCruiseForm
+from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
@@ -274,6 +275,28 @@ def NewTag(request):
     return render(request, 'cruise_manager/new_tag.html', context)
 
 
+@staff_member_required
+def EditTag(request, id):
+    '''
+    Displays the edit tag form & template, and updates the tag if the form is submitted
+    '''
+    tag = get_object_or_404(Tag, id=id)
+
+    if request.method == 'POST':
+        edit_tag_form = EditTagForm(request.POST, instance=tag)
+        if edit_tag_form.is_valid():
+            edit_tag_form.save()
+            return redirect('tags')
+    else:
+        edit_tag_form = EditTagForm(instance=tag)
+    
+    context = {
+        'edit_tag_form': edit_tag_form,
+        'tag': tag,
+    }
+    return render(request, 'cruise_manager/edit_tag.html', context)
+
+
 #As this is a class view a different method is used to enforce staff access
 @method_decorator(user_passes_test(lambda u: u.is_staff), name='dispatch')
 class TagDelete(DeleteView):
@@ -305,12 +328,12 @@ def Tags(request):
 
 
 @staff_member_required
-def DestinationDetail(request, slug):
+def DestinationDetail(request, id):
     '''
     In the cruise manager app this shows the details of a 
     specific destination
     '''
-    destination = get_object_or_404(Destination, slug=slug)
+    destination = get_object_or_404(Destination, id=id)
     context = {
         'destination' : destination,
         'mapkey': mapkey,
