@@ -53,6 +53,30 @@
     {% block content %}
     {% endblock %}
 </main>
+<footer>
+    <div class="footer_cont">  
+        <div class="footer_marketing">
+            <span class="news_offers">Subscribe for news & offers</span>            
+                <form class="news_form" action="https://gmail.us17.list-manage.com/subscribe/post?u=cbc8b1126537676a554d2dedd&amp;id=8dc62b61d6&amp;f_id=00b650e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_self">
+                    <div>
+                        <input type="email" value="" name="EMAIL" id="mce-EMAIL" required>
+                        <input type="submit" placeholder="Your email" value="Subscribe" name="subscribe" id="mc-embedded-subscribe">
+                    </div>
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_cbc8b1126537676a554d2dedd_8dc62b61d6" tabindex="-1" value=""></div>
+                </form>
+                <span class="news_offers">Connect on social media</span>
+                <div id="social_icons">
+                    <a href="https://facebook.com" target="_blank"><img src="{% static 'images/facebook.png' %}" alt="Facebook"></a>
+                    <a href="https://instagram.com" target="_blank"><img src="{% static 'images/instagram.png' %}" alt="Instagram"></a>
+                </div>
+                <span>© Alexander Foster</span>
+        </div>
+        <div class="footer_logo">
+            <img src="{% static 'images/logo_black_star.svg' %}" alt="">
+        </div>
+
+    </div>
+</footer>
 {% block footerscripts %}
 {% endblock %}
 <script src="https://js.stripe.com/v3/"></script>

@@ -114,12 +114,109 @@ main {
     justify-content: center;
     align-items: center;
 }
+footer {
+    width: 100%;
+    background-color: #dddddd;
+    border-top: 1px solid #cdcdcd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+}
+.footer_cont {
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 960px;
+    padding: 16px;
+    display: flex;
+}
 #cruise_flex_top {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     max-width: 960px;
 }
+.footer_logo {
+    margin-left: 16px;
+    padding-left: 8px;
+    border-left: 1px solid #cdcdcd;
+    display: flex;
+    justify-content: flex-end;
+    align-items: start;
+}
+.footer_logo img {
+    width: 54px;
+    height: auto;
+    margin: 4px 8px;
+}
+.footer_marketing {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.news_offers {
+    font-family: var(--wide-font);
+    font-size: 16px;
+    color: var(--black111);
+    padding-bottom: 4px;
+}
+.news_form {
+    display: flex;
+    flex-direction: column;
+}
+.news_form div {
+    display: flex;
+    align-items: center;
+}
+.news_form input {
+    padding: 0 4px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--black333);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #cdcdcd;
+    /* margin: 8px; */
+    background-color: #F2F2F2;
+    height: 32px;
+}
+.news_form input:focus {
+    background-color: #f7f7f7;
+    color: var(--black111);
+    border-bottom: 1px solid black111;
+}
+.news_form input:hover {
+    background-color: #f7f7f7;
+}
+#mc-embedded-subscribe {
+    padding: 4px 10px;
+    background-color: var(--black333);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: neue-haas-grotesk-display, sans-serif, Arial;
+    margin: 16px 8px;
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+#mc-embedded-subscribe:hover {
+    background-color: var(--black111);
+    border: none;
+}
+#social_icons {
+    display: flex;
+    margin-top: 4px;
+}
+#social_icons a img {
+    height: 32px;
+    width: auto;
+    margin-right: 4px;
+}
+/* Cruise listing styles */
 #listing_image {
     width: 100%;
     min-height: 180px;
@@ -273,6 +370,17 @@ main {
     }
     #cruise-flex-mid {
         margin-top: 16px;
+    }
+}
+
+@media screen and (max-width:400px) {
+    nav a {
+        width: auto;
+    }
+    .footer_logo img {
+        width: 40px;
+        height: auto;
+        margin: 0;
     }
 }
 
@@ -568,7 +676,6 @@ main {
     color: var(--black333);
     margin: 16px 0;
 }
-
 .booking_form {
     display: flex;
     flex-direction: column;
