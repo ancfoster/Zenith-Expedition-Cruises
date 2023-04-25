@@ -257,6 +257,22 @@ def Destinations(request):
 
 
 @staff_member_required
+def DeleteDestination(request, id):
+    '''
+    Deletes a destination provided it isn't being used in a movement
+    '''
+    destination = get_object_or_404(Destination, id=id)
+    related_movements = Movements.objects.filter(destination=destination).count()
+    if request.method == 'POST':
+        destination.delete()
+        return redirect('destinations')
+    context = {
+        'destination' : destination,
+        'related_movements' : related_movements,
+    }
+    return render(request, 'cruise_manager/delete_destination.html', context)
+
+@staff_member_required
 def NewTag(request):
     '''
     Displays the new tag form & template

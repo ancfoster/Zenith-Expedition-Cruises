@@ -1115,6 +1115,10 @@ select{
   padding-bottom: 1rem;
 }
 
+.text-center{
+  text-align: center;
+}
+
 .font-admin{
   font-family: forma-djr-micro;
 }
