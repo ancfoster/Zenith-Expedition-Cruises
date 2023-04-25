@@ -95,7 +95,6 @@ class Tag(models.Model):
     Tags are used to help with filtering
     '''
     name = models.CharField(max_length=25, verbose_name="Tag Name")
-    slug = models.SlugField(blank=True, unique=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
