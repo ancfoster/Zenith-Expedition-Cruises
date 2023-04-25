@@ -813,6 +813,10 @@ select{
   margin-top: 2rem;
 }
 
+.mr-1{
+  margin-right: 0.25rem;
+}
+
 .block{
   display: block;
 }
@@ -857,6 +861,10 @@ select{
   height: 100%;
 }
 
+.h-\[\]{
+  height: ;
+}
+
 .min-h-\[180px\]{
   min-height: 180px;
 }
@@ -875,6 +883,10 @@ select{
 
 .w-\[120px\]{
   width: 120px;
+}
+
+.w-\[24px\]{
+  width: 24px;
 }
 
 .max-w-\[760px\]{
@@ -963,6 +975,14 @@ select{
   border-radius: 0.75rem;
 }
 
+.rounded{
+  border-radius: 0.25rem;
+}
+
+.rounded-full{
+  border-radius: 9999px;
+}
+
 .rounded-t-2xl{
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
@@ -1031,6 +1051,11 @@ select{
 .bg-black333{
   --tw-bg-opacity: 1;
   background-color: rgb(51 51 51 / var(--tw-bg-opacity));
+}
+
+.bg-black{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
 .object-cover{
@@ -1118,6 +1143,11 @@ select{
   line-height: 1.75rem;
 }
 
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-light{
   font-weight: 300;
 }
@@ -1140,6 +1170,14 @@ select{
 
 .leading-5{
   line-height: 1.25rem;
+}
+
+.leading-7{
+  line-height: 1.75rem;
+}
+
+.leading-6{
+  line-height: 1.5rem;
 }
 
 .text-black222{
@@ -1416,6 +1454,11 @@ input[type=number]::-webkit-outer-spin-button {
 .hover\:bg-white:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-black:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
 .hover\:text-black:hover{

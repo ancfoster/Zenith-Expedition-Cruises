@@ -23,7 +23,7 @@ Tags
     <div class="flex-col">
         <ul>
         {% for tag in tags %}
-        <li class="h-[40px] w-full bg-admin_table_grey1 even:bg-admin_table_grey2 hover:bg-white pl-2 pr-2 border border-admin_table_border last:rounded-b-lg"><a href="#" class="w-full h-[40px] flex items-center"><span>{{tag.name}}</span></a></li>
+        <li class="h-[40px] w-full bg-admin_table_grey1 even:bg-admin_table_grey2 pl-2 pr-2 border border-admin_table_border last:rounded-b-lg"><div class="w-full h-[40px] flex items-center justify-between"><span>{{tag.name}}</span><div class="flex"><a href="{% url 'edit_tag' id=tag.id %}" class="w-[32px] h-[32px] mr-3 bg-black333 text-white rounded-full flex justify-center items-center hover:bg-black111"><span class="material-symbols-outlined text-2xl leading-6">edit</span></a><a href="{% url 'delete_tag' id=tag.id %}" class="w-[32px] h-[32px] mr-2 bg-black333 text-white rounded-full flex justify-center items-center hover:bg-black111"><span class="material-symbols-outlined text-2xl leading-6">delete</span></a></div></div></li>
         {% endfor %}
         </ul>
     </div>
