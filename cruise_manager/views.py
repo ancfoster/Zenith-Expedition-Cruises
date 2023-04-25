@@ -22,7 +22,7 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm
+from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm, EditDestinationForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
 
@@ -257,6 +257,29 @@ def Destinations(request):
 
 
 @staff_member_required
+def EditDestination(request, id):
+    '''
+    Displays the edit tag form & template, and updates the tag if the form is submitted
+    '''
+    destination = get_object_or_404(Destination, id=id)
+
+    if request.method == 'POST':
+        edit_destination_form = EditDestinationForm(request.POST, instance=destination)
+        if edit_destination_form.is_valid():
+            edit_destination_form.save()
+            return redirect('destinations')
+    else:
+        edit_destination_form = EditDestinationForm(instance=destination)
+    
+    context = {
+        'edit_destination_form': edit_destination_form,
+        'destination': destination,
+        'mapkey': mapkey
+    }
+    return render(request, 'cruise_manager/edit_destination.html', context)
+
+
+@staff_member_required
 def DeleteDestination(request, id):
     '''
     Deletes a destination provided it isn't being used in a movement
@@ -271,6 +294,7 @@ def DeleteDestination(request, id):
         'related_movements' : related_movements,
     }
     return render(request, 'cruise_manager/delete_destination.html', context)
+
 
 @staff_member_required
 def NewTag(request):

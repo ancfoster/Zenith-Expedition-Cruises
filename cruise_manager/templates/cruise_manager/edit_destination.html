@@ -1,0 +1,116 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+Create a new Destination
+{% endblock %}
+{% block head_resources %}
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+{% endblock %}
+
+{% block content %}
+<h1 class="admin_h1">Edit Destination: {{ destination.name }}</h1>
+<div class="admin_create_cont">
+    <div>
+        <form class="flex flex-col flex-wrap bg-ad" method="POST" id="edit_destination_form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label class="admin_form_label" for="id_name">Name</label>
+            {% render_field edit_destination_form.name class+="admin_field" %}
+            <label class="admin_form_label" for="id_country">Country</label>
+            {% render_field edit_destination_form.country class+="admin_field" %}
+            <label class="admin_form_label" for="id_continent">Continent</label>
+            {% render_field edit_destination_form.continent class+="admin_field" %}
+            <label class="admin_form_label" for="id_description">Description <span id="description_count" class="pl-3 font-light text-grey555 italic"></span></label>
+            {% render_field edit_destination_form.description class+="admin_field" %}
+            <label class="admin_form_label" for="id_image">Image</label>
+            <div class="admin_form_tip"><span class="material-symbols-outlined mr-2">info</span> Destination image appears on cruise listing pages</div>
+            {% render_field edit_destination_form.image class+="admin_field" %}
+            <label class="admin_form_label">Coordinates</label>
+            <span class="text-grey666 text-base mb-3">Drag the map to set the coordinate fields.</span>
+            <div id='map' class="w-full h-[320px] mb-2 overflow-hidden rounded-xl"></div>
+            <div class="flex"><span class="pr-2 font-normal">Latitude:</span><span class="mr-4 font-medium" id="latitude_span">0.0000</span><span class="pr-2 font-normal">Longitude:</span><span id="longitude_span" class="font-medium">0.0000</span></div>
+            {{ edit_destination_form.latitude }}
+            {{ edit_destination_form.longitude }}
+            <div class="m-auto pt-2">
+                <button type="submit" class="admin_button">Save Destination</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block footerscripts %}
+<script>
+const LatitudeSpan = document.getElementById('latitude_span');
+const LongitudeSpan = document.getElementById('longitude_span');
+const IdLatitude = document.getElementById('id_latitude');
+const IdLongitude = document.getElementById('id_longitude');
+
+LatitudeSpan.innerHTML = IdLatitude.value;
+LongitudeSpan.innerHTML = IdLongitude.value;
+        
+
+mapboxgl.accessToken = '{{ mapkey }}';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [IdLongitude.value, IdLatitude.value], // starting position
+      zoom: 2,
+    });
+    // This code comes from the MapBox docuentation
+    // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
+    map.addControl(new mapboxgl.NavigationControl());
+    map.loadImage("{% static 'images/crosshairs.png' %}", (error, image) => {
+        map.addImage('crosshairs', image);
+        map.addSource('point', {
+            'type': 'geojson',
+            'data': {
+            'type': 'FeatureCollection',
+            'features': [
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                        'type': 'Point',
+                        'coordinates': [IdLongitude.value, IdLatitude.value]
+                    }
+                }
+            ]
+                }
+            });
+            map.addLayer({
+                    'id': 'points',
+                    'type': 'symbol',
+                    'source': 'point', // reference the data source
+                    'layout': {
+                    'icon-image': 'crosshairs', // reference the image
+                    'icon-size': 0.4
+                    }
+                    });
+    });
+    map.on('move', () => {        
+        let position = map.getCenter();
+        let lat = parseInt(position.lat.toFixed(4));
+        let lon = parseInt(position.lng.toFixed(4));
+        LatitudeSpan.innerText = lat;
+        LongitudeSpan.innerText = lon;
+        IdLatitude.value = lat
+        IdLongitude.value = lon
+        map.getSource('point').setData({
+        'type': 'FeatureCollection',
+        'features': [
+        {
+            'type': 'Feature',
+            'geometry': {
+            'type': 'Point',
+            'coordinates': [lon, lat]
+            }
+        }
+        ]
+        });
+    });
+
+</script>
+<script src="{% static 'js/new_destination.js' %}">
+</script>
+{% endblock %}

@@ -19,7 +19,19 @@ class NewDestinationForm(forms.ModelForm):
             'longitude': forms.HiddenInput(),
         }
         fields = "__all__"
-        exclude = ('slug',)
+
+
+class EditDestinationForm(forms.ModelForm):
+    '''
+    Class for the form that edits and existing
+    '''
+    class Meta:
+        model = Destination
+        widgets = {
+            'latitude': forms.HiddenInput(),
+            'longitude': forms.HiddenInput(),
+        }
+        fields = "__all__"
 
 
 class NewTagForm(forms.ModelForm):
