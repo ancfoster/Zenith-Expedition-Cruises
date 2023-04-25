@@ -163,49 +163,31 @@ def Payment(request):
     }
     return render(request, 'booking/payment.html', context)
 
-
-@csrf_exempt
-def stripe_webhook(request):
-    event = None
-    payload = request.data
-
-    try:
-        event = json.loads(payload)
-    except:
-        print('⚠️  Webhook error while parsing basic request.' + str(e))
-        return jsonify(success=False)
-    if endpoint_secret:
-        # Only verify the event if there is an endpoint secret defined
-        # Otherwise use the basic event deserialized with json
-        sig_header = request.headers.get('stripe-signature')
-        try:
-            event = stripe.Webhook.construct_event(
-                payload, sig_header, endpoint_secret
-            )
-        except stripe.error.SignatureVerificationError as e:
-            print('⚠️  Webhook signature verification failed.' + str(e))
-            return jsonify(success=False)
-
-    # Handle the event
-    if event and event['type'] == 'payment_intent.succeeded':
-        payment_intent = event['data']['object']  # contains a stripe.PaymentIntent
-        print('Payment for {} succeeded'.format(payment_intent['amount']))
-        # Then define and call a method to handle the successful payment intent.
-        # handle_payment_intent_succeeded(payment_intent)
-    elif event['type'] == 'payment_method.attached':
-        payment_method = event['data']['object']  # contains a stripe.PaymentMethod
-        # Then define and call a method to handle the successful attachment of a PaymentMethod.
-        # handle_payment_method_attached(payment_method)
-    else:
-        # Unexpected event type
-        print('Unhandled event type {}'.format(event['type']))
-
-    return jsonify(success=True)
-
-
 @login_required
 def Success(request):
     context = {
-
+        'public_key' : STRIPE_PUBLIC_KEY,
     }
     return render(request, 'booking/success.html', context)
+
+@csrf_exempt
+def ProcessSuccess(request):
+    if request.method == 'POST':
+        try:
+            # parse the request body as json
+            data = json.loads(request.body)
+            # do something with the data 
+            print("Test success")
+       
+            subject = 'Subject of the Email'
+            message = 'This is the message body'
+            from_email = 'zenithexpeditioncruises@gmail.com'
+            recipient_list = ['a.foster@outlook.com',]
+
+            send_mail(subject, message, from_email, recipient_list)
+
+            return HttpResponse('Success')
+        except json.JSONDecodeError:
+            result = {'status': 'error', 'message': 'Invalid JSON'}
+    else:
+        result = {'status': 'error', 'message': 'Invalid request method'}
