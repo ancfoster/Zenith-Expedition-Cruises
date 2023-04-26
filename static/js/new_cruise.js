@@ -13,8 +13,8 @@ const nameCount = document.getElementById('name_count');
 const descriptionCount = document.getElementById('description_count');
 const nameField = document.getElementById('id_name');
 const descriptionField = document.getElementById('id_description');
-var destinationSelects = '';    
-var cruiseStartDate = new Date();
+let destinationSelects = '';    
+let cruiseStartDate = new Date();
 let cruiseEndDate = new Date();
 var duration;
 let movementsJSON = [];
@@ -37,6 +37,7 @@ function loadValues() {
 
 // Calculates the end date of the cruise using start date and duration
 function calculateEndDate() {
+    let cruiseEndDate = new Date(cruiseStartDate.getTime());
     cruiseEndDate.setDate(cruiseStartDate.getDate() + (duration - 1));
     let cruiseEndDateDay = `${cruiseEndDate.getDate().toString().padStart(2, '0')}`;
     let cruiseEndDateMonth = `${(cruiseEndDate.getMonth() + 1).toString().padStart(2, '0')}`;
@@ -45,12 +46,12 @@ function calculateEndDate() {
     cruiseEndSpan.innerText = `${cruiseEndDateDay}-${cruiseEndDateMonth}-${cruiseEndDateYear}`;
     // This value is returned to backend in yyyy-mm-dd format
     cruiseEndField.value = `${cruiseEndDateYear}-${cruiseEndDateMonth}-${cruiseEndDateDay}`;
+    return cruiseEndDate;
 }
 
 // When the user changes the start date in the picker update hidden field value, recalculate end date
 cruiseStartField.onchange = () => {
     cruiseStartDate = new Date(cruiseStartField.value);
-    cruiseEndDate = new Date(cruiseStartDate.getTime());
     calculateEndDate();
     updateDates();
 }
@@ -141,7 +142,7 @@ function loadMovements() {
 function createMovementJSON(daysToCreate, dayFrom) {
     for(let i=0; i < daysToCreate; i++) {
         let day = dayFrom + (i + 1);
-        let movementDate = new Date()
+        let movementDate = new Date(cruiseStartDate.getTime());
         movementDate.setDate(cruiseStartDate.getDate() + (day - 1));
         let movementDateDay = `${movementDate.getDate().toString().padStart(2, '0')}`;
         let movementDateMonth = `${(movementDate.getMonth() + 1).toString().padStart(2, '0')}`;
