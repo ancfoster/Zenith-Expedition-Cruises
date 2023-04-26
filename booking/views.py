@@ -14,6 +14,8 @@ from django.views import generic, View
 from .forms import BookingForm
 import stripe
 from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 
 if os.path.isfile('env.py'):
@@ -216,6 +218,20 @@ def ProcessBooking(request):
         new_booking = Bookings.objects.create(booking_ref=booking_ref,booked_by=booked_by,number_of_guests=number_guests,guest_information=guest_information,booking_price=booking_price,ticket=ticket,cruise_name_str=cruise_name_str)
         #Delete the session booking dictionary
         del request.session['booking_dict']
+
+        # Send confirmation email
+        name = 'Zenith Expedition Cruises'
+        message = render_to_string('booking/email_template.html', {'cruise':cruise.name, 'suite':selected_suite, 'ship':cruise.ship})
+        subject = f"Booking confirmation of {{cruise.name}} - Zenith Expedition Cruies"
+        from_email = 'zenithexpeditioncruises@gmail.com'
+        to_email = request.user.email
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=message,
+            from_email=from_email,
+            to=[to_email])
+        email.attach_alternative(message, "text/html")
+        email.send()
         return HttpResponse(f"{booking_ref}")
     else:
         return HttpResponse('failed')
