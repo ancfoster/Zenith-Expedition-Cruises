@@ -1,0 +1,44 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+Booking {{ booking.booking_ref }}
+{% endblock %}
+{% block head_resources %}
+{% endblock %}
+
+{% block content %}
+{% if booking %}
+<h1 class="admin_h1">Booking</h1>
+<div class="max-w-[760px] ml-auto mr-auto mb-3 flex">
+  <a href="{% url 'bookings' %}" class="text-black333 hover:text-black flex items-center"><span class="material-symbols-outlined pr-2">arrow_back</span><span class="font-light">Bookings</span></a>
+</div>
+<div class="max-w-[760px] w-full ml-auto mr-auto mt-2 mb-6 flex flex-col flex-wrap bg-admin_section_bg rounded-2xl shadow">
+        <div class="m-4 flex flex-col">
+            <h3 class="admin_form_label">Booking Reference</h3>
+            <span class="font-normal text-grey444">{{ booking.booking_ref }}</span>
+            <h3 class="admin_form_label">Booking by</h3>
+            <span class="font-normal text-grey444">{{ booking.booked_by }}</span>
+            <h3 class="admin_form_label">Number of guests</h3>
+            <span class="font-normal text-grey444">{{ booking.number_of_guests }}</span>
+            <h3 class="admin_form_label">Booking On</h3>
+            <span class="font-normal text-grey444">{{ booking.booked_on}}</span>
+            <h3 class="admin_form_label">Ticket</h3>
+            <span class="font-normal text-grey444">{{ booking.ticket }}</span>
+            <h3 class="admin_form_label">Cruise</h3>
+            <span class="font-normal text-grey444">{{ booking.cruise_name_str }}</span>
+            <h3 class="admin_form_label">Booking Reference</h3>
+            <span class="font-normal text-grey444">£{{ price }}</span>
+        </div>
+        <div class="flex justify-end items-center mb-4 mr-4">    
+          <a href="#">
+            <div class="admin_icon_button"><span class="material-symbols-outlined pr-1">delete</span><span class="translate-y-[1px]">Delete</span></div>
+          </a>
+        </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block footerscripts %}
+
+{% endblock %}

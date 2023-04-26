@@ -202,6 +202,20 @@ def DisplayBookings(request):
     return render(request, 'cruise_manager/bookings.html', context)
 
 
+@staff_member_required
+def BookingDetails(request, id):
+    '''
+    Displays the details of an individual booking
+    '''
+    booking = get_object_or_404(Bookings, id=id)
+    price = booking.booking_price / 100
+    context = {
+        'booking' : booking,
+        'price': price,
+    }
+    return render(request, 'cruise_manager/booking.html', context)
+
+
 def get_destinations():
     '''
     This function gets a list of all the destinations
