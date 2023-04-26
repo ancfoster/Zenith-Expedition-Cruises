@@ -254,6 +254,12 @@ footer {
     box-sizing: border-box;
     align-items: center;
 }
+#journey_map {
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    margin: 16px;
+}
 #cruise_date {
     text-align: center;
     display: block;
