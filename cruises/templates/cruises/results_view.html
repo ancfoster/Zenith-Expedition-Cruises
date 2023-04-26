@@ -10,36 +10,35 @@ Cruises
 {% block content %}
 <div id="cruise_flex_mid">
     <div class="card_grid">
-        {% for cruise in cruises %}
-        <a class="card_item" href="{% url 'cruise_detail' cruise.slug %}">
-            <img src="{{ cruise.listing_image.url }}" alt="{{ cruise.name }}">
-            <div class="card_title">{{ cruise.name }}</div>
+        {% for cruise_fare in cruise_fares %}
+        <a class="card_item" href="{% url 'cruise_detail' cruise_fare.cruise.slug %}">
+            <img src="{{ cruise_fare.cruise.listing_image.url }}" alt="{{ cruise.name }}">
+            <div class="card_title">{{ cruise_fare.cruise.name   }}</div>
             <div class="card_top_row">
                 <div class="card_padding_flex duration">
                     <span class="card_label">Duration</span>
-                    <span class="card_info">{{ cruise.duration }}</span>
+                    <span class="card_info">{{ cruise_fare.cruise.duration }}</span>
                 </div>
                 <div class="card_padding_flex duration">
                     <span class="card_label">Dates</span>
-                    <span class="card_info">{{ cruise.start_date|date:"d/m/Y" }} - {{ cruise.end_date|date:"d/m/Y" }}</span>
+                    <span class="card_info">{{ cruise_fare.cruise.start_date|date:"d/m/Y" }} - {{ cruise_fare.cruise.end_date|date:"d/m/Y" }}</span>
                 </div>
                 <div class="card_padding_flex ">
                     <span class="card_label">Ports</span>
-                    <span class="card_info">{{ cruise.port_number }}</span>
+                    <span class="card_info">{{ cruise_fare.cruise.port_number }}</span>
                 </div>                
             </div>
             <div class="card_from_to">
-                <span class="card_label">From - To </span>
-                <span class="card_info">Start Destination to End Destination</span>
+                <img src="{{ cruise_fare.cruise.map_image.url }}" alt="{{ cruise_fare.cruise.name }} Journey Map">
             </div>
             <div class="ship_price">
                 <div class="card_ship">
                     <span class="card_label">Ship</span>
-                    <span class="card_info">{{ cruise.ship }}</span>
+                    <span class="card_info">{{ cruise_fare.cruise.ship }}</span>
                 </div>
                 <div class="card_price">
                     <span class="card_label">Price from</span>
-                    <span class="card_info">£8,000</span>
+                    <span class="card_info">£ {{cruise_fare.lowest_fare}}</span>
                 </div>
             </div>
         </a>

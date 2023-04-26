@@ -793,7 +793,7 @@ footer {
 }
 .card_item img {
     width: 100%;
-    height: 172px;
+    height: 190px;
     object-fit: cover;
     margin-bottom: 8px;
 }
@@ -836,9 +836,15 @@ footer {
     border-left: 1px solid #cdcdcd;
     border-right: 1px solid #cdcdcd;
     box-sizing: border-box;
-    padding: 6px;
+    padding: 1px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.card_from_to img {
+    width: 100%;
+    height: 190px;
+    object-fit: contain;
 }
 .ship_price {
     width: 100%;
