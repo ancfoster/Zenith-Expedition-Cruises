@@ -25,21 +25,21 @@ Cruises
                 </div>
                 <div class="card_padding_flex ">
                     <span class="card_label">Ports</span>
-                    <span class="card_info">{{ port_number }}</span>
+                    <span class="card_info">{{ cruise.port_number }}</span>
+                </div>                
+            </div>
+            <div class="card_from_to">
+                <span class="card_label">From - To </span>
+                <span class="card_info">Start Destination to End Destination</span>
+            </div>
+            <div class="ship_price">
+                <div class="card_ship">
+                    <span class="card_label">Ship</span>
+                    <span class="card_info">{{ cruise.ship }}</span>
                 </div>
-                <div class="card_from_to">
-                    <span class="card_label">From - To </span>
-                    <span class="card_info">Start Destination to End Destination</span>
-                </div>
-                <div class="ship_price">
-                    <div class="card_ship">
-                        <span class="card_label">Ship</span>
-                        <span class="card_info">{{ cruise.ship }}</span>
-                    </div>
-                    <div class="card_price">
-                        <span class="card_label">Price from</span>
-                        <span class="card_info">£8,000</span>
-                    </div>
+                <div class="card_price">
+                    <span class="card_label">Price from</span>
+                    <span class="card_info">£8,000</span>
                 </div>
             </div>
         </a>

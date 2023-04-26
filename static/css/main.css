@@ -89,7 +89,7 @@ header {
     height: auto;
 }
 nav {
-    width: 100vw;
+    width: 100%;
     min-height: 64px;
     align-items: center;
     justify-content: center;
@@ -246,7 +246,7 @@ footer {
 }
 
 #cruise_flex_mid {
-    width: 1005;
+    width: 100%;
     max-width: 960px;
     padding: 20px;
     display: flex;
@@ -778,6 +778,18 @@ footer {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    color: #484848;
+    text-decoration: none;
+    grid-column: span 12;
+}
+.card_item:hover .card_top_row  {
+    background-color: #e3e3e3;
+}
+.card_item:hover .card_from_to {
+    background-color: #e3e3e3;
+}
+.card_item:hover .ship_price {
+    background-color: #e3e3e3;
 }
 .card_item img {
     width: 100%;
@@ -788,25 +800,30 @@ footer {
 .card_title {
     font-family: var(--wide-font);
     font-size: 16px;
-    margin: 8px 0;
+    margin-bottom: 8px;
+    color: black;
+    font-weight: 500;
+    padding: 0 2px;
+    box-sizing: border-box;
 }
 .card_top_row {
     border: 1px solid #cdcdcd;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    box-sizing: border-box;
 }
 .card_padding_flex {
-    padding: 4px;
+    padding: 6px;
     box-sizing: border-box;
     display: flex;
-    flex-direction: col;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 .duration {
     border-right: 1px solid #cdcdcd;
 }
 .card_label {
-    font-family: wide;
+    font-family: var(--wide-font);
     color: #484848;
     font-size: 12px;
 }
@@ -816,10 +833,10 @@ footer {
 }
 .card_from_to {
     width: 100%;
-    border-left: 1px slid #cdcdcd;
-    border-right: 1px slid #cdcdcd;
+    border-left: 1px solid #cdcdcd;
+    border-right: 1px solid #cdcdcd;
     box-sizing: border-box;
-    padding: 4px;
+    padding: 6px;
     display: flex;
     flex-direction: column;
 }
@@ -834,31 +851,48 @@ footer {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 4px;
+    padding: 6px;
     border-right: 1px solid #cdcdcd;
 }
-.card_price{
+.card_price {
     width: 50%;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 4px;
+    padding: 6px;
 }
 .card_grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        grid-gap: 16px;
-        font-family: neue-haas-grotesk-display, sans-serif, Arial;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 16px;
+    row-gap: 16px;
+    font-family: neue-haas-grotesk-display, sans-serif, Arial;
+    width: 100%;
 
 }
-@media screen and (min-width: 768px) {
-    .card-grid {
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    }
-  }
-  
-  @media screen and (min-width: 1200px) {
-    .card-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
+/* When screen size allows show two cars per row */
+@media screen and (min-width: 760px) {
+.card_item {
+    grid-column: span 6;
+}
+}
+/* Booking success styles */
+#booking_reference_cont {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 20px;
+    padding: 20px;
+    background-color: #dddddd;
+    border: solid 1px #cdcdcd;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #333333;
+}
+#booking_reference {
+    font-size: 24px;
+    color: var(--black111);
+    letter-spacing: 2px;
+    margin: 16px;
+}
