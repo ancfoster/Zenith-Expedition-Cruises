@@ -25,7 +25,8 @@ Thank you
 </div>
 
 <div class="journey_container" id="number_and_category_cont">
-Thank you for your payment
+<br>
+<span id="booking_msg"></span>
 </div>
 
 {% endblock %}
@@ -69,10 +70,12 @@ stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
 				}
 			})
 			.then(data => {
-				alert(data);
+        let bookingMsg = document.getElementById('booking_msg');
+        bookingMsg.innerText = `Your booking is confirmed. Your booking reference is ${data}. We have sent a confirmation email.`;
+
 			})
 			.catch(error => {
-				alert(error);
+				console.log(error);
 			});
       break;
 
