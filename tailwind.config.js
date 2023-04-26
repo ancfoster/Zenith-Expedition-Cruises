@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     './templates/**/*.{html,js}',
+    './static/js/**/*.{html,js}',
     './cruise_manager/templates/cruise_manager/**/*.{html,js}'
   ],
   theme: {
