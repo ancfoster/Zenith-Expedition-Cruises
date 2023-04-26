@@ -192,26 +192,31 @@ def ProcessBooking(request):
     Recieves a HTTP request is Stripe Payment intent
     was successful and then creates a booking.
     '''
-    booking_dict = request.session.get('booking_dict')
-    cruise_id = booking_dict['cruise']
-    cruise = get_object_or_404(Cruises, id=cruise_id)
-    number_guests = booking_dict['number_guests']
-    selected_category = booking_dict['selected_category']
-    selected_suite = booking_dict['selected_suite']
-    suite = get_object_or_404(Suites, ship=cruise.ship, suite_num_name=selected_suite)
-    booking_price = booking_dict['final_fare']
-    # Get ticket object
-    ticket = get_object_or_404(Tickets, cruise=cruise, suite=suite)
-    ticket.booked = True
-    ticket.save()
-    #Generate a booking reference
-    now = timezone.now()
-    current_datetime = now.strftime("%d%m%Y%H%M")
-    booking_ref = f"{cruise_id}{selected_suite}{current_datetime}"
-    booked_by = request.user
-    cruise_name_str = cruise.name
-
-    new_booking = Bookings.objects.create(booking_ref=booking_ref,booked_by=booked_by,number_of_guests=number_guests,booking_price=booking_price,ticket=ticket,cruise_name_str=cruise_name_str)
-
-    return HttpResponse('new booking success')
+    booking_dict = request.session.get('booking_dict', None)
+    if booking_dict:
+        cruise_id = booking_dict['cruise']
+        cruise = get_object_or_404(Cruises, id=cruise_id)
+        number_guests = booking_dict['number_guests']
+        guest_information = booking_dict['guest_information']
+        selected_category = booking_dict['selected_category']
+        selected_suite = booking_dict['selected_suite']
+        suite = get_object_or_404(Suites, ship=cruise.ship, suite_num_name=selected_suite)
+        booking_price = booking_dict['final_fare']
+        # Get ticket object
+        ticket = get_object_or_404(Tickets, cruise=cruise, suite=suite)
+        ticket.booked = True
+        ticket.save()
+        #Generate a booking reference
+        now = timezone.now()
+        current_datetime = now.strftime("%d%m%Y%H%M")
+        booking_ref = f"{cruise_id}{selected_suite}{current_datetime}"
+        booked_by = request.user
+        cruise_name_str = cruise.name
+        # Create the booking object
+        new_booking = Bookings.objects.create(booking_ref=booking_ref,booked_by=booked_by,number_of_guests=number_guests,guest_information=guest_information,booking_price=booking_price,ticket=ticket,cruise_name_str=cruise_name_str)
+        #Delete the session booking dictionary
+        del request.session['booking_dict']
+        return HttpResponse(f"{booking_ref}")
+    else:
+        return HttpResponse('failed')
 
