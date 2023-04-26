@@ -215,7 +215,7 @@ def ProcessBooking(request):
         booked_by = request.user
         cruise_name_str = cruise.name
         # Create the booking object
-        new_booking = Bookings.objects.create(booking_ref=booking_ref,booked_by=booked_by,number_of_guests=number_guests,guest_information=guest_information,booking_price=booking_price,ticket=ticket,cruise_name_str=cruise_name_str)
+        new_booking = Bookings.objects.create(booking_ref=booking_ref,booked_by=booked_by,number_of_guests=number_guests,guests=guest_information,booking_price=booking_price,ticket=ticket,cruise_name_str=cruise_name_str)
         #Delete the session booking dictionary
         del request.session['booking_dict']
 

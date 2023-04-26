@@ -62,11 +62,12 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'mail.alexanderfoster.design'
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'zenithexpeditioncruises@gmail.com' # replace with your Gmail address
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'zenith@alexanderfoster.design' # replace with your Gmail address
 EMAIL_HOST_PASSWORD = os.environ.get('GMAIL') # replace with your Gmail password
+EMAIL_USE_SSL = True
 
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
