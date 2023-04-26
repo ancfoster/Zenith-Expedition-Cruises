@@ -222,7 +222,7 @@ def ProcessBooking(request):
         # Send confirmation email
         name = 'Zenith Expedition Cruises'
         message = render_to_string('booking/email_template.html', {'cruise':cruise.name, 'suite':selected_suite, 'ship':cruise.ship})
-        subject = f"Booking confirmation of {{cruise.name}} - Zenith Expedition Cruies"
+        subject = f"Booking confirmation of {cruise.name} - Zenith Expedition Cruies"
         from_email = os.environ.get('EMAIL_HOST_USER')
         to_email = request.user.email
         email = EmailMultiAlternatives(
@@ -234,5 +234,5 @@ def ProcessBooking(request):
         email.send()
         return HttpResponse(f"{booking_ref}")
     else:
-        return HttpResponse('failed')
+        return HttpResponse('No dictionary')
 
