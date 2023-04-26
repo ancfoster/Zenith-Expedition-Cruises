@@ -74,4 +74,10 @@ class Movements(admin.ModelAdmin):
 class Fares(admin.ModelAdmin):
     list_display = ('cruise', 'suite_category', 'price')
     fields = ('cruise', 'suite_category', 'price')
-    # readonly_fields = ('cruise',)
+
+
+#Bookings model
+@admin.register(Bookings)
+class Bookings(admin.ModelAdmin):
+    list_display = ('booking_ref', 'booked_by', 'booking_price', 'booked_on', 'ticket')
+    fields = ('booking_ref', 'booked_by', 'booking_price', 'booked_on', 'ticket')
