@@ -223,7 +223,7 @@ def ProcessBooking(request):
         name = 'Zenith Expedition Cruises'
         message = render_to_string('booking/email_template.html', {'cruise':cruise.name, 'suite':selected_suite, 'ship':cruise.ship})
         subject = f"Booking confirmation of {{cruise.name}} - Zenith Expedition Cruies"
-        from_email = 'zenith@alexanderfoster.design'
+        from_email = os.environ.get('EMAIL_HOST_USER')
         to_email = request.user.email
         email = EmailMultiAlternatives(
             subject=subject,
