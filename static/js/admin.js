@@ -1,3 +1,4 @@
+/* jshint esversion: 11 */
 const burgerCont = document.getElementById('burgerCont');
 const burgerIcon = document.getElementById('burgerIcon');
 const adminNav = document.getElementById('adminNav');
