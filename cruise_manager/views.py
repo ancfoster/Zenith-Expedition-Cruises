@@ -216,6 +216,25 @@ def BookingDetails(request, id):
     return render(request, 'cruise_manager/booking.html', context)
 
 
+@staff_member_required
+def DeleteBooking(request, id):
+    '''
+    Deletes a book and makes the assosciated ticket available again
+    '''
+    booking = get_object_or_404(Bookings, id=id)
+    
+    if request.method == 'POST':
+        ticket = booking.ticket
+        booking.delete()
+        ticket.booked = False
+        ticket.save()
+        return redirect('bookings')
+    context = {
+        'booking' : booking,
+    }
+    return render(request, 'cruise_manager/delete_booking.html', context)
+
+
 def get_destinations():
     '''
     This function gets a list of all the destinations
