@@ -124,34 +124,36 @@ minus.addEventListener('click', () => {
 categoryCont.addEventListener('click', (e) => {
   let categoryButtonSelected = e.target.closest('.suite_category');
   removeSelectedCategoryClass()
-  let divId = categoryButtonSelected.id
-  let toApply = document.getElementById(divId);
-  toApply.classList.add('category_selected');
-  switch (categoryButtonSelected.id){
-    case 'verandah':
-        categorySelected = 1;
-        selectedCategoryField.value = 1;
-        deckplan.src = updateDeckplan()
-        break;
-    case 'deluxe':
-        categorySelected = 2;
-        selectedCategoryField.value = 2;
-        deckplan.src = updateDeckplan()
-        break;
-    case 'spa':
-        categorySelected = 3;
-        selectedCategoryField.value = 3;
-        deckplan.src = updateDeckplan()
-        break;
-    case 'owner':
-        categorySelected = 4;
-        selectedCategoryField.value = 4;
-        deckplan.src = updateDeckplan()
-        break;
-  }
-  generateSuiteSelection();
-  // Update form progress
-  suiteCategoryButton.style.display = 'flex';
+  if (categoryButtonSelected.id) {
+    let divId = categoryButtonSelected.id
+    let toApply = document.getElementById(divId);
+    toApply.classList.add('category_selected');
+    switch (categoryButtonSelected.id){
+        case 'verandah':
+            categorySelected = 1;
+            selectedCategoryField.value = 1;
+            deckplan.src = updateDeckplan()
+            break;
+        case 'deluxe':
+            categorySelected = 2;
+            selectedCategoryField.value = 2;
+            deckplan.src = updateDeckplan()
+            break;
+        case 'spa':
+            categorySelected = 3;
+            selectedCategoryField.value = 3;
+            deckplan.src = updateDeckplan()
+            break;
+        case 'owner':
+            categorySelected = 4;
+            selectedCategoryField.value = 4;
+            deckplan.src = updateDeckplan()
+            break;
+    }
+    generateSuiteSelection();
+    // Update form progress
+    suiteCategoryButton.style.display = 'flex';
+    }  
 })
 // Removes the category selected class from any div that has it
 function removeSelectedCategoryClass() {
