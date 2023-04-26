@@ -58,7 +58,7 @@ class CruisesAdmin(admin.ModelAdmin):
 class TicketAdmin(admin.ModelAdmin):
     list_display = ('ticket_ref', 'cruise', 'suite', 'booked', 'created_on',)
     fields = ('ticket_ref', 'ship', 'cruise', 'suite', 'booked', 'created_on',)
-    readonly_fields = fields
+    readonly_fields = ('ticket_ref', 'ship', 'cruise', 'suite', 'created_on',)
 
 
 #Movement model
@@ -81,3 +81,4 @@ class Fares(admin.ModelAdmin):
 class Bookings(admin.ModelAdmin):
     list_display = ('booking_ref', 'booked_by', 'booking_price', 'booked_on', 'ticket')
     fields = ('booking_ref', 'booked_by', 'booking_price', 'booked_on', 'ticket')
+    readonly_fields = fields

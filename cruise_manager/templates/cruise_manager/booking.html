@@ -28,11 +28,11 @@ Booking {{ booking.booking_ref }}
             <span class="font-normal text-grey444">{{ booking.ticket }}</span>
             <h3 class="admin_form_label">Cruise</h3>
             <span class="font-normal text-grey444">{{ booking.cruise_name_str }}</span>
-            <h3 class="admin_form_label">Booking Reference</h3>
+            <h3 class="admin_form_label">Booking Total</h3>
             <span class="font-normal text-grey444">£{{ price }}</span>
         </div>
         <div class="flex justify-end items-center mb-4 mr-4">    
-          <a href="#">
+          <a href="{% url 'delete_booking' booking.id %}">
             <div class="admin_icon_button"><span class="material-symbols-outlined pr-1">delete</span><span class="translate-y-[1px]">Delete</span></div>
           </a>
         </div>
