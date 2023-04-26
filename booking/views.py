@@ -6,6 +6,7 @@ import json
 import os
 from django.views.decorators.csrf import csrf_exempt
 from datetime import timedelta
+from django.utils import timezone
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
@@ -140,14 +141,15 @@ def Payment(request):
         elif number_guests == 3:
             final_fare = base_fare_price * Decimal('1.5')
         final_fare = final_fare.quantize(Decimal('0.01'))
+        # Save fare in session
+          #Convert to pence/cents for Stripe
         final_fare = int(final_fare * 100)
-
-        session_id = request.session.session_key
-
+        booking_dict['final_fare'] = final_fare
+        request.session['booking_dict'] = booking_dict
+        #Create stripe payment intent
         intent = stripe.PaymentIntent.create(
         amount=final_fare,
         currency="gbp",
-        metadata={"session_id" : session_id},
         automatic_payment_methods={"enabled": True},
         )
         client_secret = intent.client_secret
@@ -164,30 +166,52 @@ def Payment(request):
     return render(request, 'booking/payment.html', context)
 
 @login_required
-def Success(request):
+def PaymentConfirm(request):
+    '''
+    Displays the page that tells the user if the booking was successful
+    and handles the session booking dictionary
+    '''
+    booking_dict = request.session.get('booking_dict', None)
+    if booking_dict:
+        cruise_id = booking_dict['cruise']
+        session_id = request.session.session_key
+        cruise = get_object_or_404(Cruises, id=cruise_id)
+    else:
+        return redirect('cruise_results')
+
     context = {
         'public_key' : STRIPE_PUBLIC_KEY,
+        'session_id': session_id,
+        'cruise': cruise,
     }
-    return render(request, 'booking/success.html', context)
+    return render(request, 'booking/status.html', context)
 
-@csrf_exempt
-def ProcessSuccess(request):
-    if request.method == 'POST':
-        try:
-            # parse the request body as json
-            data = json.loads(request.body)
-            # do something with the data 
-            print("Test success")
-       
-            subject = 'Subject of the Email'
-            message = 'This is the message body'
-            from_email = 'zenithexpeditioncruises@gmail.com'
-            recipient_list = ['a.foster@outlook.com',]
 
-            send_mail(subject, message, from_email, recipient_list)
+def ProcessBooking(request):
+    '''
+    Recieves a HTTP request is Stripe Payment intent
+    was successful and then creates a booking.
+    '''
+    booking_dict = request.session.get('booking_dict')
+    cruise_id = booking_dict['cruise']
+    cruise = get_object_or_404(Cruises, id=cruise_id)
+    number_guests = booking_dict['number_guests']
+    selected_category = booking_dict['selected_category']
+    selected_suite = booking_dict['selected_suite']
+    suite = get_object_or_404(Suites, ship=cruise.ship, suite_num_name=selected_suite)
+    booking_price = booking_dict['final_fare']
+    # Get ticket object
+    ticket = get_object_or_404(Tickets, cruise=cruise, suite=suite)
+    ticket.booked = True
+    ticket.save()
+    #Generate a booking reference
+    now = timezone.now()
+    current_datetime = now.strftime("%d%m%Y%H%M")
+    booking_ref = f"{cruise_id}{selected_suite}{current_datetime}"
+    booked_by = request.user
+    cruise_name_str = cruise.name
 
-            return HttpResponse('Success')
-        except json.JSONDecodeError:
-            result = {'status': 'error', 'message': 'Invalid JSON'}
-    else:
-        result = {'status': 'error', 'message': 'Invalid request method'}
+    new_booking = Bookings.objects.create(booking_ref=booking_ref,booked_by=booked_by,number_of_guests=number_guests,booking_price=booking_price,ticket=ticket,cruise_name_str=cruise_name_str)
+
+    return HttpResponse('new booking success')
+

@@ -32,7 +32,6 @@ Thank you for your payment
 {% block footerscripts %}
 <script>
 const csrf = '{% csrf_token %}';
-const session = '{{ session_id }}';
 // Initialize Stripe.js using your publishable key
 const stripe = Stripe('{{ public_key }}');
 
@@ -53,29 +52,28 @@ stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
   // [0]: https://stripe.com/docs/payments/payment-methods#payment-notification
   switch (paymentIntent.status) {
     case 'succeeded':
-          const url = "/booking/process";
+    var url = "/payment/booking";
+			var csrf_token = csrf;
 
-          fetch(url, {
-            method: 'GET',
-            headers: {
-              'X-CSRFToken': csrf,
-              'X-SessionID': session
-            }
-          })
-          .then(response => {
-            if (response.ok) {
-              return response.text();
-            } else {
-              throw new Error('There was a problem with the request.');
-            }
-          })
-          .then(data => {
-            alert(data)
-          })
-          .catch(error => {
-            alert(error);
-          });
-        
+			fetch(url, {
+				method: 'GET',
+				headers: {
+					'X-CSRFToken': csrf_token,
+				}
+			})
+			.then(response => {
+				if (response.ok) {
+					return response.text();
+				} else {
+					throw new Error('There was a problem with the request.');
+				}
+			})
+			.then(data => {
+				alert(data);
+			})
+			.catch(error => {
+				alert(error);
+			});
       break;
 
     case 'processing':
