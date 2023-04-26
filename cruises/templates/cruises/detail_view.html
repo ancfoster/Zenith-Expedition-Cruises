@@ -13,7 +13,7 @@
         <img src="{{ cruise.listing_image.url }}" alt="{{ cruise.name }}">
     </div>
     <div id="cruise_title_desc">
-        <a href="#" id="back_to"><span></span> Back to cruises</a>
+        <a href="{% url 'cruise_results' %}" id="back_to"><span></span> Back to cruises</a>
         <h1>{{ cruise.name }}</h1>
         <span id="cruise_description">{{ cruise.description }}</span>
     </div>

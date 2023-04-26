@@ -8,11 +8,43 @@ Cruises
 {% endblock %}
 
 {% block content %}
-    <h1>Cruises</h1>
-{% for cruise in cruises %}
-    <div>
-        <h3>{{ cruise.name }}</h3>
-        <a href="{% url 'cruise_detail' slug=cruise.slug %}">View cruise</a>
+<div id="cruise_flex_mid">
+    <div class="card_grid">
+        {% for cruise in cruises %}
+        <a class="card_item" href="{% url 'cruise_detail' cruise.slug %}">
+            <img src="{{ cruise.listing_image.url }}" alt="{{ cruise.name }}">
+            <div class="card_title">{{ cruise.name }}</div>
+            <div class="card_top_row">
+                <div class="card_padding_flex duration">
+                    <span class="card_label">Duration</span>
+                    <span class="card_info">{{ cruise.duration }}</span>
+                </div>
+                <div class="card_padding_flex duration">
+                    <span class="card_label">Dates</span>
+                    <span class="card_info">{{ cruise.start_date|date:"d/m/Y" }} - {{ cruise.end_date|date:"d/m/Y" }}</span>
+                </div>
+                <div class="card_padding_flex ">
+                    <span class="card_label">Ports</span>
+                    <span class="card_info">{{ port_number }}</span>
+                </div>
+                <div class="card_from_to">
+                    <span class="card_label">From - To </span>
+                    <span class="card_info">Start Destination to End Destination</span>
+                </div>
+                <div class="ship_price">
+                    <div class="card_ship">
+                        <span class="card_label">Ship</span>
+                        <span class="card_info">{{ cruise.ship }}</span>
+                    </div>
+                    <div class="card_price">
+                        <span class="card_label">Price from</span>
+                        <span class="card_info">£8,000</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
     </div>
-{% endfor %}
+</div>
+
 {% endblock %}

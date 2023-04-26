@@ -771,3 +771,94 @@ footer {
     text-align: justify;
     margin: 4px 0;
 }
+
+/* Card result styles */
+.card_item {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+.card_item img {
+    width: 100%;
+    height: 172px;
+    object-fit: cover;
+    margin-bottom: 8px;
+}
+.card_title {
+    font-family: var(--wide-font);
+    font-size: 16px;
+    margin: 8px 0;
+}
+.card_top_row {
+    border: 1px solid #cdcdcd;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.card_padding_flex {
+    padding: 4px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: col;
+}
+.duration {
+    border-right: 1px solid #cdcdcd;
+}
+.card_label {
+    font-family: wide;
+    color: #484848;
+    font-size: 12px;
+}
+.card_info {
+    font-size: 20px;
+    color: var(--black333);
+}
+.card_from_to {
+    width: 100%;
+    border-left: 1px slid #cdcdcd;
+    border-right: 1px slid #cdcdcd;
+    box-sizing: border-box;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+}
+.ship_price {
+    width: 100%;
+    border: 1px solid #cdcdcd;
+    display: flex;
+    box-sizing: border-box;
+}
+.card_ship {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 4px;
+    border-right: 1px solid #cdcdcd;
+}
+.card_price{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 4px;
+}
+.card_grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-gap: 16px;
+        font-family: neue-haas-grotesk-display, sans-serif, Arial;
+
+}
+@media screen and (min-width: 768px) {
+    .card-grid {
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+  }
+  
+  @media screen and (min-width: 1200px) {
+    .card-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
