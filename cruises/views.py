@@ -25,10 +25,27 @@ def CruiseResults(request):
     '''
     Display list of bookable cruises
     '''
-    cruises = Cruises.objects.filter(bookable=True)
-    print(cruises)
+    #Tags are ysed for filtering
+    tags = Tag.objects.all()
+    tag_name = request.GET.get('tag')
+    
+    # Get cruises filtered by bookable flag and selected tag
+    cruises = Cruises.objects.filter(bookable=True, tags__name=tag_name) if tag_name else Cruises.objects.filter(bookable=True)
+    cruise_fares = []
+    for cruise in cruises:
+    # Get the fares associated with each cruise object
+        #Get the lowest of the fares
+        lowest_fare = Fares.objects.filter(cruise=cruise).order_by('price').first()
+        if lowest_fare:
+            #Append to list
+            cruise_fares.append({
+                'cruise': cruise,
+                'lowest_fare': lowest_fare.price
+            })
 
     context = {
         'cruises' : cruises,
+        'cruise_fares': cruise_fares,
+        'tags': tags,
     }
     return render(request, 'cruises/results_view.html', context)
