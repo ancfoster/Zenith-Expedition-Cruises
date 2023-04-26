@@ -15,5 +15,6 @@ urlpatterns = [
     path('manager/', views.Dashboard, name='dashboard'),
     path('manager/delete-tag/<id>', views.TagDelete.as_view(), name='delete_tag'),
     path('manager/edit-tag/<id>', views.EditTag, name='edit_tag'),
+    path('manager/bookings', views.DisplayBookings, name='bookings'),
 
 ]

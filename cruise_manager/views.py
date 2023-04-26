@@ -188,6 +188,20 @@ def DisplayCruises(request):
     return render(request, 'cruise_manager/cruises.html', context)
 
 
+@staff_member_required
+def DisplayBookings(request):
+    '''
+    Displays a list of booings in cruise manager
+    '''
+    bookings_queryset = Bookings.objects.all()
+    number_bookings = bookings_queryset.count()
+    context = {
+        'number_bookings' : number_bookings,
+        'bookings': bookings_queryset,
+    }
+    return render(request, 'cruise_manager/bookings.html', context)
+
+
 def get_destinations():
     '''
     This function gets a list of all the destinations
