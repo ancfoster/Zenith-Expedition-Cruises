@@ -266,17 +266,13 @@ function detailsTemplate(guest_number) {
         <input type="number" required maxlength="20" id="${guest_number}passport_number">
         <label for="${guest_number}passport_expiry">Passport Expiry Date</label>
         <input type="date" min="${passportExp}" required id="${guest_number}passport_expiry">
-        <label for="${guest_number}telephone">Telephone</label>
-        <input type="tel" maxlength="16" required id="${guest_number}telephone">
-        <label for="${guest_number}email">Email</label>
-        <input type="email" id="${guest_number}email" maxlength="120" required>
     </form>
     `;
     return formTemplate;
 }
 // Creates a new JSON object which is appended to the guestInfolist
 function createGuestJson() {
-    let obj = {"first_name": "","last_name": "","dob": "", "passport_number": "","passport_expiry": "","telephone": "","email": ""};
+    let obj = {"first_name": "","last_name": "","dob": "", "passport_number": "","passport_expiry": ""};
     guestInfoList.push(obj);
 };
 // Looks for when the guest forms are edited, updates the guestInfoList with new information
@@ -302,13 +298,7 @@ detailFormCont.addEventListener('input', e => {
                     break;
                 case 'passport_expiry':
                 guestInfoList[(guest_number - 1)].passport_expiry = target.value;
-                    break;
-                case 'telephone':
-                guestInfoList[(guest_number - 1)].telephone = target.value;
-                    break;
-                case 'email':
-                guestInfoList[(guest_number - 1)].email = target.value;
-                    break;            
+                    break;         
             default:
                 break;
         }
@@ -317,9 +307,12 @@ detailFormCont.addEventListener('input', e => {
 
 bookingForm.addEventListener('submit', e => {
     e.preventDefault();
+    let isValid = validateForms();
+    if (isValid) {
     let guestInformationStr = JSON.stringify(guestInfoList);
     guestInformationField.value = guestInformationStr;
     bookingForm.submit();
+    } 
 })
 
 suiteCategoryButton.addEventListener('click', () => {
@@ -333,3 +326,41 @@ guestDetailsButton.addEventListener('click', () => {
     progressSuite.classList.remove('booking_status_current');
     progressGuests.classList.add('booking_status_current');
 })
+
+// Forms validation
+
+function validateForms() {
+    let errorCount = 0;
+    // Get all the forms added with JS
+    let forms = document.querySelectorAll('form[id^="guest"]');  
+    // Loop through each form
+    for (let i = 0; i < forms.length; i++) {
+      let form = forms[i];  
+      // Get input fields in the form
+      let inputs = form.querySelectorAll('input[type="text"], input[type="date"]');  
+      // Loop through each input field
+      for (let j = 0; j < inputs.length; j++) {
+        let input = inputs[j];  
+        // Check if the input field is empty
+        if (input.value.trim() === '') {
+            // If the field is empty create a span with message
+            errorCount++;
+            let errorMessage = document.createElement('span');
+            errorMessage.className = 'guest_error_message';
+            errorMessage.textContent = 'This field is required';
+
+            input.insertAdjacentElement('afterend', errorMessage);
+          } 
+      }
+    }
+  
+    // If there fields not filled prevent the form from submitting
+    if (errorCount > 0) {
+      return false;    
+    }
+    else {
+        return true;
+    }
+
+  }
+  
