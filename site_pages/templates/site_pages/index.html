@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load widget_tweaks %}
+
+{% block title %}
+Welcome
+{% endblock %}
+
+{% block content %}
+<div id="cruise_flex_mid">
+    <div class="hero_top">
+        <div>        
+            <h1>Luxury all-inclusive expedition cruises</h1>
+            <span>We carry you into the furthest reaches of the planet, bringing you up close and personal with once in a lifetime moments that create lasting impressions. <br>
+                Explore, discover and learn with a curated Zenith Expedition Cruise.</span>
+        </div>
+        <div>
+            <img src="{% static 'images/home_hero.png' %}" alt="Expedition cruises Antarctica">
+        </div>
+    </div>
+    <div class="wide_cta">
+        <a class="cta_wide_a" href="{% url 'cruise_results' %}">Explore our Cruises</a>
+    </div>
+    <h2>Two all-suite exploration ships</h2>
+        <img id="two_ships" src="{% static 'images/two_ships.png' %}" alt="OUr ships Orion and Sirius">
+    <span class="pages_desc">
+        Meet Orion and Sirius, our two bespoke exploration cruise ships that offer all-suite accommodations, butler service for every guest and feature reinforced hulls for travel to the polar regions. These magnificent ships provide the ultimate luxury experience for guests who want to explore the world's most remote and fascinating destinations. With spacious and comfortable suites, personalized butler service, and state-of-the-art equipment including a submarine and helicopter, guests can embark on unforgettable adventures, from diving in Antarctica's icy waters to flying over the Arctic tundra. These ships are designed to provide complete luxury and comfort for guests while they explore the world's most beautiful and awe-inspiring landscapes.
+    </span>
+</div>
+
+{% endblock %}
