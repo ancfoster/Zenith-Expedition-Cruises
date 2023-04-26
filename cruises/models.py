@@ -194,6 +194,7 @@ class Bookings(models.Model):
     booked_on = models.DateTimeField(auto_now_add=True)
     ticket = models.ForeignKey(Tickets, on_delete=models.SET_NULL, null=True, related_name="booking")
     cruise_name_str = models.CharField(max_length=120, editable=False, null=True, verbose_name="Cruise Name")
+    guests = models.CharField(max_length=2000, default='', verbose_name="Guests JSON")
 
     def __str__(self):
         return self.booking_ref
@@ -201,25 +202,6 @@ class Bookings(models.Model):
     class Meta:
         verbose_name_plural = "Bookings"
 
-
-class Guests(models.Model):
-    '''
-    Guest model, each booking has at least 1 guest
-    '''
-    first_name = models.CharField(max_length=25, verbose_name="First Name")
-    last_name = models.CharField(max_length=25, verbose_name="Last Name")
-    dob = models.DateField(max_length=25, verbose_name="Date of Birth")
-    passport_number = models.CharField(max_length=20, verbose_name="Passport Number")
-    passport_expiry = models.DateField(verbose_name="Passport Expiry Date")
-    phone_number = models.CharField(max_length=16, verbose_name="Phone Number")
-    email = models.EmailField(max_length = 120, default='')
-    booking = models.ForeignKey(Bookings, on_delete=models.CASCADE, related_name="guest")
-
-    def __str__(self):
-        return self.first_name.last_name
-
-    class Meta:
-        verbose_name_plural = "Guests"
 
 
 

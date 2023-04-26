@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
+from .models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings
 
 # Register your models here.
 

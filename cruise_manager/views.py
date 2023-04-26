@@ -24,7 +24,7 @@ from django.core.files.storage import FileSystemStorage
 from datetime import datetime
 from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm, EditDestinationForm
 
-from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings, Guests
+from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings
 
 
 # mapkey is the key used for mapbox maps
