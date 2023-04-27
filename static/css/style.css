@@ -829,6 +829,10 @@ select{
   margin-right: 0.25rem;
 }
 
+.mt-1{
+  margin-top: 0.25rem;
+}
+
 .block{
   display: block;
 }
@@ -873,6 +877,18 @@ select{
   height: 100%;
 }
 
+.h-\[\]{
+  height: ;
+}
+
+.h-\[180px\]{
+  height: 180px;
+}
+
+.h-\[100px\]{
+  height: 100px;
+}
+
 .min-h-\[180px\]{
   min-height: 180px;
 }
@@ -891,6 +907,22 @@ select{
 
 .w-full{
   width: 100%;
+}
+
+.w-\[\]{
+  width: ;
+}
+
+.w-\[3\]{
+  width: 3;
+}
+
+.w-\[320px\]{
+  width: 320px;
+}
+
+.w-\[260px\]{
+  width: 260px;
 }
 
 .max-w-\[120px\]{
@@ -915,6 +947,10 @@ select{
 
 .max-w-\[300px\]{
   max-width: 300px;
+}
+
+.max-w-\[800px\]{
+  max-width: 800px;
 }
 
 .-translate-x-full{
@@ -1084,6 +1120,11 @@ select{
   background-color: rgb(221 221 221 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#FBFBFB\]{
+  --tw-bg-opacity: 1;
+  background-color: rgb(251 251 251 / var(--tw-bg-opacity));
+}
+
 .object-cover{
   -o-object-fit: cover;
      object-fit: cover;
@@ -1099,6 +1140,10 @@ select{
 
 .p-2{
   padding: 0.5rem;
+}
+
+.p-5{
+  padding: 1.25rem;
 }
 
 .pb-1{
@@ -1185,6 +1230,11 @@ select{
   line-height: 1.75rem;
 }
 
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-light{
   font-weight: 300;
 }
@@ -1241,6 +1291,11 @@ select{
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-black{
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .shadow{

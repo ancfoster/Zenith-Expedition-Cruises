@@ -9,6 +9,7 @@ Dashboard
 {% endblock %}
 
 {% block content %}
+<h1 class="admin_h1">Dashboard</h1>
 <ul class="flex justify-center text-center items-center">
     {% if messages %}
         {% for message in messages %}
@@ -16,7 +17,26 @@ Dashboard
         {% endfor %}
 {% endif %}
 </ul>
-<h1 class="admin_h1">Dashboard</h1>
+<div class="flex justify-center flex-col items-center ml-auto mr-auto max-w-[900px]">
+    <h3 class="font-medium text-black333 text-xl w-full">
+        At a glance
+    </h3>
+    <div class="flex mt-1 mb-4 flex-wrap justify-center">
+        <div class="w-[260px] bg-[#FBFBFB] text-grey444 p-3 m-2 h-[100px] flex flex-col rounded-xl shadow">
+            Revenue in last 90 days:
+            <span class="mt-2 text-2xl font-medium text-black222">£ {{ revenue }}</span>
+        </div>
+        <div class="w-[260px] bg-[#FBFBFB] text-grey444 p-3 m-2 h-[100px] flex flex-col rounded-xl shadow">
+            Bookings in last 90 days:
+            <span class="mt-2 text-2xl font-medium text-black222">{{ bookings }}</span>
+        </div>
+        <div class="w-[260px] bg-[#FBFBFB] text-grey444 p-3 m-2 h-[100px] flex flex-col rounded-xl shadow">
+            Enquiries to respond to:
+            <span class="mt-2 text-2xl font-medium text-black222">{{ respond_to }}</span>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
 {% block footerscripts %}
