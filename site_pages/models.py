@@ -9,5 +9,7 @@ class Enquiry(models.Model):
     email = models.EmailField(max_length=60, verbose_name='Email')
     phone = models.CharField(max_length=20, verbose_name='Phone')
     message = models.TextField(max_length=900, verbose_name='Message')
+    sent = models.DateTimeField(auto_now_add=True)
+    responded_to = models.BooleanField(default=False)
 
 
