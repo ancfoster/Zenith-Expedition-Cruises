@@ -13,6 +13,7 @@ urlpatterns = [
     path('manager/new-cruise', views.NewCruise, name='new_cruise'),
     path('manager/cruises', views.DisplayCruises, name='display_cruises_manager'),
     path('manager/cruise/<id>', views.CruiseDetail, name="display_cruise"),
+    path('manager/edit-cruise/<id>', views.EditCruise, name="edit_cruise"),
     path('manager/', views.Dashboard, name='dashboard'),
     path('manager/delete-tag/<id>', views.TagDelete.as_view(), name='delete_tag'),
     path('manager/edit-tag/<id>', views.EditTag, name='edit_tag'),
