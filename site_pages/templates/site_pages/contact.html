@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load widget_tweaks %}
+
+{% block title %}
+Contact
+{% endblock %}
+
+{% block content %}
+<div id="cruise_flex_mid">
+      
+    <h1>Contact</h1>
+    <span>Get in touch with us! If you have any questions, comments, or would like to learn more about our cruises, please use the contact form below to get in touch with us. We appreciate your interest and will respond to your message as soon as possible. Thank you.</span>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="id_name">Name</label>
+            {{ enquiry_form.name }}
+        <label for="id_email">Email</label>
+        {{ enquiry_form.email }}
+        <label for="id_email">Phone</label>
+        {{ enquiry_form.phone }}
+        <label for="id_email">Message</label>
+        {{ enquiry_form.phone }}
+
+                <button type="submit" class="">Submit Enquiry</button>
+
+    </form>
+
+{% endblock %}
