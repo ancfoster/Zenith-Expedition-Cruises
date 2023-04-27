@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load widget_tweaks %}
+
+{% block title %}
+Experience
+{% endblock %}
+
+{% block content %}
+<div id="cruise_flex_mid">
+    <div class="hero_top">
+        <div>        
+            <h1>Experience</h1>
+            <span>Zenith Expedition Cruises offers a unique luxury experience to its passengers with its exceptional onboard services, enriching lectures, and high-end dining. Passengers can indulge in a variety of gourmet cuisines prepared by expert chefs, using only the freshest and finest ingredients. In addition, the ship's staff is dedicated to providing personalized and attentive service to ensure that every need is met. The enrichment program offers educational and informative lectures by world-renowned experts in various fields, including geology, history, and marine biology. Passengers can gain a deeper understanding of the destinations they visit and their unique natural habitats. The ship also features a range of amenities, including a spa, fitness center, and lounge areas for relaxation and socializing. Whether you're exploring the polar regions or the Amazon rainforest, Zenith Expedition Cruises offers a luxurious and enriching adventure that is unparalleled in the industry.</span>
+        </div>
+        <div>
+            <img src="{% static 'images/service.jpeg' %}" alt="Luxury service">
+        </div>
+    </div>
+    <div class="wide_cta">
+        <a class="cta_wide_a" href="{% url 'cruise_results' %}">Explore our Cruises</a>
+    </div>
+    <h2>Dining</h2>
+    <img src="{% static 'images/fine-dining-12173348.jpeg' %}" class="exp_img" alt="Fine dining at sea">
+    <span class="pages_desc">
+        Zenith Expedition Cruises takes pride in offering a luxurious and intimate onboard dining experience. With a variety of restaurants to choose from, passengers can indulge in a diverse range of cuisines prepared by expert chefs. The Chef's Table offers a personalized dining experience where guests can enjoy a customized tasting menu with wine pairings. The Asian fusion restaurant features dishes inspired by the flavors of Asia, while the sushi bar serves up fresh and expertly crafted sushi rolls. For those craving French or Italian cuisine, there are dedicated restaurants offering classic dishes with a modern twist. Each restaurant boasts its own unique ambiance and style, from elegant and refined to relaxed and casual. With exceptional service and attention to detail, dining onboard Zenith Expedition Cruises is an experience that is sure to satisfy even the most discerning of palates.
+    </span>
+    <h2>Adventure & Exploration</h2>
+    <img src="{% static 'images/helicopter-2868217.jpeg' %}" class="exp_img" alt="Zenith Helicopter">
+    <span class="pages_desc">
+        Zenith Expedition Cruises offers a unique and unparalleled adventure with the onboard helicopter and submersible. Each of their ships features a helicopter for aerial sightseeing, allowing passengers to explore some of the most remote and spectacular landscapes on earth from above. The helicopter can also be used for excursions, such as hiking or skiing, in otherwise inaccessible areas. The onboard submersible offers a chance for guests to explore the underwater world with ease and comfort. With a 360-degree view, passengers can witness the incredible marine life and stunning seascapes that lie beneath the surface. These remarkable features provide an exclusive and unforgettable way to explore the destinations visited by Zenith Expedition Cruises. Whether you are admiring the breathtaking scenery from above or discovering the hidden depths of the ocean, these onboard amenities enhance the guest experience and make for an unforgettable adventure.    </span>
+
+    <h2>Enrichment Programme</h2>
+    <img src="{% static 'images/lecture-7648513.jpeg' %}" class="exp_img" alt="Onboard lecture">
+    <span class="pages_desc">
+        A key component of a Zenith Expedition Cruise is our enrichment programme. For every there will be a expert lecturers and guest speakers, carefully selected to give engaging and stimulating talks on a wide range of subjects that are relevant to each itinerary. They bring specialist knowledge and insight into the scientific, geographic and historical understanding of the destinations, allowing our guets to fully embrace the wondrous environments in which they are travelling.  
+    </span>
+</div>
+
+{% endblock %}
