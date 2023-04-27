@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block head %} {% endblock %} - Cruise Manager | Zenith Expedition Cruises</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200" rel="stylesheet"/>
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
     {% block head_resources %}
 
@@ -18,7 +18,7 @@
         <div id="burgerCont" class="flex items-center justify-center w-[64px] text-black222 hover:bg-black222 hover:text-white h-12 border-r-[1px] border-r-grey_b_light cursor-pointer mr-2">
             <i id="burgerIcon" class="material-symbols-outlined">menu</i>
         </div>
-        <div class="w-full flex pl-2 items-center justify-center md:justify-start text-xl font-medium leading-4"><img class="h-6 mr-3" src="{% static 'images/logo_black_star.svg' %}">Cruise Manager</div>
+        <div class="w-full flex pl-2 items-center justify-center md:justify-start text-xl font-medium leading-4"><img class="h-6 mr-3" alt="Logo" src="{% static 'images/logo_black_star.svg' %}">Cruise Manager</div>
         <div class="w-[64px] h-full flex items-center justify-center cursor-pointer text-black222 hover:bg-black222 hover:text-white">
            <a href="{% url 'account_logout' %}" class="flex items-center justify-center h-full"> <i class="material-symbols-outlined">logout</i></a>
         </div>
