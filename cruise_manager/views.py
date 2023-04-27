@@ -204,14 +204,14 @@ def EditCruise(request, id):
 
     FaresFormSet = modelformset_factory(Fares, form=EditFareForm, extra=0)
     if request.method == 'POST':
-        cruise_form = EditCruiseForm(request.POST, instance=cruise)
+        cruise_form = EditCruiseForm(request.POST, request.FILES, instance=cruise)
         fares_formset = FaresFormSet(request.POST, queryset=Fares.objects.filter(cruise=cruise))
         if cruise_form.is_valid() and fares_formset.is_valid():
             # Save the updates to the cruise object and its associated fares
             cruise_form.save()
             fares_formset.save()
             messages.add_message(request, messages.INFO, 'Cruise was updated successfully.')
-            return redirect('display_cruise', id=id)
+            return redirect('display_cruises')
     else:
         # Initialize the Cruise form and Fares formset with the data from the cruise object and its associated fares
         cruise_form = EditCruiseForm(instance=cruise)
