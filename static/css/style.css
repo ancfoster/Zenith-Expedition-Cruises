@@ -753,6 +753,14 @@ select{
   margin: auto;
 }
 
+.m-3{
+  margin: 0.75rem;
+}
+
+.m-2{
+  margin: 0.5rem;
+}
+
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -815,6 +823,10 @@ select{
 
 .mt-8{
   margin-top: 2rem;
+}
+
+.mr-1{
+  margin-right: 0.25rem;
 }
 
 .block{
@@ -891,6 +903,18 @@ select{
 
 .max-w-\[900px\]{
   max-width: 900px;
+}
+
+.max-w-\[\]{
+  max-width: ;
+}
+
+.max-w-\[240px\]{
+  max-width: 240px;
+}
+
+.max-w-\[300px\]{
+  max-width: 300px;
 }
 
 .-translate-x-full{
@@ -1041,6 +1065,25 @@ select{
   background-color: rgb(51 51 51 / var(--tw-bg-opacity));
 }
 
+.bg-gray-200{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.bg-gray-400{
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+}
+
+.bg-\[\]{
+  background-color: ;
+}
+
+.bg-\[\#dddddd\]{
+  --tw-bg-opacity: 1;
+  background-color: rgb(221 221 221 / var(--tw-bg-opacity));
+}
+
 .object-cover{
   -o-object-fit: cover;
      object-fit: cover;
@@ -1048,6 +1091,14 @@ select{
 
 .p-4{
   padding: 1rem;
+}
+
+.p-3{
+  padding: 0.75rem;
+}
+
+.p-2{
+  padding: 0.5rem;
 }
 
 .pb-1{
