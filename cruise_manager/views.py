@@ -28,6 +28,8 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
 from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm, EditDestinationForm, EditCruiseForm, EditFareForm
+import logging
+logger = logging.getLogger(__name__)
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings
 from site_pages.models import Enquiry
@@ -211,7 +213,9 @@ def EditCruise(request, id):
             cruise_form.save()
             fares_formset.save()
             messages.add_message(request, messages.INFO, 'Cruise was updated successfully.')
-            return redirect('display_cruises')
+            return redirect('display_cruises_manager')
+        else:
+            logger.error(cruise_form.errors.as_json())
     else:
         # Initialize the Cruise form and Fares formset with the data from the cruise object and its associated fares
         cruise_form = EditCruiseForm(instance=cruise)

@@ -23,18 +23,24 @@ Edit {{cruise.name}}
             {% csrf_token %}
             <label class="admin_form_label" for="id_name">Name<span id="name_count" class="pl-3 font-light text-grey555 italic"></span></label>
             {% render_field cruise_form.name class+="admin_field" %}
+            {{ cruise_form.name.errors }}
             <label class="admin_form_label" for="id_description">Description <span id="description_count" class="pl-3 font-light text-grey555 italic"></span></label>
             {% render_field cruise_form.description class+="admin_field" %}
+            {{ cruise_form.description.errors }}
             <label class="admin_form_label" for="id_bookable">Is cruise bookable?</label>
             {% render_field cruise_form.bookable class+="admin_field" %}
             <label class="admin_form_label" for="id_tags">Tags</label>
             {% render_field cruise_form.tags class+="admin_field" %}
+            {{ cruise_form.tags.errors }}
             <label class="admin_form_label" for="id_results_image">Results Image</label>
             {% render_field cruise_form.results_image class+="admin_field" %}
+            {{ cruise_form.results_image.errors }}
             <label class="admin_form_label" for="id_listing_image">Listing Image</label>
             {% render_field cruise_form.listing_image class+="admin_field" %}
+            {{ cruise_form.listing_image.errors }}
             <label class="admin_form_label" for="id_map_image">Map Image</label>
             {% render_field cruise_form.map_image class+="admin_field" %}
+            {{ cruise_form.map_image.errors }}
             <br>
             <h2 class="admin_form_label">Fares</h2>
             {{ fares_formset.management_form }}
