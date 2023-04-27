@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %} | Zenith Expedition Cruises - luxury small ship voyages</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200" rel="stylesheet"/>
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
     {% block head_resources %}
 
@@ -17,14 +17,7 @@
 <header>
     <div class="head-logo">
         <div class="head-icons">
-            {% if user.is_authenticated %}
-            <a href="#">
-                <span class="material-symbols-outlined head-icons-span">
-                    confirmation_number
-                </span>
-            </a>
-            {% else %}
-            {% endif %}
+           
         </div>
         <a id="logo-a" href="{% url 'home' %}"><img class="logo_img" src="{% static 'images/logo.svg' %}" alt="Zenith Expedition Cruises"></a>
         <div class="head-icons">
@@ -57,10 +50,10 @@
     <div class="footer_cont">  
         <div class="footer_marketing">
             <span class="news_offers">Subscribe for news & offers</span>            
-                <form class="news_form" action="https://gmail.us17.list-manage.com/subscribe/post?u=cbc8b1126537676a554d2dedd&amp;id=8dc62b61d6&amp;f_id=00b650e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_self">
+                <form class="news_form" action="https://gmail.us17.list-manage.com/subscribe/post?u=cbc8b1126537676a554d2dedd&amp;id=8dc62b61d6&amp;f_id=00b650e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_self">
                     <div>
-                        <input type="email" value="" name="EMAIL" id="mce-EMAIL" required>
-                        <input type="submit" placeholder="Your email" value="Subscribe" name="subscribe" id="mc-embedded-subscribe">
+                        <input type="email" placeholder="Your email" value="" name="EMAIL" id="mce-EMAIL" required>
+                        <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe">
                     </div>
                     <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_cbc8b1126537676a554d2dedd_8dc62b61d6" tabindex="-1" value=""></div>
                 </form>
@@ -72,7 +65,7 @@
                 <span>© Alexander Foster</span>
         </div>
         <div class="footer_logo">
-            <img src="{% static 'images/logo_black_star.svg' %}" alt="">
+            <img src="{% static 'images/logo_black_star.svg' %}" alt="Zenith Cruises Logo">
         </div>
 
     </div>
