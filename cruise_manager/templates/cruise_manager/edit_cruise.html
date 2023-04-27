@@ -1,0 +1,55 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+Create a new Destination
+{% endblock %}
+{% block head_resources %}
+{% endblock %}
+
+{% block content %}
+<h1 class="admin_h1">Edit: {{ cruise.name }}</h1>
+<ul class="flex justify-center text-center items-center">
+    {% if messages %}
+        {% for message in messages %}
+            <li class="p-2 m-2 text-center max-w-[300px] bg-[#dddddd] text-black222">{{ message }}</li>
+        {% endfor %}
+{% endif %}
+</ul>
+<div class="admin_create_cont">
+    <div>
+        <form method="POST" class="flex flex-col flex-wrap bg-ad" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label class="admin_form_label" for="id_name">Name<span id="name_count" class="pl-3 font-light text-grey555 italic"></span></label>
+            {% render_field cruise_form.name class+="admin_field" %}
+            <label class="admin_form_label" for="id_description">Description <span id="description_count" class="pl-3 font-light text-grey555 italic"></span></label>
+            {% render_field cruise_form.description class+="admin_field" %}
+            <label class="admin_form_label" for="id_bookable">Is cruise bookable?</label>
+            {% render_field cruise_form.bookable class+="admin_field" %}
+            <label class="admin_form_label" for="id_tags">Tags</label>
+            {% render_field cruise_form.tags class+="admin_field" %}
+            <label class="admin_form_label" for="id_results_image">Results Image</label>
+            {% render_field cruise_form.results_image class+="admin_field" %}
+            <label class="admin_form_label" for="id_listing_image">Listing Image</label>
+            {% render_field cruise_form.listing_image class+="admin_field" %}
+            <label class="admin_form_label" for="id_map_image">Map Image</label>
+            {% render_field cruise_form.map_image class+="admin_field" %}
+            <br>
+            <h2 class="admin_form_label">Fares</h2>
+            {{ fares_formset.management_form }}
+        
+            {% for form in fares_formset %}
+              <div class="fares-formset-form">
+                {{ form.as_p }}
+              </div>
+            {% endfor %}
+        
+            <button type="submit" class="admin_button">Save Cruise</button>
+          </form>
+    </div>
+</div>
+{% endblock %}
+{% block footerscripts %}
+<script src="{% static 'js/edit.js' %}"></script>
+{% endblock %}
