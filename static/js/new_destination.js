@@ -1,6 +1,7 @@
+/* jshint esversion: 11 */
 // Init variables
 const DescriptionField = document.getElementById('id_description');
-const DescriptionCount = document.getElementById('description_count')
+const DescriptionCount = document.getElementById('description_count');
 
 DescriptionField.addEventListener('input', countLength);
 function countLength(e) {
