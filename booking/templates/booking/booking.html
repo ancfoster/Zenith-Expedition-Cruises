@@ -32,6 +32,9 @@ Book {{ cruise.name }}
         <div role="button" id="plus" class="passenger_increment">+</div>
     </div>
     <h2 class="booking_h2">Select Suite Category</h2>
+    <button class="booking_button" id="suite_category_button" type="button">
+        Suite <span class="material-symbols-outlined">arrow_forward</span>
+     </button>
     <div id="category_cont">
        <!-- Check if tickets are available for each category. If not, category is greyed out and unselectable. -->
         {% if number_verandah > 0 %}
@@ -123,9 +126,7 @@ Book {{ cruise.name }}
           </div>
            {% endif %}
     </div>
-    <button class="booking_button" id="suite_category_button" type="button">
-       Suite <span class="material-symbols-outlined">arrow_forward</span>
-    </button>
+
 </div>
 <div class="journey_container" id="suite">
     <h2 class="booking_h2">Select your suite</h2>
@@ -133,12 +134,13 @@ Book {{ cruise.name }}
         <img src="" id="deckplan" alt="">
     </div>
     <h3>Available Suites</h3>
-    <div id="suite_selection_cont">
-
-    </div>
     <button class="booking_button" id="guest_details_button" type="button">
         Guest Details <span class="material-symbols-outlined">arrow_forward</span>
      </button>
+    <div id="suite_selection_cont">
+
+    </div>
+
 </div>
 <div class="journey_container" id="guest_details">
     <h2 class="booking_h2">Enter the details for each guest</h2>
