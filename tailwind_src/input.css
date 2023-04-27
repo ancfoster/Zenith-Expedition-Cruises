@@ -50,6 +50,9 @@
 .guest_error_message {
     @apply mt-1 mb-3 p-2 bg-red-100 rounded border border-red-300 border-solid;
 }
+.admin_plus {
+    @apply font-size: 40px !important;
+}
 
 .fh {
     @apply font-zenith_h;

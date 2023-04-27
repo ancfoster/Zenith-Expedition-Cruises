@@ -35,6 +35,23 @@ Dashboard
             <span class="mt-2 text-2xl font-medium text-black222">{{ respond_to }}</span>
         </div>
     </div>
+    <h3 class="font-medium text-black333 mt-2 text-xl w-full">
+        Frequent Tasks
+    </h3>
+    <div class="flex mt-1 mb-4 flex-wrap justify-center">
+        <a href="{% url 'new_cruise' %}" class="w-[260px] bg-black333 hover:bg-black111 text-white p-3 m-2 h-[64px] cursor-pointer flex justify-between items-center rounded-xl shadow">
+            New Cruise
+            <span class="material-symbols-outlined admin_plus">add_circle</span>
+        </a>
+        <a href="{% url 'new_destination' %}" class="w-[260px] bg-black333 hover:bg-black111 text-white p-3 m-2 h-[64px] cursor-pointer flex justify-between items-center rounded-xl shadow">
+            New Destination
+            <span class="material-symbols-outlined admin_plus">add_circle</span>
+        </a>
+        <a href="{% url 'new_tag' %}" class="w-[260px] bg-black333 hover:bg-black111 text-white p-3 m-2 h-[64px] cursor-pointer flex justify-between items-center rounded-xl shadow">
+            New Tag
+            <span class="material-symbols-outlined admin_plus">add_circle</span>
+        </a>
+    </div>
 </div>
 
 
