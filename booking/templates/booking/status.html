@@ -23,19 +23,16 @@ Thank you
         Payment
     </span>
 </div>
+<div class="journey_container" id="booking_conf_cont">
 
-<div class="journey_container" id="number_and_category_cont">
-<br>
-<span id="booking_msg"></span>
 </div>
-
 {% endblock %}
 {% block footerscripts %}
 <script>
 const csrf = '{% csrf_token %}';
 // Initialize Stripe.js using your publishable key
 const stripe = Stripe('{{ public_key }}');
-
+const confCont = document.getElementById('booking_conf_cont');
 // Retrieve the "payment_intent_client_secret" query parameter appended to
 // your return_url by Stripe.js
 const clientSecret = new URLSearchParams(window.location.search).get(
@@ -70,8 +67,17 @@ stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
 				}
 			})
 			.then(data => {
-        let bookingMsg = document.getElementById('booking_msg');
-        bookingMsg.innerText = `Your booking is confirmed. Your booking reference is ${data}. We have sent a confirmation email.`;
+        confCont.innerHTML = `
+        <h2 class="booking_h2">Booking confirmed</h2>
+        <span id="thank_you">Thank you for choosing Zenith Expedition Cruises, we cannot wait to welcome you onboard. A booking confirmation has been emailed to you.</span>
+        <div id="booking_reference_cont">
+          <span>Your booking reference is:</span>
+          <span id="booking_reference">${data}</span>
+        </div>
+        <a href="https://zenith-ci.herokuapp.com/" id="complete_home">
+          Back to home page
+        </a>
+        `;
 
 			})
 			.catch(error => {
