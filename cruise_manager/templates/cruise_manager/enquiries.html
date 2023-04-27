@@ -12,8 +12,8 @@ Enquiries
 <h1 class="admin_h1">Enquiries</h1>
 <div class="flex justify-between items-center ml-auto mr-auto max-w-[900px]">
 
-    <span class="font-light text-grey666">
-    {{ enquiries_number }}&nbsp;&nbsp; Enquiries
+    <span class=" text-grey666">
+    {{ enquiries_number }}&nbsp; Enquiries - {{ unresponded_count }} need responding to
     </span>
 </div>
 <div class="flex flex-col mt-4 max-w-[900px] ml-auto mr-auto">
@@ -21,13 +21,12 @@ Enquiries
     <div class="flex-col">
         <ul>
         {% for enquiry in enquiries %}
-        <li class="h-[40px] w-full bg-admin_table_grey1 even:bg-admin_table_grey2 pl-2 pr-2 border border-admin_table_border last:rounded-b-lg"><div class="w-full h-[40px] flex justify-between items-center "><span class="pr-2">{{enquiry.name}} - {{enquiry.email}}</span><span class="material-symbols-outlined">markunread_mailbox</span></li>
+        <li class="h-[40px] w-full bg-admin_table_grey1 hover:bg-white even:bg-admin_table_grey2 pl-2 pr-2 border border-admin_table_border last:rounded-b-lg"><a href="{% url 'enquiry' enquiry.id %}" class="w-full h-[40px] flex justify-between items-center "><span class="pr-2">{{enquiry.name}} - {{enquiry.email}}</span><span class="material-symbols-outlined">{% if enquiry.responded_to %}task_alt{%else%}markunread_mailbox{% endif %}</span></a></li>
         {% endfor %}
         </ul>
     </div>
 
 
-</div>
 </div>
 
 {% endblock %}
