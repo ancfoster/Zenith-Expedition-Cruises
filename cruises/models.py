@@ -192,7 +192,7 @@ class Bookings(models.Model):
     number_of_guests = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(3)], verbose_name="Number of guests")
     booking_price = models.DecimalField(max_digits=9, decimal_places=2)
     booked_on = models.DateTimeField(auto_now_add=True)
-    ticket = models.ForeignKey(Tickets, on_delete=models.SET_NULL, null=True, related_name="booking")
+    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE, null=True, related_name="booking")
     cruise_name_str = models.CharField(max_length=120, editable=False, null=True, verbose_name="Cruise Name")
     guests = models.CharField(max_length=2000, default='', verbose_name="Guests JSON")
 
