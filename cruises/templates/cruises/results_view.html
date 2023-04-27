@@ -9,6 +9,21 @@ Cruises
 
 {% block content %}
 <div id="cruise_flex_mid">
+    <h1>Cruises</h1>
+    <div id="filter_flex">
+        <form method="get" id='filter_form' action="{% url 'cruise_results' %}">
+            <select name="tag" id="tag">
+                <option value="" disabled selected>Filter by</option>
+                {% for tag in tags %}
+                    <option value="{{ tag.name }}">{{ tag.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <div id="remove_cont">
+           
+        </div>
+    </div>
+
     <div class="card_grid">
         {% for cruise_fare in cruise_fares %}
         <a class="card_item" href="{% url 'cruise_detail' cruise_fare.cruise.slug %}">
@@ -46,4 +61,8 @@ Cruises
     </div>
 </div>
 
+{% endblock %}
+{% block footerscripts %}
+<script>const url = {% url 'cruise_results' %}</script>
+<script src="{% static 'js/filter.js' %}"></script>
 {% endblock %}
