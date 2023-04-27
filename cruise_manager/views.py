@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
+from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login as auth_login
@@ -13,6 +14,8 @@ from django.utils.decorators import method_decorator
 from django.utils.text import slugify
 from django.db.models import F
 from django.contrib import messages
+from django.utils import timezone
+from datetime import timedelta
 import uuid
 from PIL import Image
 from django_countries import countries
@@ -434,8 +437,19 @@ def Dashboard(request):
     '''
     Displays dashboard in cruise manager
     '''
+    # Calculate revenue in the past 90 days
+    date_90_days_ago = timezone.now() - timedelta(days=90)
+    revenue = Bookings.objects.filter(booked_on__gte=date_90_days_ago).aggregate(total_booking_price=Sum('booking_price'))['total_booking_price']
+    #Convert from pence to pounds
+    revenue = revenue / 100
+    # Get number of bookings in pas 90 days
+    bookings = Bookings.objects.filter(booked_on__gte=date_90_days_ago).count()
+    # Get number of enquiries that need responding to
+    respond_to = Enquiry.objects.filter(responded_to=False).count()
     context = {
-
+        'revenue' : revenue,
+        'bookings' : bookings,
+        'respond_to' : respond_to,
     }
     return render(request, 'cruise_manager/dashboard.html', context)
 
