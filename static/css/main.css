@@ -34,7 +34,7 @@ body {
     padding: 0;
     background-color: #F2F2F2;
     font-family: neue-haas-grotesk-display, sans-serif, Arial;
-    font-weight: 400;
+    font-weight: 500;
     box-sizing: border-box;
 }
 header {
@@ -1031,4 +1031,39 @@ footer {
         width: 100%;
         margin-bottom: 16px;
     }
+}
+
+/* Contact page styles */
+.customer_messages {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.customer_messages li {
+    list-style: none;
+    margin: 16px 4px;
+    box-sizing: border-box;
+    background-color: #dddddd;
+    color: #4c4c4c;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 500;
+}
+#id_message {
+    width: 100%;
+    background-color: #F2F2F2 Important !important;
+    color: var(--black333);
+}
+#contact_submit {
+    padding: 10px;
+    background-color: var(--black333);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: neue-haas-grotesk-display, sans-serif, Arial;
+    margin: 16px 8px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    width: 180px;
 }
