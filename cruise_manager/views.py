@@ -455,6 +455,18 @@ def Enquiries(request):
     return render(request, 'cruise_manager/enquiries.html', context)
 
 
+@staff_member_required
+def EnquiryDetail(request, id):
+    '''
+    Displays a specific enqiry message with actions
+    '''
+    enquiry = get_object_or_404(Enquiry, id=id)
+    context = {
+        'enquiry' : enquiry,
+    }
+    return render(request, 'cruise_manager/enquiry.html', context)
+
+
 def compress_uploaded_images(image, image_name, max_dimension):
     '''
     This function compresses uploaded imagaes for end user performance,
