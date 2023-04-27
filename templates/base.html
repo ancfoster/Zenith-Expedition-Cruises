@@ -17,7 +17,14 @@
 <header>
     <div class="head-logo">
         <div class="head-icons">
+            {% if user.is_staff %}
+            <a href="{% url 'dashboard' %}">
+                <span class="material-symbols-outlined head-icons-span">
+                    manage_accounts
+                </span>
+            </a>
            
+            {% endif %}
         </div>
         <a id="logo-a" href="{% url 'home' %}"><img class="logo_img" src="{% static 'images/logo.svg' %}" alt="Zenith Expedition Cruises"></a>
         <div class="head-icons">
