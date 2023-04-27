@@ -10,6 +10,13 @@ Destinations
 
 {% block content %}
 <h1 class="admin_h1">Destinations</h1>
+<ul class="flex justify-center text-center items-center">
+    {% if messages %}
+        {% for message in messages %}
+            <li class="p-2 m-2 text-center max-w-[300px] bg-[#dddddd] text-black222">{{ message }}</li>
+        {% endfor %}
+{% endif %}
+</ul>
 <div class="flex justify-between items-center ml-auto mr-auto max-w-[900px]">
     <a href="{% url 'new_destination' %}">
         <div class="admin_icon_button bg-black333 hover:bg-black111 text-base flex items-center text-white pl-2 pr-3 pt-1 pb-1 rounded-lg"><i class="material-symbols-outlined pr-2">add</i><span>New Destination</span></div>

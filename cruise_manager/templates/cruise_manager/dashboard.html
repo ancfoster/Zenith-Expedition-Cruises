@@ -9,6 +9,13 @@ Dashboard
 {% endblock %}
 
 {% block content %}
+<ul class="flex justify-center text-center items-center">
+    {% if messages %}
+        {% for message in messages %}
+            <li class="p-2 m-2 text-center max-w-[300px] bg-[#dddddd] text-black222">{{ message }}</li>
+        {% endfor %}
+{% endif %}
+</ul>
 <h1 class="admin_h1">Dashboard</h1>
 
 {% endblock %}

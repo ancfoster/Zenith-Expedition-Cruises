@@ -10,8 +10,14 @@ Enquiries
 
 {% block content %}
 <h1 class="admin_h1">Enquiries</h1>
+<ul class="flex justify-center text-center items-center">
+    {% if messages %}
+        {% for message in messages %}
+            <li class="p-2 m-2 text-center max-w-[300px] bg-[#dddddd] text-black222">{{ message }}</li>
+        {% endfor %}
+{% endif %}
+</ul>
 <div class="flex justify-between items-center ml-auto mr-auto max-w-[900px]">
-
     <span class=" text-grey666">
     {{ enquiries_number }}&nbsp; Enquiries - {{ unresponded_count }} need responding to
     </span>

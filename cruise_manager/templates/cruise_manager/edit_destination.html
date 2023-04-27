@@ -12,6 +12,13 @@ Create a new Destination
 
 {% block content %}
 <h1 class="admin_h1">Edit Destination: {{ destination.name }}</h1>
+<ul class="flex justify-center text-center items-center">
+    {% if messages %}
+        {% for message in messages %}
+            <li class="p-2 m-2 text-center max-w-[300px] bg-[#dddddd] text-black222">{{ message }}</li>
+        {% endfor %}
+{% endif %}
+</ul>
 <div class="admin_create_cont">
     <div>
         <form class="flex flex-col flex-wrap bg-ad" method="POST" id="edit_destination_form" enctype="multipart/form-data">

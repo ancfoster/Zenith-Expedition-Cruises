@@ -13,6 +13,13 @@
 {% block content %}
 {% if destination %}
 <h1 class="admin_h1">{{ destination.name }}</h1>
+<ul class="flex justify-center text-center items-center">
+  {% if messages %}
+      {% for message in messages %}
+          <li class="p-2 m-2 text-center max-w-[300px] bg-[#dddddd] text-black222">{{ message }}</li>
+      {% endfor %}
+{% endif %}
+</ul>
 <div class="max-w-[760px] ml-auto mr-auto mb-3 flex">
   <a href="{% url 'destinations' %}" class="text-black333 hover:text-black flex items-center"><span class="material-symbols-outlined pr-2">arrow_back</span><span class="font-light">Destinations</span></a>
 </div>
