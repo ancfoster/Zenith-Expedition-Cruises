@@ -1,0 +1,42 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% block head %}
+Enquiry from {{ enquiry.name }}
+{% endblock %}
+{% block head_resources %}
+
+{% endblock %}
+
+{% block content %}
+<h1 class="admin_h1">Enquiry</h1>
+<ul class="flex justify-center text-center items-center">
+    {% if messages %}
+        {% for message in messages %}
+            <li class="p-2 m-2 text-center max-w-[300px] bg-[#dddddd] text-black222">{{ message }}</li>
+        {% endfor %}
+{% endif %}
+</ul>
+<div class="admin_create_cont">
+    <span class="admin_form_label">Name</span>
+    <span>{{enquiry.name}}</span>
+    <span class="admin_form_label">Phone</span>
+    <span>{{enquiry.phone}}</span>
+    <span class="admin_form_label">Email</span>
+    <span>{{enquiry.email}}</span>
+    <span class="admin_form_label">Message</span>
+    <span>{{enquiry.message}}</span>
+    <span class="admin_form_label">Date Sent</span>
+    <span>{{enquiry.sent}}</span>
+    <div class="flex items-center mb-4 mt-4">
+        <a href="{% url 'enquiry_status' enquiry.id %}">
+          <div class="admin_icon_button mr-2">{% if enquiry.responded_to %}<span class="material-symbols-outlined">markunread_mailbox</span><span class="translate-y-[1px]">Mark not responded</span>{% else %}<span class="material-symbols-outlined">task_alt</span><span class="translate-y-[1px]">Mark as responded</span>{% endif %}</div>
+        </a>
+        <a href="{% url 'delete_enquiry' enquiry.id %}">
+          <div class="admin_icon_button"><span class="material-symbols-outlined">delete</span><span class="translate-y-[1px]">Delete</span></div>
+        </a>
+      </div>
+</div>
+{% endblock %}
+{% block footerscripts %}
+{% endblock %}

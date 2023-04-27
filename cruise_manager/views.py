@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.utils.text import slugify
 from django.db.models import F
+from django.contrib import messages
 import uuid
 from PIL import Image
 from django_countries import countries
@@ -465,6 +466,32 @@ def EnquiryDetail(request, id):
         'enquiry' : enquiry,
     }
     return render(request, 'cruise_manager/enquiry.html', context)
+
+
+@staff_member_required
+def DeleteEnquiry(request, id):
+    '''
+    Deletes an enquiry, but presents action confirmation first
+    '''
+    enquiry = get_object_or_404(Enquiry, id=id)
+    
+    if request.method == 'POST':
+        enquiry.delete()
+        messages.add_message(request, messages.INFO, 'The enquiry was deleted')
+        return redirect('enquiries')
+    context = {
+        'enquiry' : enquiry,
+    }
+    return render(request, 'cruise_manager/delete_enquiry.html', context)
+
+
+def EnquiryStatus(request, id):
+    enquiry = get_object_or_404(Enquiry, id=id)
+     # toggle status
+    enquiry.responded_to = not enquiry.responded_to
+    enquiry.save()
+    messages.add_message(request, messages.INFO, 'Enquiry status updated')
+    return redirect('enquiry', id=id)
 
 
 def compress_uploaded_images(image, image_name, max_dimension):
