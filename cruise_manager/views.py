@@ -165,6 +165,7 @@ def NewCruise(request):
             destination_count = Movements.objects.filter(cruise=cruise, type='D').values('destination').distinct().count()
             cruise.port_number = destination_count
             cruise.save()
+            messages.add_message(request, messages.INFO, 'The new cruise was added successfully.')
             # Return to cruises list in cruise manager
             return redirect('display_cruises_manager')
         else:
@@ -209,6 +210,7 @@ def EditCruise(request, id):
             # Save the updates to the cruise object and its associated fares
             cruise_form.save()
             fares_formset.save()
+            messages.add_message(request, messages.INFO, 'Cruise was updated successfully.')
             return redirect('display_cruise', id=id)
     else:
         # Initialize the Cruise form and Fares formset with the data from the cruise object and its associated fares
@@ -237,6 +239,7 @@ def DeleteCruise(request, id):
     if request.method == 'POST':
         tickets.delete()
         cruise.delete()
+        messages.add_message(request, messages.INFO, 'Cruise deleted successfully.')
         return redirect('display_cruises_manager')
     context = {
         'cruise': cruise,
@@ -300,6 +303,7 @@ def DeleteBooking(request, id):
         booking.delete()
         ticket.booked = False
         ticket.save()
+        messages.add_message(request, messages.INFO, 'Booking deleted successfully.')
         return redirect('bookings')
     context = {
         'booking' : booking,
@@ -350,6 +354,7 @@ def NewDestination(request):
             new_destination_form.instance.image.field.upload_to = 'destination_img/'
             form = new_destination_form.save()
             form.save()
+            messages.add_message(request, messages.INFO, 'Destination successfully created.')
             return redirect('destinations')
     else:
         new_destination_form = NewDestinationForm()
@@ -386,6 +391,7 @@ def EditDestination(request, id):
         edit_destination_form = EditDestinationForm(request.POST, instance=destination)
         if edit_destination_form.is_valid():
             edit_destination_form.save()
+            messages.add_message(request, messages.INFO, 'Destination edited successfully.')
             return redirect('destinations')
     else:
         edit_destination_form = EditDestinationForm(instance=destination)
@@ -407,6 +413,7 @@ def DeleteDestination(request, id):
     related_movements = Movements.objects.filter(destination=destination).count()
     if request.method == 'POST':
         destination.delete()
+        messages.add_message(request, messages.INFO, 'Destination deleted successfully')
         return redirect('destinations')
     context = {
         'destination' : destination,
@@ -445,6 +452,7 @@ def EditTag(request, id):
         edit_tag_form = EditTagForm(request.POST, instance=tag)
         if edit_tag_form.is_valid():
             edit_tag_form.save()
+            messages.add_message(request, messages.INFO, 'Tag updated successfully.')
             return redirect('tags')
     else:
         edit_tag_form = EditTagForm(instance=tag)
@@ -469,6 +477,7 @@ class TagDelete(DeleteView):
         return get_object_or_404(Tag, id=id)
 
     def get_success_url(self):
+        messages.add_message(request, messages.INFO, 'Tag deleted')
         return reverse('tags')
 
 
