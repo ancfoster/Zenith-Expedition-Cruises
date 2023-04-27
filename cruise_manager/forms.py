@@ -1,5 +1,5 @@
 from django import forms
-from cruises.models import Destination, Tag, Cruises
+from cruises.models import Destination, Tag, Cruises, Fares
 from datetime import date, timedelta
 
 
@@ -23,7 +23,7 @@ class NewDestinationForm(forms.ModelForm):
 
 class EditDestinationForm(forms.ModelForm):
     '''
-    Class for the form that edits and existing
+    Class for the form that edits a destination
     '''
     class Meta:
         model = Destination
@@ -32,6 +32,31 @@ class EditDestinationForm(forms.ModelForm):
             'longitude': forms.HiddenInput(),
         }
         fields = "__all__"
+
+
+class EditFareForm(forms.ModelForm):
+    '''
+    Edit a fare object
+    '''
+    class Meta:
+        model = Fares
+        fields = ('price',)
+
+
+class EditCruiseForm(forms.ModelForm):
+    '''
+    Edit a cruise object, note this only edits
+    cruise object and not movements
+    '''
+    class Meta:
+        model = Cruises
+        fields = ('name', 'description', 'results_image', 'listing_image', 'map_image', 'bookable', 'tags',)
+        widgets = {
+            'tags' : forms.CheckboxSelectMultiple(),
+            'results_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+            'map_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+            'listing_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+        }
 
 
 class NewTagForm(forms.ModelForm):
