@@ -20,6 +20,7 @@ urlpatterns = [
     path('manager/delete-booking/<id>/', views.DeleteBooking, name='delete_booking'),
     path('manager/enquiries/', views.Enquiries, name='enquiries'),
     path('manager/enquiry/<id>', views.EnquiryDetail, name='enquiry'),
-
+    path('manager/delete-enquiry/<id>', views.DeleteEnquiry, name='delete_enquiry'),
+    path('manager/enquiry-status/<id>', views.EnquiryStatus, name='enquiry_status'),
 
 ]
