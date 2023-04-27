@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load widget_tweaks %}
+
+{% block title %}
+500 - Server Error
+{% endblock %}
+
+{% block content %}
+<div id="cruise_flex_mid">
+    <h1>500 - Server error</h1>
+    <br>
+    <span>We're very sorry but a server error has occurred. </span>
+    <br>
+    <div class="wide_cta">
+        <a class="cta_wide_a" href="{% url 'cruise_results' %}">Explore our Cruises</a>
+    </div>
+</div>
+
+{% endblock %}

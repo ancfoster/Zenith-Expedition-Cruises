@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% load widget_tweaks %}
+
+{% block title %}
+404 - Page could not be found
+{% endblock %}
+
+{% block content %}
+<div id="cruise_flex_mid">
+    <h1>404 - Page could not be found</h1>
+    <br>
+    <span>The page could not be found, why not take a look at our exciting cruises?</span>
+    <br>
+    <div class="wide_cta">
+        <a class="cta_wide_a" href="{% url 'cruise_results' %}">Explore our Cruises</a>
+    </div>
+</div>
+
+{% endblock %}
