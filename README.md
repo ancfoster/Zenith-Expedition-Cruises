@@ -1,7 +1,7 @@
 # Zenith-Expedition-Cruises
 
-This project involved developing an e-commerce website for the imaginary cruise line, Zenith Cruises. The website built using the Django MVT framework and allows users to find and book an expedition cruise. 
-
+This project involved developing an e-commerce website for the imaginary cruise line, Zenith Expedition Cruises. The website built using the Django MVT framework and allows users to find and book an expedition cruise.
+The project involved devloping a comprehensive booking management system for the cruise company, kown as Cruise Manager. This booking management system keeps track of inventory (tickets) and manages which suites are booked on any given cruise. 
 
 ![screenshot](documentation/mockup.png)
 
@@ -294,9 +294,7 @@ Using this approach, I was able to apply the MoSCow prioritization and labels to
 
 ## Ecommerce Business Model
 
-This site sells goods to individual customers, and therefore follows a `Business to Customer` model.
-It is of the simplest **B2C** forms, as it focuses on individual transactions, and doesn't need anything
-such as monthly/annual subscriptions.
+This site sells goods to individual customers, and therefore follows a `Business to Customer` model. By hacing an ecommerce website Zenith Expedition Cruises is able to take new bookings 24 hours a day. 
 
 It is still in its early development stages, although it already has a newsletter, and links for social media marketing.
 
@@ -701,31 +699,16 @@ Use this space to discuss any differences between the local version you've devel
 
 ## Credits
 
-In this section you need to reference where you got your content, media, and extra help from.
-It is common practice to use code from other repositories and tutorials,
-however, it is important to be very specific about these sources to avoid plagiarism.
 
-### Content
+### Tutorials followed
 
-Use this space to provide attribution links to any borrowed code snippets, elements, or resources.
-A few examples have been provided below to give you some ideas.
-
-Ideally, you should provide an actual link to every resource used, not just a generic link to the main site!
 
 | Source | Location | Notes |
 | --- | --- | --- |
-| [Markdown Builder by Tim Nelson](https://traveltimn.github.io/markdown-builder) | README and TESTING | tool to help generate the Markdown files |
-| [Chris Beams](https://chris.beams.io/posts/git-commit) | version control | "How to Write a Git Commit Message" |
-| [W3Schools](https://www.w3schools.com/howto/howto_js_topnav_responsive.asp) | entire site | responsive HTML/CSS/JS navbar |
-| [W3Schools](https://www.w3schools.com/howto/howto_css_modals.asp) | contact page | interactive pop-up (modal) |
-| [W3Schools](https://www.w3schools.com/css/css3_variables.asp) | entire site | how to use CSS :root variables |
-| [Flexbox Froggy](https://flexboxfroggy.com/) | entire site | modern responsive layouts |
-| [Grid Garden](https://cssgridgarden.com) | entire site | modern responsive layouts |
-| [StackOverflow](https://stackoverflow.com/a/2450976) | quiz page | Fisher-Yates/Knuth shuffle in JS |
-| [YouTube](https://www.youtube.com/watch?v=YL1F4dCUlLc) | leaderboard | using `localStorage()` in JS for high scores |
-| [YouTube](https://www.youtube.com/watch?v=u51Zjlnui4Y) | PP3 terminal | tutorial for adding color to the Python terminal |
-| [strftime](https://strftime.org) | CRUD functionality | helpful tool to format date/time from string |
-| [WhiteNoise](http://whitenoise.evans.io) | entire site | hosting static files on Heroku temporarily |
+| [Markdown Builder by Tim Nelson](https://traveltimn.github.io/markdown-builder) | README and TESTING | Tool to help generate the Markdown files |
+| [Jaysha](https://ordinarycoders.com/blog/article/django-sitemap) | Django sitemap | How to Create a Dynamic Django Sitemap |
+| [Code with Stein](https://codewithstein.com/adding-robots-txt-to-a-django-site/) | Adding robots.txt | Adding robots.txt to a Django site |
+
 
 ### Media
 
@@ -756,8 +739,5 @@ by sending yourself the following command: `!freemedia`.
 Use this space to provide attribution to any supports that helped, encouraged, or supported you throughout the development stages of this project.
 A few examples have been provided below to give you some ideas.
 
-- I would like to thank my Code Institute mentor, [John/Jane Doe](https://github.com/username) for their support throughout the development of this project.
-- I would like to thank the [Code Institute](https://codeinstitute.net) tutor team for their assistance with troubleshooting and debugging some project issues.
-- I would like to thank the [Code Institute Slack community](https://code-institute-room.slack.com) for the moral support; it kept me going during periods of self doubt and imposter syndrome.
-- I would like to thank my spouse/partner (John/Jane), for believing in me, and allowing me to make this transition into software development.
-- I would like to thank my employer, for supporting me in my career development change towards becoming a software developer.
+- I would like to thank my Code Institute mentor, Tim Nelson for their support throughout the development of this project and the whole of my CI diploma. Their guidance has been invaluable.
+- I would like to thank my wife Alice for extensively testing the site and providing feedback.
