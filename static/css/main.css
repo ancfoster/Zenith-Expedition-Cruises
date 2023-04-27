@@ -244,7 +244,6 @@ footer {
     font-size: 1rem;
     color: var(--grey444);
 }
-
 #cruise_flex_mid {
     width: 100%;
     max-width: 960px;
@@ -329,6 +328,47 @@ footer {
 .price_figure {
     font-size: 32px;
     color: var(--black222);
+}
+/* Results Cruise filter styles */
+#filter_flex {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px 0 24px 0;
+}
+#remove_cont a {
+    padding: 5px 8px;
+    background-color: #444444;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+#remove_cont a:hover {
+    background-color: var(--black111);
+    text-decoration: none;
+}
+#remove_cont a span {
+    margin-right: 6px;
+}
+#filter_form {
+    display: flex;
+    align-items: center;
+}
+#filter_form label {
+    margin-right: 4px;
+    font-size: 16px;
+    color: #444444;
+}
+#filter_form select {
+    margin-right: 8px;
+    font-size: 16px;
+    color: #333333;
+    padding: 6px;
+    background-color: #ededed;
+    border: 1px solid #cdcdcd;
 }
 .book_now {
     width: 33%;
