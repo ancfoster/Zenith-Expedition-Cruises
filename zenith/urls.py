@@ -16,6 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from site_pages.views import handler404, handler500
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import CruiseSitemap
+
+app_name = 'cruises'
+
+sitemaps = {
+    'blog':CruiseSitemap
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +32,8 @@ urlpatterns = [
     path('', include("cruise_manager.urls"), name="cruise_manager_urls"),
     path('', include("booking.urls"), name="booking_urls"),
     path('accounts/', include('allauth.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
+
+
+
