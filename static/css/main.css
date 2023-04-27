@@ -1012,3 +1012,23 @@ footer {
 .auth_cont p {
     text-align: center;
 }
+
+/* Experience styles */
+.exp_img {
+    width: 100%;
+    margin: 16px 0;
+    max-width: 480px;
+    height: auto;
+}
+
+@media screen and (max-width:600px) {
+    .hero_top {
+        display: flex;
+        flex-direction: column;
+        flex-direction: column-reverse;
+    }
+    .hero_top div {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+}
