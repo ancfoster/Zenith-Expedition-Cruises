@@ -1,8 +1,8 @@
 from django import forms
-from cruises.models import Enquiry
+from site_pages.models import Enquiry
 
 
-class NewDestinationForm(forms.ModelForm):
+class EnquiryForm(forms.ModelForm):
     '''
     Class for the form for sending a contact enquiry
     '''

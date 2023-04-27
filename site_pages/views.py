@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf.urls import handler404, handler500
-from cruises.models import Destination
-from django.db.models import Count, Case, When, BooleanField
+from site_pages.models import Enquiry
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.views import generic, View
-
+from .forms import EnquiryForm
 
 # Create your views here.
 def HomePage(request):
@@ -28,8 +27,16 @@ def Experience(request):
 
 def Contact(request):
     '''
-    Displays the contact page page
+    Displays the contact page and sends contact form responses
     '''
+    if request.method == 'POST':
+        enquiry_form = EnquiryForm()
+        if enquiry_form.is_valid():
+             form.save()
+             return redirect('contact')
+    else:
+        enquiry_form = EnquiryForm()
     context = {
+        'enquiry_form' : enquiry_form,
     }
     return render(request, 'site_pages/contact.html', context)
