@@ -25,7 +25,7 @@ from datetime import datetime
 from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm, EditDestinationForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings
-
+from site_pages.models import Enquiry
 
 # mapkey is the key used for mapbox maps
 mapkey = os.environ.get('MAPBOX')
@@ -437,6 +437,20 @@ def Dashboard(request):
 
     }
     return render(request, 'cruise_manager/dashboard.html', context)
+
+
+@staff_member_required
+def Enquiries(request):
+    '''
+    Displays a list of receieved enquiries
+    '''
+    enquiries = Enquiry.objects.order_by('-sent')
+    enquiries_number = enquiries.count()
+    context = {
+        'enquiries' : enquiries,
+        'enquiries_number' : enquiries_number,
+    }
+    return render(request, 'cruise_manager/enquiries.html', context)
 
 
 def compress_uploaded_images(image, image_name, max_dimension):

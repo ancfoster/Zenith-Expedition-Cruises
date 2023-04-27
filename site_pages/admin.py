@@ -6,4 +6,4 @@ from .models import Enquiry
 @admin.register(Enquiry)
 class EquiryAdmin(admin.ModelAdmin):
     list_display = ('name', 'sent', 'responded_to')
-    fields = ('name', 'sent', 'phone', 'email', 'message')
+    fields = ('name', 'phone', 'email', 'responded_to', 'message')
