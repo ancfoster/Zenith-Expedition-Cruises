@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf.urls import handler404, handler500
 from site_pages.models import Enquiry
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.views import generic, View
@@ -30,12 +31,14 @@ def Contact(request):
     Displays the contact page and sends contact form responses
     '''
     if request.method == 'POST':
-        enquiry_form = EnquiryForm()
+        enquiry_form = EnquiryForm(request.POST)
         if enquiry_form.is_valid():
-             form.save()
+             enquiry_form.save()             
+             messages.add_message(request, messages.INFO, 'Your enquiry was sent successfully.')
              return redirect('contact')
     else:
         enquiry_form = EnquiryForm()
+
     context = {
         'enquiry_form' : enquiry_form,
     }
