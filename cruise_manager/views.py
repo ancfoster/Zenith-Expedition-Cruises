@@ -224,6 +224,27 @@ def EditCruise(request, id):
 
 
 @staff_member_required
+def DeleteCruise(request, id):
+    '''
+    Deletes a cruise and associated tickets
+    Tickets must be deleted first as they are
+    protected
+    '''
+    #Get cruise object and ticket objects
+    cruise = get_object_or_404(Cruises, id=id)
+    tickets = Tickets.objects.filter(cruise=cruise)
+    # Delete tickets and cruises
+    if request.method == 'POST':
+        tickets.delete()
+        cruise.delete()
+        return redirect('display_cruises_manager')
+    context = {
+        'cruise': cruise,
+    }
+    return render(request, 'cruise_manager/delete_cruise.html', context)
+
+
+@staff_member_required
 def CruiseDetail(request, id):
     '''
     Displays the detail of a cruise
