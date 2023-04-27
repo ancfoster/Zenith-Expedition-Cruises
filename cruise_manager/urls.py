@@ -18,5 +18,6 @@ urlpatterns = [
     path('manager/bookings', views.DisplayBookings, name='bookings'),
     path('manager/booking/<id>/', views.BookingDetails, name='booking_details'),
     path('manager/delete-booking/<id>/', views.DeleteBooking, name='delete_booking'),
+    path('manager/enquiries/', views.Enquiries, name='enquiries'),
 
 ]

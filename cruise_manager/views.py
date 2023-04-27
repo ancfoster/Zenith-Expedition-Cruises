@@ -446,9 +446,11 @@ def Enquiries(request):
     '''
     enquiries = Enquiry.objects.order_by('-sent')
     enquiries_number = enquiries.count()
+    unresponded_count = Enquiry.objects.filter(responded_to=False).count()
     context = {
         'enquiries' : enquiries,
         'enquiries_number' : enquiries_number,
+        'unresponded_count' : unresponded_count,
     }
     return render(request, 'cruise_manager/enquiries.html', context)
 
