@@ -1,0 +1,87 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+{{ cruise.name }}
+{% endblock %}
+{% block head_resources %}
+{% endblock %}
+
+{% block content %}
+{% if cruise %}
+<h1 class="admin_h1">{{ cruise.name }}</h1>
+<ul class="flex justify-center text-center items-center">
+  {% if messages %}
+      {% for message in messages %}
+          <li class="p-2 m-2 text-center max-w-[300px] bg-[#dddddd] text-black222">{{ message }}</li>
+      {% endfor %}
+{% endif %}
+</ul>
+<div class="max-w-[760px] ml-auto mr-auto mb-3 flex">
+  <a href="{% url 'display_cruises_manager' %}" class="text-black333 hover:text-black flex items-center"><span class="material-symbols-outlined pr-2">arrow_back</span><span class="font-light">Cruises</span></a>
+</div>
+<div class="max-w-[760px] w-full ml-auto mr-auto mt-2 mb-6 flex flex-col flex-wrap bg-admin_section_bg rounded-2xl shadow">
+        <img src="{{ cruise.listing_image.url }}" class="w-full object-cover h-[240px] rounded-t-2xl">
+        <div class="m-4 flex flex-col">
+            <h3 class="admin_form_label">Description</h3>
+            <span class="text-grey444 font-normal mb-4">{{ cruise.description }}</span>
+            <div class="grid gap-4 grid-cols-1 md:grid-cols-3">
+              <div class="flex flex-col md:col-span-1 mb-4 md:mb-0">
+                <h3 class="admin_form_label">Ship</h3>
+                <span class="font-normal text-grey444">{{ cruise.ship }}</span>
+                <h3 class="admin_form_label">Start date</h3>
+                <span class="font-normal text-grey444">{{ cruise.start_date }}</span>
+                <h3 class="admin_form_label">End date</h3>
+                <span class="font-normal text-grey444">{{ cruise.end_date }}</span>
+                <h3 class="admin_form_label">Tags</h3>
+                <span class="font-normal text-grey444">
+                    {% for tag in cruise.tags.all %}
+                    {{tag}}<br>  
+                    {% endfor %}
+                </span>
+                <h3 class="admin_form_label">Bookable</h3>
+                <span class="font-normal text-grey444">{% if cruise.bookable %} Yes {% else %} No {% endif %}</span>
+                <h3 class="admin_form_label">Fares</h3>
+                <ul>
+                    {% for fare in fares %}
+                    <li>{{fare.suite_category}} - £ {{ fare.price }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+              <div class="md:col-span-2 flex flex-col">
+                <h3 class="admin_form_label">Map Image</h3>
+                <img class="w-full h-auto mt-2 mb-2" src="{{ cruise.map_image.url}}" alt="Map Image">
+                <h3 class="admin_form_label">Results Image</h3>
+                <img class="w-full h-auto mt-2 mb-2" src="{{ cruise.results_image.url}}" alt="Results Image">
+              </div>             
+        </div>
+        <div class="grid-cols-3 flex flex-col">
+            <h3 class="admin_form_label">Movements</h3>
+            {% for movement in movements %}
+            <b>Day {{ movement.order }}</b>
+            Movement Type: {{ movement.get_type_display }}<br>
+            {% if movement.type == 'D' %}
+            Destination: {{movement.destination}}, {{movement.destination.get_country_display}}<br>
+            Coordinates: {{movement.destination.latitude}}, {{movement.destination.longitude}}<br>
+
+
+            {% endif %}
+            {% endfor %}
+          </div>
+          
+
+        </div>
+        <div class="flex justify-end items-center mb-4 mr-4">
+          <a href="#">
+            <div class="admin_icon_button mr-2"><span class="material-symbols-outlined pr-1">edit</span><span class="translate-y-[1px]">Edit</span></div>
+          </a>
+          <a href="#">
+            <div class="admin_icon_button"><span class="material-symbols-outlined pr-1">delete</span><span class="translate-y-[1px]">Delete</span></div>
+          </a>
+        </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block footerscripts %}
+{% endblock %}

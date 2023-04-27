@@ -193,6 +193,21 @@ def DisplayCruises(request):
 
 
 @staff_member_required
+def CruiseDetail(request, id):
+    '''
+    Displays the detail of a cruise
+    '''
+    cruise = get_object_or_404(Cruises, id=id)
+    fares = Fares.objects.filter(cruise=cruise)
+    movements = Movements.objects.filter(cruise=cruise)
+    context = {
+        'cruise':cruise,
+        'fares':fares,
+        'movements':movements,
+    }
+    return render(request, 'cruise_manager/cruise.html', context)
+
+@staff_member_required
 def DisplayBookings(request):
     '''
     Displays a list of booings in cruise manager
