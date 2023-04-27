@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
+from django.forms import modelformset_factory
 from django.utils.text import slugify
 from django.db.models import F
 from django.contrib import messages
@@ -26,7 +27,7 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm, EditDestinationForm
+from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm, EditDestinationForm, EditCruiseForm, EditFareForm
 
 from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings
 from site_pages.models import Enquiry
@@ -193,6 +194,36 @@ def DisplayCruises(request):
 
 
 @staff_member_required
+def EditCruise(request, id):
+    '''
+    Allows editing of cruise fields and 
+    associated cruise fares
+    '''
+    cruise = get_object_or_404(Cruises, id=id)
+
+    FaresFormSet = modelformset_factory(Fares, form=EditFareForm, extra=0)
+    if request.method == 'POST':
+        cruise_form = EditCruiseForm(request.POST, instance=cruise)
+        fares_formset = FaresFormSet(request.POST, queryset=Fares.objects.filter(cruise=cruise))
+        if cruise_form.is_valid() and fares_formset.is_valid():
+            # Save the updates to the cruise object and its associated fares
+            cruise_form.save()
+            fares_formset.save()
+            return redirect('display_cruise', id=id)
+    else:
+        # Initialize the Cruise form and Fares formset with the data from the cruise object and its associated fares
+        cruise_form = EditCruiseForm(instance=cruise)
+        fares_formset = FaresFormSet(queryset=Fares.objects.filter(cruise=cruise))
+
+    context = {
+        'cruise': cruise,
+        'cruise_form': cruise_form,
+        'fares_formset': fares_formset,
+    }
+    return render(request, 'cruise_manager/edit_cruise.html', context)
+
+
+@staff_member_required
 def CruiseDetail(request, id):
     '''
     Displays the detail of a cruise
@@ -206,6 +237,7 @@ def CruiseDetail(request, id):
         'movements':movements,
     }
     return render(request, 'cruise_manager/cruise.html', context)
+
 
 @staff_member_required
 def DisplayBookings(request):
