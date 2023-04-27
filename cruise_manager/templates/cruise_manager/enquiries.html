@@ -1,0 +1,36 @@
+
+{% extends "admin_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+Enquiries
+{% endblock %}
+{% block head_resources %}
+{% endblock %}
+
+{% block content %}
+<h1 class="admin_h1">Enquiries</h1>
+<div class="flex justify-between items-center ml-auto mr-auto max-w-[900px]">
+
+    <span class="font-light text-grey666">
+    {{ enquiries_number }}&nbsp;&nbsp; Enquiries
+    </span>
+</div>
+<div class="flex flex-col mt-4 max-w-[900px] ml-auto mr-auto">
+    <div class="text-grey444 h-[40px] w-full font-medium text-sm bg-admin_table_grey_top pl-2 pr-2 flex items-center border border-admin_table_border rounded-tl-xl justify-between rounded-tr-xl"><span>From</span><span>Responded / Not Responded</span></div>
+    <div class="flex-col">
+        <ul>
+        {% for enquiry in enquiries %}
+        <li class="h-[40px] w-full bg-admin_table_grey1 even:bg-admin_table_grey2 pl-2 pr-2 border border-admin_table_border last:rounded-b-lg"><div class="w-full h-[40px] flex justify-between items-center "><span class="pr-2">{{enquiry.name}} - {{enquiry.email}}</span><span class="material-symbols-outlined">markunread_mailbox</span></li>
+        {% endfor %}
+        </ul>
+    </div>
+
+
+</div>
+</div>
+
+{% endblock %}
+{% block footerscripts %}
+
+{% endblock %}
