@@ -388,11 +388,13 @@ footer {
 }
 @media screen and (min-width: 640px) {
     #cruise_flex_top {
-        flex-direction: row-reverse;
-        align-items: stretch;
-        flex-wrap: nowrap;
-        margin: 16px 16px 0 16px;
-    }
+    flex-direction: row-reverse;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    margin: 16px 16px 0 16px;
+    box-sizing: border-box;
+    padding: 0 16px;
+}
     #listing_image {
         width: 50%;
         flex-grow: 1;
@@ -605,6 +607,15 @@ footer {
     align-items: center;
     justify-content: center;
     margin-bottom: 24px;
+}
+#complete_home {
+    color: var(--grey444);
+    margin: 16px auto;
+    padding: 8px 16px;
+    text-decoration: underline;
+    font-size: 20px;
+    background-color: #e9e9e9;
+    border: 1px solid #cdcdcd;
 }
 
 /* Booking - suite category styles  */
@@ -947,4 +958,57 @@ footer {
     color: var(--black111);
     letter-spacing: 2px;
     margin: 16px;
+}
+
+/* allauth template styles */
+.auth_cont {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #cdcdcd;
+  padding: 16px;
+  box-sizing: border-box;
+  margin: 16px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.auth_cont h1 {
+    font-family: neue-haas-grotesk-display, sans-serif, Arial;
+    color: var(--black111);
+    font-size: 24px;
+    margin: 16px 0;
+    padding: 0;
+}
+.auth_cont button {
+    background-color: #333333;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    margin: 8px 0;
+    cursor: pointer;
+}
+.auth_cont button:hover {
+    background-color: #111111;
+}
+#auth_logo {
+    width: 96px;
+    height: auto;
+    margin: 8px 0;
+}
+.auth_cont a {
+    color: #333333;
+    text-decoration: underline;
+}
+.auth_cont a:hover {
+    color: var(--black111);
+    text-decoration: none;
+}
+.auth_cont p {
+    text-align: center;
 }
