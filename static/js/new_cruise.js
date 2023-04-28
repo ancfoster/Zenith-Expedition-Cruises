@@ -54,15 +54,15 @@ cruiseStartField.onchange = () => {
     cruiseStartDate = new Date(cruiseStartField.value);
     calculateEndDate();
     updateDates();
-}
+};
 
 // These two functions respond to the + - buttons being pressed then recalculate the cruise end date
 durationMinus.addEventListener('click', () => {
     if (duration == 2) {
-        alert('Cruise duration cannot be less than two days')
+        alert('Cruise duration cannot be less than two days');
     } 
     else {
-        let contRemove = document.getElementById(duration)
+        let contRemove = document.getElementById(duration);
         contRemove.remove();
         duration -= 1;
         durationField.value = duration;
@@ -71,10 +71,10 @@ durationMinus.addEventListener('click', () => {
         movementsJSON.pop();
         jsonToString();
     }
-})
+});
 durationPlus.addEventListener('click', () => {
     if (duration == 199) {
-        alert('Cruise duration cannot exceed 199 days')
+        alert('Cruise duration cannot exceed 199 days');
     } 
     else {
         duration++;
@@ -87,7 +87,7 @@ durationPlus.addEventListener('click', () => {
         newDayJsonId--;
         createMovementContainer(newDayJsonId);
     }
-})
+});
 
 // Get destinations and convert to JSON
 function loadDestinations() {
@@ -159,14 +159,14 @@ function createMovementJSON(daysToCreate, dayFrom) {
             'type': 'D',
             'destination': firstDestination.id,
             'description': ''
-        }
+        };
         movementsJSON.push(newMovement);
     }
 }
 
 // Updates the movement JSON objects when the cruise date is changed.
 function updateDates() {
-    for (i = 0; i < movementsJSON.length; i++) {
+    for (let i = 0; i < movementsJSON.length; i++) {
         let movementDate = new Date(cruiseStartDate);
         movementDate.setDate(movementDate.getDate() + i);
         // movementDate.setDate(cruiseStartDate.getDate() + i);
@@ -179,7 +179,7 @@ function updateDates() {
         backEndDate = `${movementDateYear}-${movementDateMonth}-${movementDateDay}`;
         movementsJSON[i].frontEndDate = frontEndDate;
         movementsJSON[i].backEndDate = backEndDate;
-        let count = i
+        let count = i;
         count++;
         let mcDate = document.getElementById(`${count}_Date`);
         mcDate.innerText = frontEndDate;
@@ -190,7 +190,7 @@ function updateDates() {
 // This function creates the HTML elements that represent each movement/day of the cruise and allows the user to modify them
 function createMovementContainer(day) {  
     // Create the movement container  
-    let i = day
+    let i = day;
     let newMcCont = document.createElement('div');
     newMcCont.setAttribute('class', 'mc_cont');
     newMcCont.setAttribute('id', movementsJSON[i].day);
@@ -212,7 +212,7 @@ function createMovementContainer(day) {
             <select class="admin_field" id="${movementsJSON[i].day}_Destination">
             ${destinationSelects}
             </select>
-            `
+            `;
             newMcCont.innerHTML = newTopRow + destinationUiElements;
             movementsCont.append(newMcCont);
         break;
@@ -224,7 +224,7 @@ function createMovementContainer(day) {
             </select>
             <label class="admin_form_label" for="${movementsJSON[i].day}_Description">Description</label>
             <input type="text" maxlength="120" class="admin_field" id="${movementsJSON[i].day}}_Description">
-            `
+            `;
             newMcCont.innerHTML = newTopRow + seaDayUiElements;
             movementsCont.append(newMcCont);
         break;
@@ -236,12 +236,12 @@ function createMovementContainer(day) {
             </select>
             <label class="admin_form_label" for="${movementsJSON[i].day}_Description">Description</label>
             <input type="text" maxlength="120" class="admin_field" id="${movementsJSON[i].day}}_Description">
-            `
+            `;
             newMcCont.innerHTML = newTopRow + scenicCruisingUiElements;
             movementsCont.append(newMcCont);
         break;
         default:
-            console.log("Error when creating movement containers") 
+            console.log("Error when creating movement containers");
     }    
 }
 
@@ -351,7 +351,7 @@ movementsCont.addEventListener('change', function(e){
             jsonToString();
             break;
         }
-    })
+    });
 
 movementsCont.addEventListener('input', function(e) {
     const target = e.target;
@@ -364,8 +364,8 @@ movementsCont.addEventListener('input', function(e) {
     let text = e.target.value;
     movementsJSON[movementsJsonId].description = text;
     jsonToString();
-})
-
+});
+// This function converts JSON to a string so it can be sent in the page form to Django for processing
 function jsonToString() {
     let movementsString = JSON.stringify(movementsJSON);
     movements.value = movementsString;
