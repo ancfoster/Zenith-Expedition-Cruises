@@ -37,12 +37,13 @@ const progressGuests = document.getElementById('progress_guests');
 // Guest form vars
 let numberForms = 0;
 const detailFormCont = document.getElementById('detail_form_cont');
-let guestInfoList = []
+let guestInfoList = [];
 const guestInformationField = document.getElementById('id_guest_information');
 
 window.onload = set;
 
 function set() {
+    // This function sets key values, runs initial functions and hides divs until needed
     let suitesParse = JSON.parse(suites);
     suites = suitesParse;
     let deckplansParse = JSON.parse(deckplans);
@@ -60,7 +61,7 @@ function set() {
 function updateTotalPrice() {
     // 1 guest = 25% discount
     // 3 guests = 50% surcharge
-    let multiplier = 0
+    let multiplier = 0;
     switch (numberGuests){
         case 1:
             multiplier = 0.75;
@@ -91,8 +92,8 @@ function updateTotalPrice() {
 plus.addEventListener('click', () => {
     if (numberGuests < 3) {
         createDetailForms();
-        numberGuests++
-        numberField.value = numberGuests
+        numberGuests++;
+        numberField.value = numberGuests;
         guestNumberSpan.innerText = numberGuests;
         if (numberGuests === 3) {
             plus.style.cursor = "not-allowed";
@@ -102,13 +103,13 @@ plus.addEventListener('click', () => {
         }
         updateTotalPrice();
     }
-})
+});
 // Minus number of guests
 minus.addEventListener('click', () => {
     if (numberGuests > 1) {
         deleteDetailForm();
-        numberGuests--
-        numberField.value = numberGuests
+        numberGuests--;
+        numberField.value = numberGuests;
         guestNumberSpan.innerText = numberGuests;
         if (numberGuests === 1) {
             minus.style.cursor = "not-allowed";
@@ -118,43 +119,43 @@ minus.addEventListener('click', () => {
         }
         updateTotalPrice();
     }
-})
+});
 
 // Select and update category
 categoryCont.addEventListener('click', (e) => {
   let categoryButtonSelected = e.target.closest('.suite_category');
-  removeSelectedCategoryClass()
+  removeSelectedCategoryClass();
   if (categoryButtonSelected.id) {
-    let divId = categoryButtonSelected.id
+    let divId = categoryButtonSelected.id;
     let toApply = document.getElementById(divId);
     toApply.classList.add('category_selected');
     switch (categoryButtonSelected.id){
         case 'verandah':
             categorySelected = 1;
             selectedCategoryField.value = 1;
-            deckplan.src = updateDeckplan()
+            deckplan.src = updateDeckplan();
             break;
         case 'deluxe':
             categorySelected = 2;
             selectedCategoryField.value = 2;
-            deckplan.src = updateDeckplan()
+            deckplan.src = updateDeckplan();
             break;
         case 'spa':
             categorySelected = 3;
             selectedCategoryField.value = 3;
-            deckplan.src = updateDeckplan()
+            deckplan.src = updateDeckplan();
             break;
         case 'owner':
             categorySelected = 4;
             selectedCategoryField.value = 4;
-            deckplan.src = updateDeckplan()
+            deckplan.src = updateDeckplan();
             break;
     }
     generateSuiteSelection();
     // Update form progress
     suiteCategoryButton.style.display = 'flex';
     }  
-})
+});
 // Removes the category selected class from any div that has it
 function removeSelectedCategoryClass() {
     let toRemove = categoryCont.querySelectorAll('.category_selected');
@@ -166,11 +167,11 @@ function removeSelectedCategoryClass() {
 // Suite selection functions
 // Generate suite numbers based on category selection
 function generateSuiteSelection() {
-    suiteSelectionCont.innerHTML = ''
+    suiteSelectionCont.innerHTML = '';
     // Loop through and get available suites that match selected category
-    for(i = 0; i < suites.length; i++) {
+    for(let i = 0; i < suites.length; i++) {
         if (suites[i].category == categorySelected) {
-            let suite = generateSuiteItem(suites[i].suite_number)
+            let suite = generateSuiteItem(suites[i].suite_number);
             suiteSelectionCont.innerHTML += suite;
         }
     }
@@ -186,13 +187,13 @@ function generateSuiteItem(x) {
 suiteSelectionCont.addEventListener('click', (e) => {
     guestDetailsButton.style.display = 'flex';
     if (e.target.classList.contains('suite_item')) {
-        removeSelectedSuiteClass()
+        removeSelectedSuiteClass();
         const suiteSelectedId = e.target.id;
         selectedSuiteField.value = parseInt(suiteSelectedId);
         let toApply = document.getElementById(suiteSelectedId);
         toApply.classList.add('suite_selected');
     }
-  })
+  });
   // Removes the category selected class from any div that has it
 function removeSelectedSuiteClass() {
     let toRemove = suiteSelectionCont.querySelectorAll('.suite_selected');
@@ -240,12 +241,12 @@ function deleteDetailForm(){
     let formToDelete = document.getElementById(formNumber);
     switch (numberForms) {
         case 2:
-            formToDelete.remove()
+            formToDelete.remove();
             guestInfoList.pop();
             numberForms--;
             break;
         case 3:
-            formToDelete.remove()
+            formToDelete.remove();
             guestInfoList.pop();
             numberForms--;
             break;
@@ -276,15 +277,15 @@ function detailsTemplate(guest_number) {
 function createGuestJson() {
     let obj = {"first_name": "","last_name": "","dob": "", "passport_number": "","passport_expiry": ""};
     guestInfoList.push(obj);
-};
+}
 // Looks for when the guest forms are edited, updates the guestInfoList with new information
 detailFormCont.addEventListener('input', e => {
     let target = e.target;
     if (target.tagName === 'INPUT' || target.tagName === 'SELECT' || target.tagName) {
-        let targetId = String(target.id)
-        guest = targetId.charAt(0)
+        let targetId = String(target.id);
+        guest = targetId.charAt(0);
         guest_number = parseInt(guest);
-        let field = targetId.substring(1)
+        let field = targetId.substring(1);
         switch (field) {
             case 'first_name':
                 guestInfoList[(guest_number - 1)].first_name = target.value;
@@ -305,7 +306,7 @@ detailFormCont.addEventListener('input', e => {
                 break;
         }
     }
-})
+});
 
 bookingForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -315,19 +316,19 @@ bookingForm.addEventListener('submit', e => {
     guestInformationField.value = guestInformationStr;
     bookingForm.submit();
     } 
-})
+});
 
 suiteCategoryButton.addEventListener('click', () => {
     numberCategoryJourneyCont.style.display='none';
     suiteJourneyCont.style.display='flex';
-})
+});
 
 guestDetailsButton.addEventListener('click', () => {
     suiteJourneyCont.style.display='none';
     guestDetailsCont.style.display='flex';
     progressSuite.classList.remove('booking_status_current');
     progressGuests.classList.add('booking_status_current');
-})
+});
 
 // Forms validation
 
@@ -363,6 +364,5 @@ function validateForms() {
     else {
         return true;
     }
-
   }
   
