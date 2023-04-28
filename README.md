@@ -151,92 +151,22 @@ To help me manage the planning and implementation of all primary functionality w
 
 ### Customer Features
 
+| Feature | Description | Screenshot |
+| --- | --- | --- |
+| Sign in | Login for those with an account | ![screenshot](readme_assets/login.jpeg) |
+| Sign up | Create an account | ![screenshot](readme_assets/signup.jpeg) |
+| Navigation bar | To navigate around site and access login/logout | ![screenshot](readme_assets/nav.jpeg) |
+| Home page| Conveys to new visitors what the company does and links to other pages | ![screenshot](readme_assets/home.jpeg) |
+| Experience page| Informs users of the onboard experience | ![screenshot](readme_assets/exp.jpeg) |
+| Contact form| Allows unregistered and registered users to contact the company 24/7 with a form | ![screenshot](readme_assets/contact_form.jpeg) |
+| Subscribe to marketing email | Allows users to receieve news and offers by email | ![screenshot](readme_assets/subscribe.jpeg) |
+| See available cruises in a list | Allows users to see bookable cruises, with key information like dates, starting price and ship | ![screenshot](readme_assets/cruise_results.jpeg) |
+| Filter cruise list by tag | See available cruises based on interest, display what filter has been applied | ![screenshot](readme_assets/filter.jpeg) |
+| Detailed cruise view | View more detailed information about a cruise including the destinations and all pricing options | ![screenshot](readme_assets/cruise_view.jpeg) |
+| Detailed cruise view | View more detailed information about a cruise including the destinations and all pricing options | ![screenshot](readme_assets/cruise_view.jpeg) |
 
 ## Wireframes
 
-In this section, display your wireframe screenshots using a Markdown `table`.
-
-Instructions on how to do Markdown `tables` start on line #213 on this site: https://pandao.github.io/editor.md/en.html
-
-To follow best practice, wireframes were developed for mobile, tablet, and desktop sizes.
-I've used [Balsamiq](https://balsamiq.com/wireframes) to design my site wireframes.
-
-### Home Page Wireframes
-
-| Size | Screenshot |
-| --- | --- |
-| Mobile | ![screenshot](documentation/wireframes/mobile-home.png) |
-| Tablet | ![screenshot](documentation/wireframes/tablet-home.png) |
-| Desktop | ![screenshot](documentation/wireframes/desktop-home.png) |
-
-### About Page Wireframes
-
-| Size | Screenshot |
-| --- | --- |
-| Mobile | ![screenshot](documentation/wireframes/mobile-about.png) |
-| Tablet | ![screenshot](documentation/wireframes/tablet-about.png) |
-| Desktop | ![screenshot](documentation/wireframes/desktop-about.png) |
-
-### Contact Page Wireframes
-
-| Size | Screenshot |
-| --- | --- |
-| Mobile | ![screenshot](documentation/wireframes/mobile-contact.png) |
-| Tablet | ![screenshot](documentation/wireframes/tablet-contact.png) |
-| Desktop | ![screenshot](documentation/wireframes/desktop-contact.png) |
-
-Repeat for any addition wireframe pages you have.
-
-## Features
-
-In this section, you should go over the different parts of your project,
-and describe each in a sentence or so.
-
-You will need to explain what value each of the features provides for the user,
-focusing on who this website is for, what it is that they want to achieve,
-and how your project is the best way to help them achieve these things.
-
-For some/all of your features, you may choose to reference the specific project files that implement them.
-
-IMPORTANT: Remember to always include a screenshot of each individual feature!
-
-### Existing Features
-
-- **Feature #1**
-
-    - Details about this particular feature, including the value to the site, and benefit for the user. Be as detailed as possible!
-
-![screenshot](documentation/feature01.png)
-
-- **Feature #2**
-
-    - Details about this particular feature, including the value to the site, and benefit for the user. Be as detailed as possible!
-
-![screenshot](documentation/feature02.png)
-
-- **Feature #3**
-
-    - Details about this particular feature, including the value to the site, and benefit for the user. Be as detailed as possible!
-
-![screenshot](documentation/feature03.png)
-
-Repeat as necessary for as many features as your site contains.
-
-Hint: the more, the merrier!
-
-### Future Features
-
-Do you have additional ideas that you'd like to include on your project in the future?
-Fantastic! List them here!
-It's always great to have plans for future improvements!
-Consider adding any helpful links or notes to help remind you in the future, if you revisit the project in a couple years.
-
-- Cool new feature #1
-    - Any additional notes about this feature.
-- Cool new feature #2
-    - Any additional notes about this feature.
-- Cool new feature #3
-    - Any additional notes about this feature.
 
 ## Technologies & Tools Used
 
@@ -247,6 +177,8 @@ Consider adding any helpful links or notes to help remind you in the future, if 
 - CSS3 - cascading style sheets is a language used for styling a file written in a markup language like HTML.
 
 - JavaScript (ES11) is a scripting language and one of the main technologies of web development. In this project it was used on the client side for webpage behavior.
+
+- Tailwind - Tailwind is used for creating utility CSS styles for styling cruise manager. Tailwind is a utility-first CSS framework that provides a set of pre-designed CSS classes to speed up the development process.
 
 ### Back-End
 
@@ -303,7 +235,7 @@ Zenith Expedition Cruises is made of 4 custom applications and 11 models, in add
 
 This site sells goods to individual customers, and therefore follows a `Business to Customer` model. By having an ecommerce website Zenith Expedition Cruises is able to take new bookings 24 hours a day. 
 
-It is still in its early development stages, although it already has a newsletter, and links for social media marketing.
+It is still in its early development stages, although it already has a newsletter, and links for social media in the footer marketing.
 
 Social media can potentially build a community of users around the business, and boost site visitor numbers,
 especially when using larger platforms such a Facebook.
