@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings
+from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings  # noqa
 from django.db.models import Count, Case, When, BooleanField
 import json
 import os
@@ -81,10 +81,10 @@ def NewBooking(request, slug):
             else:
                 booking_dict = {}
             booking_dict['cruise'] = cruise.id
-            booking_dict['number_guests'] = booking_form.cleaned_data['number_guests']
-            booking_dict['selected_category'] = booking_form.cleaned_data['selected_category']
-            booking_dict['selected_suite'] = booking_form.cleaned_data['selected_suite']
-            booking_dict['guest_information'] = booking_form.cleaned_data['guest_information']
+            booking_dict['number_guests'] = booking_form.cleaned_data['number_guests']  # noqa
+            booking_dict['selected_category'] = booking_form.cleaned_data['selected_category']  # noqa
+            booking_dict['selected_suite'] = booking_form.cleaned_data['selected_suite']  # noqa
+            booking_dict['guest_information'] = booking_form.cleaned_data['guest_information']  # noqa
             request.session['booking_dict'] = booking_dict
 
             return redirect('payment')
@@ -225,16 +225,16 @@ def ProcessBooking(request):
         booked_by = request.user
         cruise_name_str = cruise.name
         # Create the booking object
-        new_booking = Bookings.objects.create(booking_ref=booking_ref, booked_by=booked_by, number_of_guests=number_guests,
-                                              guests=guest_information, booking_price=booking_price, ticket=ticket, cruise_name_str=cruise_name_str)
+        new_booking = Bookings.objects.create(booking_ref=booking_ref, booked_by=booked_by, number_of_guests=number_guests,  # noqa
+                                              guests=guest_information, booking_price=booking_price, ticket=ticket, cruise_name_str=cruise_name_str)  # noqa
         # Delete the session booking dictionary
         del request.session['booking_dict']
 
         # Send confirmation email
         name = 'Zenith Expedition Cruises'
         message = render_to_string('booking/email_template.html', {
-                                   'cruise': cruise.name, 'suite': selected_suite, 'ship': cruise.ship})
-        subject = f"Booking confirmation of {cruise.name} - Zenith Expedition Cruies"
+                                   'cruise': cruise.name, 'suite': selected_suite, 'ship': cruise.ship})  # noqa
+        subject = f"Booking confirmation of {cruise.name} - Zenith Expedition Cruies"  # noqa
         from_email = os.environ.get('EMAIL_HOST_USER')
         to_email = request.user.email
         email = EmailMultiAlternatives(
