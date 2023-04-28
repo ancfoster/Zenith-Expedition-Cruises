@@ -287,6 +287,38 @@ Zenith Expedition Cruises is made of 4 custom applications and 11 models, in add
 	port_number: PositiveSmallIntegerField
 	slug: SlugField
 
+- Fares model
+	cruise: ForeignKey relationship to Cruises model
+	suite_category: ForeignKey relationship to SuiteCategories model
+	price: Decimal field
+
+- Movements model
+date: Date field
+type: Char field with choices
+ship: ForeignKey relationship to Ships model
+destination: ForeignKey relationship to Destination model
+cruise: ForeignKey relationship to Cruises model
+order: PositiveSmallIntegerField with validators
+description: Char field 
+
+- Tickets model
+	ticket_ref: Char field
+	ship: ForeignKey relationship to Ships model
+	cruise: ForeignKey relationship to Cruises model
+	booked: Boolean field
+	suite: ForeignKey relationship to Suites model
+	created_on: DateTime field 
+
+- Bookings model
+	booking_ref: Char field
+	booked_by: ForeignKey relationship to User model 
+	number_of_guests: PositiveSmallIntegerField
+	booking_price: Decimal field
+	booked_on: DateTime field 
+	ticket: ForeignKey relationship to Tickets model
+	cruise_name_str: Char field 
+	guests: Char field
+
 
 ## Ecommerce Business Model
 
