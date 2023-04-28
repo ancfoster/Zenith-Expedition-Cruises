@@ -58,17 +58,59 @@ Validation was achieved using CodeInstitute's PEP8 validation tool
 |File|Screenshot|
 |---|---|
 |[forms.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/cruises/admin.py)|![](testing_assets/pep8.jpeg)|
-|[models.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/cruises/models.py)|![](testing_assets/pep8/.jpeg)|
-|[urls.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/cruises/urls.py)|![](testing_assets/pep8/.jpeg)|
-|[views.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/cruises/views.py)|![](testing_assets/pep8/.jpeg)|
+|[models.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/cruises/models.py)|![](testing_assets/pep8.jpeg)|
+|[urls.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/cruises/urls.py)|![](testing_assets/pep8.jpeg)|
+|[views.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/cruises/views.py)|![](testing_assets/pep8.jpeg)|
 
 ## Site Pages App
 
 |File|Screenshot|
 |---|---|
-|[forms.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/site_pages/admin.py)|![](testing_assets/pep8/.jpeg)|
+|[forms.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/site_pages/admin.py)|![](testing_assets/pep8.jpeg)|
 |[models.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/site_pages/models.py)|![](testing_assets/pep8.jpeg)|
 |[forms.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/site_pages/forms.py)|![](testing_assets/pep8.jpeg)|
 |[urls.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/site_pages/urls.py)|![](testing_assets/pep8.jpeg)|
 |[views.py](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/ancfoster/Zenith-Expedition-Cruises/main/site_pages/views.py)|![](testing_assets/pep8.jpeg)|
 
+
+## Responsiveness
+
+- Each page was tested using Google Chrome's developer tools where it is possible to mimick the screen size and other settings for different mobile and desktop devices. 
+- Each page was tested with the Google Chrome settings for iPhone XR, iPad Air tablet and a MDI display laptop with a 1080p resolution.
+
+
+## Manual Testing
+
+Tests were carried to test all aspects of cruise manager admin and customer functionality.
+
+- Example with experience page:
+
+| Device | Screenshot |
+|---|---|
+|iPhone XR|![](testing_assets/iphone.jpeg)|
+|iPhad Air|![](testing_assets/ipad.jpeg)|
+|Laptop|![](testing_assets/laptop.jpeg)|
+
+#### Bugs
+
+Any bugs were documented on [GitHub](https://github.com/ancfoster/Zenith-Expedition-Cruises/issues?q=is%3Aissue+is%3Aclosed) as issues and then closed when fixed.
+
+### Cruise Manager Admin
+
+| Test | Expected Result | Pass or Fail? |
+|---|---|---|
+|Login to dashboard|Can only see dashboard when signed in as admin or staff user|Pass|
+|Dashboard quick links | When clicked the dashboard links go to correct URLS|Pass|
+|Navigation menu |Burger menu opens and closes with all links working |Pass|
+|Create destination |Destination is created |Pass|
+|Django messages | WHen an action is carried out in cruise manager a Django success/fail message will be shown on next screen |Pass|
+|Delete destination | A destination being used by a movement/cruise will result in a message saying it cannot be deleted. An unassociated one can be deleted |Pass|
+|Edit destination | A destination can be edited |Pass|
+|Create tag | When tag form is submitted the inputted tag is created |Pass|
+|Edit tag | When tag edit form is submitted the selected tag is updated |Pass|
+|Delete tag | When tag is deleted, a confirmation message is displayed, then when confirmed the tag is deleted |Pass|
+|Create cruise | After the new cruise has been filled out the cruise, movements and tickets will be generated |Pass|
+|Edit cruise | When a cruise is edited the cruise is updated as per the new form inputs |Pass|
+|Delete cruise| After confirming intention the cruise and its tickets and movements are deleted |Pass|
+|Change enquiry status| A django message will appear on the screen confirming the status of an enquiry has been toggled |Pass|
+|Delete enquiry| After confirming intention the enquiry is deleted from the database|Pass|
