@@ -490,21 +490,22 @@ def EditTag(request, id):
     return render(request, 'cruise_manager/edit_tag.html', context)
 
 
-# As this is a class view a different method is used to enforce staff access
-@method_decorator(user_passes_test(lambda u: u.is_staff), name='dispatch')
-class TagDelete(DeleteView):
+
+@staff_member_required
+def DeleteTag(request, id):
     '''
     Deletes a tag
     '''
-    template_name = 'cruise_manager/delete_tag.html'
+    tag = get_object_or_404(Tag, id=id)
 
-    def get_object(self):
-        id = self.kwargs.get("id")
-        return get_object_or_404(Tag, id=id)
-
-    def get_success_url(self):
-        messages.add_message(request, messages.INFO, 'Tag deleted')
-        return reverse('tags')
+    if request.method == 'POST':
+        tag.delete()
+        messages.add_message(request, messages.INFO, 'The tag was deleted')
+        return redirect('tags')
+    context = {
+        'tag': tag,
+    }
+    return render(request, 'cruise_manager/delete_tag.html', context)
 
 
 @staff_member_required
