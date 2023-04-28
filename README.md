@@ -163,7 +163,12 @@ To help me manage the planning and implementation of all primary functionality w
 | See available cruises in a list | Allows users to see bookable cruises, with key information like dates, starting price and ship | ![screenshot](readme_assets/cruise_results.jpeg) |
 | Filter cruise list by tag | See available cruises based on interest, display what filter has been applied | ![screenshot](readme_assets/filter.jpeg) |
 | Detailed cruise view | View more detailed information about a cruise including the destinations and all pricing options | ![screenshot](readme_assets/cruise_view.jpeg) |
-| Detailed cruise view | View more detailed information about a cruise including the destinations and all pricing options | ![screenshot](readme_assets/cruise_view.jpeg) |
+| Booking process | A step by step booking flow guides the user through making a booking, including selecting a suite category and suite with dynamic pricing | ![screenshot](readme_assets/booking.jpeg) |
+| Available suites | Whilst booking a cruise the site shows which suites are available to book | ![screenshot](readme_assets/suites.jpeg) |
+| Payment| User can pay with using Stripe form | ![screenshot](readme_assets/payment.jpeg) |
+| Confirmation | Upon a successful booking the user is presented with a confirmation and booking number | ![screenshot](readme_assets/disp_conf.jpeg) |
+| Confirmation email | The user receives a confirmation email after they have made a booking | ![screenshot](readme_assets/email_conf.jpeg) |
+
 
 ## Wireframes
 
@@ -229,6 +234,58 @@ Further details on all Python packages used on this project can be found in the 
 ### Database Models
 
 Zenith Expedition Cruises is made of 4 custom applications and 11 models, in addition to the user model that comes with the Django admin/authentication system
+
+### Models and fields
+
+- Destination
+	name: CharField
+	country: CountryField
+	continent: CharField
+	description: TextField
+	image: ImageField
+	latitude: DecimalField
+	longitude: DecimalField
+
+- Ships
+	name: CharField
+	total_suites: PositiveSmallIntegerField
+	info_page: URLField
+	ship_image: ImageField
+
+- SuiteCategories
+	name: CharField
+	description: TextField
+	sleeps: PositiveSmallIntegerField
+	size: PositiveSmallIntegerField
+	suite_image: ImageField
+	suite_layout_image: ImageField
+	suite_feature_list: CharField
+	category_deckplan: ImageField
+
+
+- Suites
+	ship: ForeignKey to Ships
+	suite_num_name: CharField
+	category: ForeignKey to SuiteCategories
+
+- Tag
+	name: CharField
+
+- Cruises
+	name: CharField
+	ship: ForeignKey to Ships
+	created_on: DateTimeField
+	duration: PositiveSmallIntegerField
+	start_date: DateField
+	end_date: DateField
+	description: TextField
+	results_image: ImageField
+	listing_image: ImageField
+	map_image: ImageField
+	bookable: BooleanField
+	tags: ManyToManyField to Tag
+	port_number: PositiveSmallIntegerField
+	slug: SlugField
 
 
 ## Ecommerce Business Model
