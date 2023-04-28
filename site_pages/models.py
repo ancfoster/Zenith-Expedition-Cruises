@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Enquiry(models.Model):
     '''
@@ -11,5 +12,3 @@ class Enquiry(models.Model):
     message = models.TextField(max_length=900, verbose_name='Message')
     sent = models.DateTimeField(auto_now_add=True)
     responded_to = models.BooleanField(default=False)
-
-
