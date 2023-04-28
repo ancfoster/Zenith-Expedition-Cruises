@@ -3,7 +3,7 @@
 This project involved developing an e-commerce website for the imaginary cruise line, Zenith Expedition Cruises. The website built using the Django MVT framework and allows users to find and book an expedition cruise.
 The project involved devloping a comprehensive booking management system for the cruise company, kown as Cruise Manager. This booking management system keeps track of inventory (tickets) and manages which suites are booked on any given cruise. 
 
-![screenshot](documentation/mockup.png)
+![screenshot](readme_assets/responsive.png)
 
 
 ## Design Process
@@ -12,12 +12,11 @@ In this section, you will briefly explain your design processes.
 
 ### Colour Scheme
 
-Explain your colours and the colour scheme.
+- Both the custom admin interfaces and the customer front end site both use a monochrome colour scheme, consisting of different shades of grey and black.
 
-- `#000000` used for primary text.
-- `#E84610` used for primary highlights.
-- `#4A4A4F` used for secondary text.
-- `#009FE3` used for secondary highlights.
+- The colour choices are for aesthetic purposes but to also convey importance of different UI elements through visual hierachy. Headings or labels with a lighter colour are less important than those with a darker shade. 
+
+![screenshot](readme_assets/colours.jpeg.png)
 
 Consider adding a link and screenshot for your colour scheme using "coolors".
 https://coolors.co/generate
@@ -261,7 +260,7 @@ updates to business hours, notifications of events, and much more!
 
 I've identified some appropriate keywords to align with my site, that should help users
 when searching online to find my page easily from a search engine.
-I have added the keyword and meta fields to 
+I have added the keyword and meta fields to the head section to improve SEO.
 
 
 
