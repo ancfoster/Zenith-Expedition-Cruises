@@ -27,9 +27,9 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm, EditDestinationForm, EditCruiseForm, EditFareForm
+from .forms import NewDestinationForm, NewTagForm, NewCruiseForm, EditTagForm, EditDestinationForm, EditCruiseForm, EditFareForm  # noqa
 
-from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings
+from cruises.models import Destination, Ships, SuiteCategories, Suites, Tag, Cruises, Fares, Movements, Tickets, Bookings  # noqa
 from site_pages.models import Enquiry
 
 # mapkey is the key used for mapbox maps
@@ -41,7 +41,7 @@ def NewCruise(request):
     '''
     This function creates a new cruise, fares, tickets and movements
     '''
-    #Get a list of all destinations which will be passed to template
+    # Get a list of all destinations which will be passed to template
     destinations = get_destinations()
     if request.method == 'POST':
         new_cruise_form = NewCruiseForm(request.POST, request.FILES)
@@ -57,62 +57,65 @@ def NewCruise(request):
             # tags = new_cruise_form.cleaned_data['tags']
             slug_text = f"{slugify(name)}-{start_date}"
             slug = slug_text
-                #Upload results image and process
+            # Upload results image and process
             results_image_file = new_cruise_form.cleaned_data['results_image']
-            compressed_results_image = compress_uploaded_images(results_image_file, f"{slug_text}_r", 400)
+            compressed_results_image = compress_uploaded_images(
+                results_image_file, f"{slug_text}_r", 400)
             compressed_results_image.upload_to = f"cruises/{slug_text}"
-                #Upload listing image and process
+            # Upload listing image and process
             listing_image_file = new_cruise_form.cleaned_data['listing_image']
-            compressed_listing_image = compress_uploaded_images(results_image_file, f"{slug_text}_l", 1400)
+            compressed_listing_image = compress_uploaded_images(
+                results_image_file, f"{slug_text}_l", 1400)
             compressed_listing_image.upload_to = f"cruises/{slug_text}"
-                #Upload map image and process 
+            # Upload map image and process
             map_image_file = new_cruise_form.cleaned_data['map_image']
-            compressed_map_image = compress_uploaded_images(results_image_file, f"{slug_text}_map", 800)
+            compressed_map_image = compress_uploaded_images(
+                results_image_file, f"{slug_text}_map", 800)
             compressed_map_image.upload_to = f"cruises/{slug_text}"
             # Save cruise
             new_cruise = Cruises.objects.create(
-            name=name,
-            ship=ship,
-            duration=duration,
-            start_date=start_date,
-            end_date=end_date,
-            description=description,
-            slug=slug,
-            port_number = port_number,
-            results_image=compressed_results_image,
-            listing_image=compressed_listing_image,
-            map_image=compressed_map_image,
+                name=name,
+                ship=ship,
+                duration=duration,
+                start_date=start_date,
+                end_date=end_date,
+                description=description,
+                slug=slug,
+                port_number=port_number,
+                results_image=compressed_results_image,
+                listing_image=compressed_listing_image,
+                map_image=compressed_map_image,
             )
-                #Adds tags
+            # Adds tags
             tags = new_cruise_form.cleaned_data['tags']
             for tag in tags:
                 new_cruise.tags.add(tag)
 
-                #Get ID of newly created cruise for use in creating fares, tickets           
+                # Get ID of newly created cruise for use in creating fares
             cruise_id = new_cruise.id
             # Create fares
-                #Verandah suite fare
-            verandah_suite_fare = new_cruise_form.cleaned_data['verandah_suite_fare']
+            # Verandah suite fare
+            verandah_suite_fare = new_cruise_form.cleaned_data['verandah_suite_fare']  # noqa
             new_verandah_suite_fare = Fares.objects.create(
                 suite_category=SuiteCategories.objects.get(id=1),
                 cruise=Cruises.objects.get(id=cruise_id),
                 price=verandah_suite_fare,
             )
-                #Deluxe verandah fare
-            deluxe_verandah_suite_fare = new_cruise_form.cleaned_data['deluxe_verandah_suite_fare']
+            # Deluxe verandah fare
+            deluxe_verandah_suite_fare = new_cruise_form.cleaned_data['deluxe_verandah_suite_fare']  # noqa
             new_deluxe_verandah_suite_fare = Fares.objects.create(
                 suite_category=SuiteCategories.objects.get(id=2),
                 cruise=Cruises.objects.get(id=cruise_id),
                 price=deluxe_verandah_suite_fare,
             )
-                #Spa suite fare
+            # Spa suite fare
             spa_suite_fare = new_cruise_form.cleaned_data['spa_suite_fare']
             new_spa_suite_fare = Fares.objects.create(
                 suite_category=SuiteCategories.objects.get(id=3),
                 cruise=Cruises.objects.get(id=cruise_id),
                 price=spa_suite_fare,
             )
-                #owner suite fare
+            # owner suite fare
             owner_suite_fare = new_cruise_form.cleaned_data['owner_suite_fare']
             new_owner_suite_fare = Fares.objects.create(
                 suite_category=SuiteCategories.objects.get(id=4),
@@ -120,22 +123,22 @@ def NewCruise(request):
                 price=owner_suite_fare,
             )
             # Create tickets
-                #Get the number of suites for the required ship
+            # Get the number of suites for the required ship
             suite_tickets = Suites.objects.filter(ship=ship)
 
             for suite_ticket in suite_tickets:
                 new_ticket = Tickets.objects.create(
-                    ship = ship,
-                    cruise = Cruises.objects.get(id=cruise_id),
-                    suite = suite_ticket,
-                    ticket_ref = str(uuid.uuid4())[:8],
+                    ship=ship,
+                    cruise=Cruises.objects.get(id=cruise_id),
+                    suite=suite_ticket,
+                    ticket_ref=str(uuid.uuid4())[:8],
                 )
 
             # Create ship movements
                 # Convert JSON movements to Python dictionary
             movements_json = new_cruise_form.cleaned_data['movements']
             movements_dict = json.loads(movements_json)
-                # For each dictionary item create a movement
+            # For each dictionary item create a movement
             for movement in movements_dict:
                 order = movement['day']
                 date = movement['backEndDate']
@@ -144,17 +147,18 @@ def NewCruise(request):
                     destination = None
                     description = movement['description']
                 else:
-                    destination = Destination.objects.get(id=movement['destination'])
+                    destination = Destination.objects.get(
+                        id=movement['destination'])
                     description = None
-                #Create each movement object
+                # Create each movement object
                 new_movement = Movements.objects.create(
-                    cruise = Cruises.objects.get(id=cruise_id),
-                    order = order,
-                    date = date,
-                    type = type,
-                    destination = destination,
-                    description = description,
-                    ship = ship,
+                    cruise=Cruises.objects.get(id=cruise_id),
+                    order=order,
+                    date=date,
+                    type=type,
+                    destination=destination,
+                    description=description,
+                    ship=ship,
                 )
             cruise = Cruises.objects.get(id=cruise_id)
             '''
@@ -162,17 +166,19 @@ def NewCruise(request):
             unique destinations can be calculated. This number can then
             be applued to the cruise that was created in this function.
             '''
-            destination_count = Movements.objects.filter(cruise=cruise, type='D').values('destination').distinct().count()
+            destination_count = Movements.objects.filter(
+                cruise=cruise, type='D').values('destination').distinct().count()  # noqa
             cruise.port_number = destination_count
             cruise.save()
-            messages.add_message(request, messages.INFO, 'The new cruise was added successfully.')
+            messages.add_message(request, messages.INFO,
+                                 'The new cruise was added successfully.')
             # Return to cruises list in cruise manager
             return redirect('display_cruises_manager')
         else:
             new_cruise_form = NewCruiseForm()
     else:
         new_cruise_form = NewCruiseForm()
-    
+
     context = {
         'new_cruise_form': NewCruiseForm,
         'destinations': destinations,
@@ -188,7 +194,7 @@ def DisplayCruises(request):
     cruises_queryset = Cruises.objects.all().order_by('name')
     number_cruises = cruises_queryset.count()
     context = {
-        'number_cruises' : number_cruises,
+        'number_cruises': number_cruises,
         'cruises': cruises_queryset,
     }
     return render(request, 'cruise_manager/cruises.html', context)
@@ -197,28 +203,33 @@ def DisplayCruises(request):
 @staff_member_required
 def EditCruise(request, id):
     '''
-    Allows editing of cruise fields and 
+    Allows editing of cruise fields and
     associated cruise fares
     '''
     cruise = get_object_or_404(Cruises, id=id)
 
     FaresFormSet = modelformset_factory(Fares, form=EditFareForm, extra=0)
     if request.method == 'POST':
-        cruise_form = EditCruiseForm(request.POST, request.FILES, instance=cruise)
-        fares_formset = FaresFormSet(request.POST, queryset=Fares.objects.filter(cruise=cruise))
+        cruise_form = EditCruiseForm(
+            request.POST, request.FILES, instance=cruise)
+        fares_formset = FaresFormSet(
+            request.POST, queryset=Fares.objects.filter(cruise=cruise))
         if cruise_form.is_valid() and fares_formset.is_valid():
             # Save the updates to the cruise object and its associated fares
             cruise_form.save()
             fares_formset.save()
-            messages.add_message(request, messages.INFO, 'Cruise was updated successfully.')
+            messages.add_message(request, messages.INFO,
+                                 'Cruise was updated successfully.')
             return redirect('display_cruises_manager')
         else:
             EditCruiseForm()
             FaresFormSet()
     else:
-        # Initialize the Cruise form and Fares formset with the data from the cruise object and its associated fares
+        # Initialize the Cruise form and Fares formset with the data
+        # from the cruise object and its associated fares
         cruise_form = EditCruiseForm(instance=cruise)
-        fares_formset = FaresFormSet(queryset=Fares.objects.filter(cruise=cruise))
+        fares_formset = FaresFormSet(
+            queryset=Fares.objects.filter(cruise=cruise))
 
     context = {
         'cruise': cruise,
@@ -235,14 +246,15 @@ def DeleteCruise(request, id):
     Tickets must be deleted first as they are
     protected
     '''
-    #Get cruise object and ticket objects
+    # Get cruise object and ticket objects
     cruise = get_object_or_404(Cruises, id=id)
     tickets = Tickets.objects.filter(cruise=cruise)
     # Delete tickets and cruises
     if request.method == 'POST':
         tickets.delete()
         cruise.delete()
-        messages.add_message(request, messages.INFO, 'Cruise deleted successfully.')
+        messages.add_message(request, messages.INFO,
+                             'Cruise deleted successfully.')
         return redirect('display_cruises_manager')
     context = {
         'cruise': cruise,
@@ -259,9 +271,9 @@ def CruiseDetail(request, id):
     fares = Fares.objects.filter(cruise=cruise)
     movements = Movements.objects.filter(cruise=cruise)
     context = {
-        'cruise':cruise,
-        'fares':fares,
-        'movements':movements,
+        'cruise': cruise,
+        'fares': fares,
+        'movements': movements,
     }
     return render(request, 'cruise_manager/cruise.html', context)
 
@@ -274,7 +286,7 @@ def DisplayBookings(request):
     bookings_queryset = Bookings.objects.all()
     number_bookings = bookings_queryset.count()
     context = {
-        'number_bookings' : number_bookings,
+        'number_bookings': number_bookings,
         'bookings': bookings_queryset,
     }
     return render(request, 'cruise_manager/bookings.html', context)
@@ -288,7 +300,7 @@ def BookingDetails(request, id):
     booking = get_object_or_404(Bookings, id=id)
     price = booking.booking_price / 100
     context = {
-        'booking' : booking,
+        'booking': booking,
         'price': price,
     }
     return render(request, 'cruise_manager/booking.html', context)
@@ -300,16 +312,17 @@ def DeleteBooking(request, id):
     Deletes a book and makes the assosciated ticket available again
     '''
     booking = get_object_or_404(Bookings, id=id)
-    
+
     if request.method == 'POST':
         ticket = booking.ticket
         booking.delete()
         ticket.booked = False
         ticket.save()
-        messages.add_message(request, messages.INFO, 'Booking deleted successfully.')
+        messages.add_message(request, messages.INFO,
+                             'Booking deleted successfully.')
         return redirect('bookings')
     context = {
-        'booking' : booking,
+        'booking': booking,
     }
     return render(request, 'cruise_manager/delete_booking.html', context)
 
@@ -318,17 +331,18 @@ def get_destinations():
     '''
     This function gets a list of all the destinations
     in the destination model and returns JSON which is
-    then returned as a variable in NewCruise and 
+    then returned as a variable in NewCruise and
     sent to the new cruise template
     '''
-    destinations = list(Destination.objects.all().order_by('name').values('id', 'name', 'country'))
+    destinations = list(Destination.objects.all().order_by(
+        'name').values('id', 'name', 'country'))
     '''
     Country returns country as two-letter code,
     this needs converting to full country name.
     '''
     for destination in destinations:
         destination['country'] = get_country_name(destination['country'])
-    #convert to json
+    # convert to json
     destinations_json = json.dumps(destinations)
     return destinations_json
 
@@ -350,14 +364,16 @@ def NewDestination(request):
         new_destination_form = NewDestinationForm(request.POST, request.FILES)
         if new_destination_form.is_valid():
             image = new_destination_form.cleaned_data['image']
-            image_name = new_destination_form.cleaned_data['name'].replace(" ", "")
+            image_name = new_destination_form.cleaned_data['name'].replace(
+                " ", "")
             # 960 is the maximum dimension in px
             compressed_image = compress_uploaded_images(image, image_name, 960)
             new_destination_form.instance.image = compressed_image
-            new_destination_form.instance.image.field.upload_to = 'destination_img/'
+            new_destination_form.instance.image.field.upload_to = 'destination_img/'  # noqa
             form = new_destination_form.save()
             form.save()
-            messages.add_message(request, messages.INFO, 'Destination successfully created.')
+            messages.add_message(request, messages.INFO,
+                                 'Destination successfully created.')
             return redirect('destinations')
     else:
         new_destination_form = NewDestinationForm()
@@ -377,7 +393,7 @@ def Destinations(request):
     destination_queryset = Destination.objects.all().order_by('name')
     number_destinations = destination_queryset.count()
     context = {
-        'number_destinations' : number_destinations,
+        'number_destinations': number_destinations,
         'destinations': destination_queryset,
     }
     return render(request, 'cruise_manager/destinations.html', context)
@@ -386,19 +402,22 @@ def Destinations(request):
 @staff_member_required
 def EditDestination(request, id):
     '''
-    Displays the edit tag form & template, and updates the tag if the form is submitted
+    Displays the edit tag form & template, and updates the tag
+    if the form is submitted
     '''
     destination = get_object_or_404(Destination, id=id)
 
     if request.method == 'POST':
-        edit_destination_form = EditDestinationForm(request.POST, instance=destination)
+        edit_destination_form = EditDestinationForm(
+            request.POST, instance=destination)
         if edit_destination_form.is_valid():
             edit_destination_form.save()
-            messages.add_message(request, messages.INFO, 'Destination edited successfully.')
+            messages.add_message(request, messages.INFO,
+                                 'Destination edited successfully.')
             return redirect('destinations')
     else:
         edit_destination_form = EditDestinationForm(instance=destination)
-    
+
     context = {
         'edit_destination_form': edit_destination_form,
         'destination': destination,
@@ -413,14 +432,16 @@ def DeleteDestination(request, id):
     Deletes a destination provided it isn't being used in a movement
     '''
     destination = get_object_or_404(Destination, id=id)
-    related_movements = Movements.objects.filter(destination=destination).count()
+    related_movements = Movements.objects.filter(
+        destination=destination).count()
     if request.method == 'POST':
         destination.delete()
-        messages.add_message(request, messages.INFO, 'Destination deleted successfully')
+        messages.add_message(request, messages.INFO,
+                             'Destination deleted successfully')
         return redirect('destinations')
     context = {
-        'destination' : destination,
-        'related_movements' : related_movements,
+        'destination': destination,
+        'related_movements': related_movements,
     }
     return render(request, 'cruise_manager/delete_destination.html', context)
 
@@ -437,7 +458,7 @@ def NewTag(request):
             return redirect('tags')
     else:
         new_tag_form = NewTagForm()
-    
+
     context = {
         'new_tag_form': new_tag_form,
     }
@@ -447,7 +468,8 @@ def NewTag(request):
 @staff_member_required
 def EditTag(request, id):
     '''
-    Displays the edit tag form & template, and updates the tag if the form is submitted
+    Displays the edit tag form & template, and updates the
+    tag if the form is submitted
     '''
     tag = get_object_or_404(Tag, id=id)
 
@@ -455,11 +477,12 @@ def EditTag(request, id):
         edit_tag_form = EditTagForm(request.POST, instance=tag)
         if edit_tag_form.is_valid():
             edit_tag_form.save()
-            messages.add_message(request, messages.INFO, 'Tag updated successfully.')
+            messages.add_message(request, messages.INFO,
+                                 'Tag updated successfully.')
             return redirect('tags')
     else:
         edit_tag_form = EditTagForm(instance=tag)
-    
+
     context = {
         'edit_tag_form': edit_tag_form,
         'tag': tag,
@@ -467,7 +490,7 @@ def EditTag(request, id):
     return render(request, 'cruise_manager/edit_tag.html', context)
 
 
-#As this is a class view a different method is used to enforce staff access
+# As this is a class view a different method is used to enforce staff access
 @method_decorator(user_passes_test(lambda u: u.is_staff), name='dispatch')
 class TagDelete(DeleteView):
     '''
@@ -492,8 +515,8 @@ def Tags(request):
     tag_queryset = Tag.objects.all().order_by('name')
     number_tags = tag_queryset.count()
     context = {
-        'tags' : tag_queryset,
-        'number_tags' : number_tags,
+        'tags': tag_queryset,
+        'number_tags': number_tags,
     }
     return render(request, 'cruise_manager/tags.html', context)
 
@@ -501,12 +524,12 @@ def Tags(request):
 @staff_member_required
 def DestinationDetail(request, id):
     '''
-    In the cruise manager app this shows the details of a 
+    In the cruise manager app this shows the details of a
     specific destination
     '''
     destination = get_object_or_404(Destination, id=id)
     context = {
-        'destination' : destination,
+        'destination': destination,
         'mapkey': mapkey,
     }
     return render(request, 'cruise_manager/destination.html', context)
@@ -519,17 +542,18 @@ def Dashboard(request):
     '''
     # Calculate revenue in the past 90 days
     date_90_days_ago = timezone.now() - timedelta(days=90)
-    revenue = Bookings.objects.filter(booked_on__gte=date_90_days_ago).aggregate(total_booking_price=Sum('booking_price'))['total_booking_price']
-    #Convert from pence to pounds
+    revenue = Bookings.objects.filter(booked_on__gte=date_90_days_ago).aggregate(  # noqa
+        total_booking_price=Sum('booking_price'))['total_booking_price']  # noqa
+    # Convert from pence to pounds
     revenue = revenue / 100
     # Get number of bookings in pas 90 days
     bookings = Bookings.objects.filter(booked_on__gte=date_90_days_ago).count()
     # Get number of enquiries that need responding to
     respond_to = Enquiry.objects.filter(responded_to=False).count()
     context = {
-        'revenue' : revenue,
-        'bookings' : bookings,
-        'respond_to' : respond_to,
+        'revenue': revenue,
+        'bookings': bookings,
+        'respond_to': respond_to,
     }
     return render(request, 'cruise_manager/dashboard.html', context)
 
@@ -543,9 +567,9 @@ def Enquiries(request):
     enquiries_number = enquiries.count()
     unresponded_count = Enquiry.objects.filter(responded_to=False).count()
     context = {
-        'enquiries' : enquiries,
-        'enquiries_number' : enquiries_number,
-        'unresponded_count' : unresponded_count,
+        'enquiries': enquiries,
+        'enquiries_number': enquiries_number,
+        'unresponded_count': unresponded_count,
     }
     return render(request, 'cruise_manager/enquiries.html', context)
 
@@ -557,7 +581,7 @@ def EnquiryDetail(request, id):
     '''
     enquiry = get_object_or_404(Enquiry, id=id)
     context = {
-        'enquiry' : enquiry,
+        'enquiry': enquiry,
     }
     return render(request, 'cruise_manager/enquiry.html', context)
 
@@ -568,20 +592,20 @@ def DeleteEnquiry(request, id):
     Deletes an enquiry, but presents action confirmation first
     '''
     enquiry = get_object_or_404(Enquiry, id=id)
-    
+
     if request.method == 'POST':
         enquiry.delete()
         messages.add_message(request, messages.INFO, 'The enquiry was deleted')
         return redirect('enquiries')
     context = {
-        'enquiry' : enquiry,
+        'enquiry': enquiry,
     }
     return render(request, 'cruise_manager/delete_enquiry.html', context)
 
 
 def EnquiryStatus(request, id):
     enquiry = get_object_or_404(Enquiry, id=id)
-     # toggle status
+    # toggle status
     enquiry.responded_to = not enquiry.responded_to
     enquiry.save()
     messages.add_message(request, messages.INFO, 'Enquiry status updated')
