@@ -67,11 +67,11 @@ To help me manage the planning and implementation of all primary functionality w
 
 - I also made use of MoSCoW prioritization, a technique commonly used in Agile project management to prioritize project requirements based on their importance. The acronym stands for "Must have," "Should have," "Could have," and "Won't have." The technique helps project teams to focus on the most critical and essential requirements first, ensuring that the project delivers the highest value to the stakeholders.
 
-		The "Must have" requirements are those that are essential for the project's success, and failure to deliver them would result in a significant impact on the project's overall value.
+	- The "Must have" requirements are those that are essential for the project's success, and failure to deliver them would result in a significant impact on the project's overall value.
 
-		The "Should have" requirements are important but not critical, and they can be postponed if necessary.
+	- The "Should have" requirements are important but not critical, and they can be postponed if necessary.
 		
-		The "Could have" requirements are desirable but not necessary, and they can be deferred to a later phase or iteration. The "Won't have" requirements are those that the project team has agreed not to include in the current scope.
+	- The "Could have" requirements are desirable but not necessary, and they can be deferred to a later phase or iteration. The "Won't have" requirements are those that the project team has agreed not to include in the current scope.
 
 
 #### Customer user story board
@@ -91,11 +91,43 @@ To help me manage the planning and implementation of all primary functionality w
 
 ![screenshot](readme_assets/kanban.png)
 
-### User Stories
+### User Stories & Features
 
 #### Customer user stories
 
+- As a user I can create an account so that I can book a cruise
+- As a user I can login into my account so that I can make a booking
+- As a user I can browse through a list of cruises so that I can see there any cruises that interest me.
+- As a user I can view detailed information about a cruise so that I can learn more about that cruise and see if it is a cruise I want to book.
+- As a user I can book a cruise on the website so that I can book a cruise any time of day without having to contact the company via phone.
+- As a user I can filter available cruises so that I can only the most relevant ones.
+- As a user I can use a credit card to pay for my cruise securely.
+- As a user I can see which suites are available for me to book.
+- As a user I can unsubscribe to marketing emails when I am no longer interested in them
+- As a user I can subscribe to marketing emails so that I can receive Zenith company news and promotional offers.
+- As a user I can send an enquiry message so that I can contact the company if I have any questions
+- As a user I can use a navigation bar so that I can easily navigate through the site.
 
+#### Site owner stories
+
+- As a site owner I can reduce site storage, bandwidth and improve SEO by having images compressed on upload
+- As a site owner I can improve the site's SEO through a sitemap so that i can improve the company's search ranking
+- As a site owner I can edit cruise prices through a custom interface so that I can boost sales.
+- As a site owner I can add new cruise destinations so that I can create new itineraries
+- As a site owner I can view revenue generated through online bookings so that I can monitor sales.
+- As a site owner I can see customer enquiries in a list so that I can easily keep track of them and respond to them
+- As a site owner I can use a Facebook Page so that I can market the company on a popular social media platform.
+- As a site owner I will use an admin dashboard so that I can to see key business information like revenue, number of bookings and quickly access key tasks
+- As a site owner I can view the details of an existing booking so that I can see which customers are booked on a specific cruise.
+- As a site owner I can access a custom manager interface so that employees can interact through an easy to use interface and not the Django admin
+
+## Site Features
+
+### Cruise Manager Admin Features
+
+| Feature | Description | Screenshot |
+| --- | --- | --- |
+| | | ![screenshot](readme_assets/.jpeg) |
 
 ## Wireframes
 
