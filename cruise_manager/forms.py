@@ -50,9 +50,10 @@ class EditCruiseForm(forms.ModelForm):
     '''
     class Meta:
         model = Cruises
-        fields = ('name', 'description', 'results_image', 'listing_image', 'map_image', 'bookable', 'tags',)
+        fields = ('name', 'description', 'results_image',
+                  'listing_image', 'map_image', 'bookable', 'tags',)
         widgets = {
-            'tags' : forms.CheckboxSelectMultiple(),
+            'tags': forms.CheckboxSelectMultiple(),
             'results_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
             'map_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
             'listing_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
@@ -86,7 +87,7 @@ class NewCruiseModelForm(forms.ModelForm):
         model = Cruises
         two_days_time = date.today() + timedelta(days=2)
         widgets = {
-            'tags' : forms.CheckboxSelectMultiple(),
+            'tags': forms.CheckboxSelectMultiple(),
             'results_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
             'map_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
             'listing_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
@@ -95,8 +96,8 @@ class NewCruiseModelForm(forms.ModelForm):
             'end_date': forms.HiddenInput(),
         }
         fields = ('name', 'ship', 'duration', 'start_date', 'description',
-        'results_image', 'listing_image', 'map_image', 'bookable', 'tags',
-        'end_date',)
+                  'results_image', 'listing_image', 'map_image', 'bookable', 'tags',
+                  'end_date',)
 
 
 class NewCruiseOtherFields(forms.Form):
@@ -106,32 +107,32 @@ class NewCruiseOtherFields(forms.Form):
     but that are used for creating a new cruise, cruise
     tickets and fares.
     '''
-    #Fares for each category
+    # Fares for each category
     verandah_suite_fare = forms.DecimalField(
-    max_digits=8,
-    decimal_places=2,
-    widget=forms.NumberInput(attrs={'class': 'form-control',
-    'required': 'required'}))
+        max_digits=8,
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={'class': 'form-control',
+                                        'required': 'required'}))
 
     deluxe_verandah_suite_fare = forms.DecimalField(
-    max_digits=8,
-    decimal_places=2,
-    widget=forms.NumberInput(attrs={'class': 'form-control',
-    'required': 'required'}))
+        max_digits=8,
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={'class': 'form-control',
+                                        'required': 'required'}))
 
     spa_suite_fare = forms.DecimalField(
-    max_digits=8,
-    decimal_places=2,
-    widget=forms.NumberInput(attrs={'class': 'form-control',
-    'required': 'required'}))
+        max_digits=8,
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={'class': 'form-control',
+                                        'required': 'required'}))
 
     owner_suite_fare = forms.DecimalField(
-    max_digits=8,
-    decimal_places=2,
-    widget=forms.NumberInput(attrs={'class': 'form-control',
-    'required': 'required'}))
+        max_digits=8,
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={'class': 'form-control',
+                                        'required': 'required'}))
 
-    #Movement JSON field
+    # Movement JSON field
     movements = forms.CharField(widget=forms.HiddenInput())
 
 
@@ -141,6 +142,7 @@ class NewCruiseForm(forms.Form):
     the non-model form fiels into a single form.
     This form is the one that is used in the view.
     '''
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields.update(NewCruiseModelForm().fields)
