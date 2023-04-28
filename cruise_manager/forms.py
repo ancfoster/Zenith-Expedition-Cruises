@@ -54,9 +54,9 @@ class EditCruiseForm(forms.ModelForm):
                   'listing_image', 'map_image', 'bookable', 'tags',)
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
-            'results_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
-            'map_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
-            'listing_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+            'results_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),  # noqa
+            'map_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),  # noqa
+            'listing_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),  # noqa
         }
 
 
@@ -88,22 +88,22 @@ class NewCruiseModelForm(forms.ModelForm):
         two_days_time = date.today() + timedelta(days=2)
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
-            'results_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+            'results_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),  # noqa
             'map_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
-            'listing_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
-            'start_date': DateInput(attrs={'min': f"{two_days_time}", 'value': f"{two_days_time}"}),
+            'listing_image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),  # noqa
+            'start_date': DateInput(attrs={'min': f"{two_days_time}", 'value': f"{two_days_time}"}),  # noqa
             'duration': forms.HiddenInput(attrs={'value': '2'}),
             'end_date': forms.HiddenInput(),
         }
         fields = ('name', 'ship', 'duration', 'start_date', 'description',
-                  'results_image', 'listing_image', 'map_image', 'bookable', 'tags',
+                  'results_image', 'listing_image', 'map_image', 'bookable', 'tags',  # noqa
                   'end_date',)
 
 
 class NewCruiseOtherFields(forms.Form):
     '''
-    Regular form used in creating a new cruise. 
-    This form class contains fields not in the model
+    Regular form used in creating a new
+    cruise. This form class contains fields not in the model
     but that are used for creating a new cruise, cruise
     tickets and fares.
     '''
