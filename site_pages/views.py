@@ -8,6 +8,8 @@ from django.views import generic, View
 from .forms import EnquiryForm
 
 # Create your views here.
+
+
 def HomePage(request):
     '''
     Displays the home page
@@ -19,7 +21,7 @@ def HomePage(request):
 
 def Experience(request):
     '''
-    Displays the contact page page
+    Displays the contact page
     '''
     context = {
     }
@@ -33,13 +35,14 @@ def Contact(request):
     if request.method == 'POST':
         enquiry_form = EnquiryForm(request.POST)
         if enquiry_form.is_valid():
-             enquiry_form.save()             
-             messages.add_message(request, messages.INFO, 'Your enquiry was sent successfully.')
-             return redirect('contact')
+            enquiry_form.save()
+            messages.add_message(request, messages.INFO,
+                                 'Your enquiry was sent successfully.')
+            return redirect('contact')
     else:
         enquiry_form = EnquiryForm()
 
     context = {
-        'enquiry_form' : enquiry_form,
+        'enquiry_form': enquiry_form,
     }
     return render(request, 'site_pages/contact.html', context)
