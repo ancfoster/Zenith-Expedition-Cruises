@@ -3,7 +3,7 @@
 This project involved developing an e-commerce website for the imaginary cruise line, Zenith Expedition Cruises. The website built using the Django MVT framework and allows users to find and book an expedition cruise.
 The project involved devloping a comprehensive booking management system for the cruise company, kown as Cruise Manager. This booking management system keeps track of inventory (tickets) and manages which suites are booked on any given cruise. 
 
-![screenshot](readme_assets/responsive.png)
+![screenshot](readme_assets/responsive.jpeg)
 
 
 ## Design Process
@@ -16,48 +16,37 @@ In this section, you will briefly explain your design processes.
 
 - The colour choices are for aesthetic purposes but to also convey importance of different UI elements through visual hierachy. Headings or labels with a lighter colour are less important than those with a darker shade. 
 
-![screenshot](readme_assets/colours.jpeg.png)
+![screenshot](readme_assets/colours.jpeg)
 
-Consider adding a link and screenshot for your colour scheme using "coolors".
-https://coolors.co/generate
+In my main `main.css` I've used CSS `:root` variables to easily update the global colour scheme by changing only one value, instead of everywhere in the CSS file.
 
-When you add a colour to the palette, the URL is dynamically updated, making it easier for you to return back to your colour palette later if needed.
-
-Example:
-
-I used [coolors.co](https://coolors.co/e84610-009fe3-4a4a4f-445261-d63649-e6ecf0-000000) to generate my colour palette.
-
-![screenshot](documentation/coolors.png)
-
-If you've used CSS `:root` variables, consider also including a code snippet here!
-
-I've used CSS `:root` variables to easily update the global colour scheme by changing only one value, instead of everywhere in the CSS file.
-
-```css
-:root {
-    /* P = Primary | S = Secondary */
-    --p-text: #000000;
-    --p-highlight: #E84610;
-    --s-text: #4A4A4F;
-    --s-highlight: #009FE3;
-    --white: #FFFFFF;
-    --black: #000000;
-}
-```
+![screenshot](readme_assets/root.jpeg)
 
 ### Typography
 
-Explain any fonts and icon libraries used, like Google Fonts and/or Font Awesome.
+For this project I used fonts from Adobe Fonts and added them using `@import` inside my CSS.
 
-Consider adding a link to each font used, and the Font Awesome site if used (or similar icon library).
+- [Termina](https://fonts.adobe.com/fonts/termina) was used for the primary headers and titles.
 
-Example:
+	![screenshot](readme_assets/termina.jpeg)
 
-- [Montserrat](https://fonts.google.com/specimen/Montserrat) was used for the primary headers and titles.
+- [Neue Haas Grotesk](https://fonts.adobe.com/fonts/neue-haas-grotesk) was used for body text and labels
 
-- [Lato](https://fonts.google.com/specimen/Lato) was used for all other secondary text.
+	![screenshot](readme_assets/neue.jpeg)
 
-- [Font Awesome](https://fontawesome.com) icons were used throughout the site, such as the social media icons in the footer.
+- [Forma DJR](https://fonts.adobe.com/fonts/forma-djr-micro) was used for he typography for the Cruise Manager Admin Interface
+
+	![screenshot](readme_assets/forma.jpeg)
+
+
+### Icons
+
+- For this project I used [Google's Material Design Icon library](https://fonts.google.com/icons) for icons. These were implented by importing a Google Stylesheet and applying it to spans where I would write out the name of the icon.
+
+- Here is an example of how icons are used to respresent information to the user in an intuitive way that allows for less text labels.
+
+	![screenshot](readme_assets/icons.jpeg)
+
 
 ## Agile
 
