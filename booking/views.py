@@ -24,6 +24,7 @@ if os.path.isfile('env.py'):
 STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 
+
 @login_required
 def NewBooking(request, slug):
     '''
@@ -31,19 +32,23 @@ def NewBooking(request, slug):
     receieves form input
     '''
     cruise = get_object_or_404(Cruises, slug=slug)
-    if cruise.bookable == False:
+    if cruise.bookable is False:
         return redirect('cruise_results')
-    
+
     movements = Movements.objects.filter(cruise=cruise)
-    #Check availability of suites
-    #Check availability of veranda category
-    number_verandah = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=1).count
-    #Check availability of deluxe veranda category
-    number_deluxe = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=2).count
-    #Check availability of spa suites
-    number_spa = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=3).count
-    #Check availability of owner suites
-    number_owner = Tickets.objects.filter(cruise=cruise, booked=False, suite__category=4).count
+    # Check availability of suites
+    # Check availability of veranda category
+    number_verandah = Tickets.objects.filter(
+        cruise=cruise, booked=False, suite__category=1).count
+    # Check availability of deluxe veranda category
+    number_deluxe = Tickets.objects.filter(
+        cruise=cruise, booked=False, suite__category=2).count
+    # Check availability of spa suites
+    number_spa = Tickets.objects.filter(
+        cruise=cruise, booked=False, suite__category=3).count
+    # Check availability of owner suites
+    number_owner = Tickets.objects.filter(
+        cruise=cruise, booked=False, suite__category=4).count
     # Get suite categories
     suite_categories = SuiteCategories.objects.all()
     # Get deckplans and make them available in template
@@ -53,7 +58,7 @@ def NewBooking(request, slug):
         dict['category'] = suite_cat.id
         dict['url'] = suite_cat.category_deckplan.url
         deckplan_list.append(dict)
-    
+
     deckplans = json.dumps(deckplan_list)
 
     # Get cruise fares
@@ -62,9 +67,10 @@ def NewBooking(request, slug):
     fare_spa = get_object_or_404(Fares, cruise=cruise, suite_category=3)
     fare_owner = get_object_or_404(Fares, cruise=cruise, suite_category=4)
 
-    #Passport expiry date minimum
+    # Passport expiry date minimum
     cruise_end_date = cruise.end_date
-    passport_min_expire = (cruise_end_date + timedelta(days=30)).strftime('%Y-%m-%d')
+    passport_min_expire = (
+        cruise_end_date + timedelta(days=30)).strftime('%Y-%m-%d')
 
     if request.method == 'POST':
         booking_form = BookingForm(request.POST)
@@ -81,12 +87,12 @@ def NewBooking(request, slug):
             booking_dict['guest_information'] = booking_form.cleaned_data['guest_information']
             request.session['booking_dict'] = booking_dict
 
-            return redirect('payment')            
+            return redirect('payment')
 
     else:
         booking_form = BookingForm()
 
-    #Get all bookable tickets and conver to JSON
+    # Get all bookable tickets and conver to JSON
     ticket_list = []
     available_tickets = Tickets.objects.filter(cruise=cruise, booked=False)
     for ticket in available_tickets:
@@ -100,15 +106,15 @@ def NewBooking(request, slug):
     context = {
         'cruise': cruise,
         'movements': movements,
-        'number_verandah' : number_verandah,
-        'number_deluxe' : number_deluxe,
-        'number_spa' : number_spa,
-        'number_owner' : number_owner,
+        'number_verandah': number_verandah,
+        'number_deluxe': number_deluxe,
+        'number_spa': number_spa,
+        'number_owner': number_owner,
         'fare_verandah': fare_verandah,
         'fare_deluxe': fare_deluxe,
         'fare_spa': fare_spa,
         'fare_owner': fare_owner,
-        'suite_categories' : suite_categories,
+        'suite_categories': suite_categories,
         'suites': suites,
         'booking_form': booking_form,
         'passport_min_expire': passport_min_expire,
@@ -128,14 +134,16 @@ def Payment(request):
         number_guests = booking_dict['number_guests']
         selected_category = booking_dict['selected_category']
         selected_suite = booking_dict['selected_suite']
-        #Get cruise
+        # Get cruise
         cruise = get_object_or_404(Cruises, id=cruise_id)
-        #Get suite category
-        suite_category = get_object_or_404(SuiteCategories, id=selected_category)
-        #Getting base fare
-        base_fare = get_object_or_404(Fares, cruise=cruise, suite_category=suite_category)
+        # Get suite category
+        suite_category = get_object_or_404(
+            SuiteCategories, id=selected_category)
+        # Getting base fare
+        base_fare = get_object_or_404(
+            Fares, cruise=cruise, suite_category=suite_category)
         base_fare_price = base_fare.price
-        #Work out price to charge customer
+        # Work out price to charge customer
         if number_guests == 1:
             final_fare = base_fare_price * Decimal('0.75')
         elif number_guests == 2:
@@ -144,21 +152,21 @@ def Payment(request):
             final_fare = base_fare_price * Decimal('1.5')
         final_fare = final_fare.quantize(Decimal('0.01'))
         # Save fare in session
-          #Convert to pence/cents for Stripe
+        # Convert to pence/cents for Stripe
         final_fare = int(final_fare * 100)
         booking_dict['final_fare'] = final_fare
         request.session['booking_dict'] = booking_dict
-        #Create stripe payment intent
+        # Create stripe payment intent
         intent = stripe.PaymentIntent.create(
-        amount=final_fare,
-        currency="gbp",
-        automatic_payment_methods={"enabled": True},
+            amount=final_fare,
+            currency="gbp",
+            automatic_payment_methods={"enabled": True},
         )
         client_secret = intent.client_secret
 
     else:
         return redirect('cruise_results')
-    
+
     context = {
         'cruise': cruise,
         'final_fare_price': final_fare,
@@ -166,6 +174,7 @@ def Payment(request):
         'public_key': STRIPE_PUBLIC_KEY,
     }
     return render(request, 'booking/payment.html', context)
+
 
 @login_required
 def PaymentConfirm(request):
@@ -182,7 +191,7 @@ def PaymentConfirm(request):
         return redirect('cruise_results')
 
     context = {
-        'public_key' : STRIPE_PUBLIC_KEY,
+        'public_key': STRIPE_PUBLIC_KEY,
         'session_id': session_id,
         'cruise': cruise,
     }
@@ -202,26 +211,29 @@ def ProcessBooking(request):
         guest_information = booking_dict['guest_information']
         selected_category = booking_dict['selected_category']
         selected_suite = booking_dict['selected_suite']
-        suite = get_object_or_404(Suites, ship=cruise.ship, suite_num_name=selected_suite)
+        suite = get_object_or_404(
+            Suites, ship=cruise.ship, suite_num_name=selected_suite)
         booking_price = booking_dict['final_fare']
         # Get ticket object
         ticket = get_object_or_404(Tickets, cruise=cruise, suite=suite)
         ticket.booked = True
         ticket.save()
-        #Generate a booking reference
+        # Generate a booking reference
         now = timezone.now()
         current_datetime = now.strftime("%d%m%Y%H%M")
         booking_ref = f"{cruise_id}{selected_suite}{current_datetime}"
         booked_by = request.user
         cruise_name_str = cruise.name
         # Create the booking object
-        new_booking = Bookings.objects.create(booking_ref=booking_ref,booked_by=booked_by,number_of_guests=number_guests,guests=guest_information,booking_price=booking_price,ticket=ticket,cruise_name_str=cruise_name_str)
-        #Delete the session booking dictionary
+        new_booking = Bookings.objects.create(booking_ref=booking_ref, booked_by=booked_by, number_of_guests=number_guests,
+                                              guests=guest_information, booking_price=booking_price, ticket=ticket, cruise_name_str=cruise_name_str)
+        # Delete the session booking dictionary
         del request.session['booking_dict']
 
         # Send confirmation email
         name = 'Zenith Expedition Cruises'
-        message = render_to_string('booking/email_template.html', {'cruise':cruise.name, 'suite':selected_suite, 'ship':cruise.ship})
+        message = render_to_string('booking/email_template.html', {
+                                   'cruise': cruise.name, 'suite': selected_suite, 'ship': cruise.ship})
         subject = f"Booking confirmation of {cruise.name} - Zenith Expedition Cruies"
         from_email = os.environ.get('EMAIL_HOST_USER')
         to_email = request.user.email
@@ -235,4 +247,3 @@ def ProcessBooking(request):
         return HttpResponse(f"{booking_ref}")
     else:
         return HttpResponse('No dictionary')
-
