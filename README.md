@@ -1,7 +1,9 @@
 # Zenith-Expedition-Cruises
 
-This project involved developing an e-commerce website for the imaginary cruise line, Zenith Expedition Cruises. The website built using the Django MVT framework and allows users to find and book an expedition cruise.
-The project involved devloping a comprehensive booking management system for the cruise company, kown as Cruise Manager. This booking management system keeps track of inventory (tickets) and manages which suites are booked on any given cruise. 
+This project involved developing an e-commerce website for the imaginary cruise line, Zenith Expedition Cruises. The website is built using the Django MVT framework and allows users to find and book an expedition cruise.
+The project involved devloping a comprehensive booking management system for the cruise company, kown as Cruise Manager. This booking management system keeps track of inventory (tickets) and manages which suites are booked on any given cruise. It also features an enquiry management system. 
+
+- **[Deployed Site](https://zenith-ci.herokuapp.com/)**
 
 ![screenshot](readme_assets/responsive.jpeg)
 
@@ -47,41 +49,53 @@ For this project I used fonts from Adobe Fonts and added them using `@import` in
 
 	![screenshot](readme_assets/icons.jpeg)
 
+- I also made my own custom favicon featuring the company's logo mark.
+
+	![screenshot](readme_assets/favicon.png)
+
 
 ## Agile
 
 Agile is a project management methodology that emphasizes flexibility, collaboration, and rapid iteration. It is designed to help teams quickly adapt to changing requirements and deliver value to customers in a more efficient and effective manner. Agile involves breaking down large projects into smaller, more manageable tasks, and continuously testing and refining the product throughout the development process.
 
-To help me manage the planning and implementation of all primary functionality with the Agile methodology I used the [monday.com Kanban Board tool](https://monday.com/features/kanban).
+To help me manage the planning and implementation of all primary functionality with the agile methodology I used the [monday.com agile prroject management tool](https://monday.com/features/kanban).
+
+### Agile User Story Boards
 
 - In Agile software development, user stories are used to capture the requirements for a particular feature or piece of work. They are typically written from the perspective of an end user using the format:
     - As a **role** I can **functionality** so that **benefit**
 
-- 
+- I also made use of MoSCoW prioritization, a technique commonly used in Agile project management to prioritize project requirements based on their importance. The acronym stands for "Must have," "Should have," "Could have," and "Won't have." The technique helps project teams to focus on the most critical and essential requirements first, ensuring that the project delivers the highest value to the stakeholders.
 
-### New Site Users
+		The "Must have" requirements are those that are essential for the project's success, and failure to deliver them would result in a significant impact on the project's overall value.
 
-- As a new site user, I would like to ____________, so that I can ____________.
-- As a new site user, I would like to ____________, so that I can ____________.
-- As a new site user, I would like to ____________, so that I can ____________.
-- As a new site user, I would like to ____________, so that I can ____________.
-- As a new site user, I would like to ____________, so that I can ____________.
+		The "Should have" requirements are important but not critical, and they can be postponed if necessary.
+		
+		The "Could have" requirements are desirable but not necessary, and they can be deferred to a later phase or iteration. The "Won't have" requirements are those that the project team has agreed not to include in the current scope.
 
-### Returning Site Users
 
-- As a returning site user, I would like to ____________, so that I can ____________.
-- As a returning site user, I would like to ____________, so that I can ____________.
-- As a returning site user, I would like to ____________, so that I can ____________.
-- As a returning site user, I would like to ____________, so that I can ____________.
-- As a returning site user, I would like to ____________, so that I can ____________.
+#### Customer user story board
 
-### Site Admin
+![screenshot](readme_assets/user_board.jpeg)
 
-- As a site administrator, I should be able to ____________, so that I can ____________.
-- As a site administrator, I should be able to ____________, so that I can ____________.
-- As a site administrator, I should be able to ____________, so that I can ____________.
-- As a site administrator, I should be able to ____________, so that I can ____________.
-- As a site administrator, I should be able to ____________, so that I can ____________.
+
+#### Site owner story board
+
+![screenshot](readme_assets/business_board.jpeg)
+
+### Kanban Board
+
+- A Kanban board in Agile is a visual project management tool that provides an overview of the workflow, allowing team members to visualize and manage their work more efficiently.
+
+- I used the Kanban board to 'move' stories between the columns of to do, in progress and done.
+
+![screenshot](readme_assets/kanban.png)
+
+### User Stories
+
+#### Customer user stories
+
+
 
 ## Wireframes
 
