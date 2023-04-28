@@ -6,7 +6,7 @@ The project involved devloping a comprehensive booking management system for the
 ![screenshot](documentation/mockup.png)
 
 
-## UX
+## Design Process
 
 In this section, you will briefly explain your design processes.
 
@@ -60,9 +60,16 @@ Example:
 
 - [Font Awesome](https://fontawesome.com) icons were used throughout the site, such as the social media icons in the footer.
 
-## User Stories
+## Agile
 
-In this section, list all of your user stories for the project.
+Agile is a project management methodology that emphasizes flexibility, collaboration, and rapid iteration. It is designed to help teams quickly adapt to changing requirements and deliver value to customers in a more efficient and effective manner. Agile involves breaking down large projects into smaller, more manageable tasks, and continuously testing and refining the product throughout the development process.
+
+To help me manage the planning and implementation of all primary functionality with the Agile methodology I used the [monday.com Kanban Board tool](https://monday.com/features/kanban).
+
+- In Agile software development, user stories are used to capture the requirements for a particular feature or piece of work. They are typically written from the perspective of an end user using the format:
+    - As a **role** I can **functionality** so that **benefit**
+
+- 
 
 ### New Site Users
 
@@ -174,127 +181,70 @@ Consider adding any helpful links or notes to help remind you in the future, if 
 - Cool new feature #3
     - Any additional notes about this feature.
 
-## Tools & Technologies Used
+## Technologies & Tools Used
 
-In this section, you should explain the various tools and technologies used to develop the project.
-Make sure to put a link (where applicable) to the source, and explain what each was used for.
-Some examples have been provided, but this is just a sample only, your project might've used others.
-Feel free to delete any unused items below as necessary.
+### Front-End
 
-- [HTML](https://en.wikipedia.org/wiki/HTML) used for the main site content.
-- [CSS](https://en.wikipedia.org/wiki/CSS) used for the main site design and layout.
-- [CSS :root variables](https://www.w3schools.com/css/css3_variables.asp) used for reusable styles throughout the site.
-- [CSS Flexbox](https://www.w3schools.com/css/css3_flexbox.asp) and/or [CSS Grid](https://www.w3schools.com/css/css_grid.asp) used for an enhanced responsive layout.
-- [Bootstrap](https://getbootstrap.com) used as the front-end CSS framework for modern responsiveness and pre-built components.
-- [Materialize](https://materializecss.com) used as the front-end CSS framework for modern responsiveness and pre-built components.
-- [JavaScript](https://www.javascript.com) used for user interaction on the site.
-- [Python](https://www.python.org) used as the back-end programming language.
-- [Git](https://git-scm.com) used for version control. (`git add`, `git commit`, `git push`)
-- [GitHub](https://github.com) used for secure online code storage.
-- [GitHub Pages](https://pages.github.com) used for hosting the deployed front-end site.
-- [Gitpod](https://gitpod.io) used as a cloud-based IDE for development.
-- [Markdown Builder by Tim Nelson](https://traveltimn.github.io/markdown-builder) used to help generate the Markdown files.
-- [Flask](https://flask.palletsprojects.com) used as the Python framework for the site.
-- [Django](https://www.djangoproject.com) used as the Python framework for the site.
-- [MongoDB](https://www.mongodb.com) used as the non-relational database management with Flask.
-- [SQLAlchemy](https://www.sqlalchemy.org) used as the relational database management with Flask.
-- [PostgreSQL](https://www.postgresql.org) used as the relational database management.
-- [ElephantSQL](https://www.elephantsql.com) used as the Postgres database.
-- [Heroku](https://www.heroku.com) used for hosting the deployed back-end site.
-- [Cloudinary](https://cloudinary.com) used for online static file storage.
-- [Stripe](https://stripe.com) used for online secure payments of ecommerce products/services.
-- [AWS S3](https://aws.amazon.com/s3) used for online static file storage.
+- HTML5 - hypertext markup language is the standard language for designing files to be displayed in a web browser like Chrome or Safari. 
 
-## Database Design
+- CSS3 - cascading style sheets is a language used for styling a file written in a markup language like HTML.
 
-Entity Relationship Diagrams (ERD) help to visualize database architecture before creating models.
-Understanding the relationships between different tables can save time later in the project.
+- JavaScript (ES11) is a scripting language and one of the main technologies of web development. In this project it was used on the client side for webpage behavior.
 
-Using your defined models (one example below), create an ERD with the relationships identified.
+### Back-End
 
-```python
-class Product(models.Model):
-    category = models.ForeignKey(
-        "Category", null=True, blank=True, on_delete=models.SET_NULL)
-    sku = models.CharField(max_length=254, null=True, blank=True)
-    name = models.CharField(max_length=254)
-    description = models.TextField()
-    has_sizes = models.BooleanField(default=False, null=True, blank=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    rating = models.DecimalField(
-        max_digits=6, decimal_places=2, null=True, blank=True)
-    image_url = models.URLField(max_length=1024, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True)
+- [Django](https://www.djangoproject.com/) an open-source, Python-based web framework that follows the model–template–views (MTV) architectural pattern.
 
-    def __str__(self):
-        return self.name
-```
+- [PostgreSQL](https://www.postgresql.org/) is an open-source relational database management system (RDBMS)
 
-A couple recommendations for building free ERDs:
-- [Draw.io](https://draw.io)
-- [Lucidchart](https://www.lucidchart.com/pages/ER-diagram-symbols-and-meaning)
+- [Python](https://www.python.org/) is a high-level, general-purpose programming language and was used for the backend. The use of Django as the selected framework dictated the use of Python.
 
-![screenshot](documentation/erd.png)
+- [Heroku](https://heroku.com/) is a cloud platform as a service (PaaS) supporting several programming languages and database. Heroku is used to host the deployed application and PostgreSQL database.
 
-Using Markdown formatting to represent an example ERD table using the Product model above:
+- [AWS S3](http://aws.amazon.com/s3/) was used for hosting the Django static files and user uploaded media. Amazon Simple Storage Service is a service offered by Amazon Web Services (AWS) that provides object storage through a web service interface.
 
-- Table: **Product**
+### Packages Used
 
-    | **PK** | **id** (unique) | Type | Notes |
-    | --- | --- | --- | --- |
-    | **FK** | category | ForeignKey | FK to **Category** model |
-    | | sku | CharField | |
-    | | name | CharField | |
-    | | description | TextField | |
-    | | has_sizes | BooleanField | |
-    | | price | DecimalField | |
-    | | rating | DecimalField | |
-    | | image_url | URLField | |
-    | | image | ImageField | |
+Further details on all Python packages used on this project can be found in the requirements.txt file.
+| Package | Version | Description |
+|---|---|---|
+| asgiref | 3.5.2 | ASGI is a standard for Python asynchronous web apps and servers to communicate with each other, and positioned as an asynchronous successor to WSGI. |
+| backports.zoneinfo | 0.2.1 | Backport of the standard library module zoneinfo |
+| boto3 | 1.26.12 | Boto3 is the Amazon Web Services (AWS) Software Development Kit (SDK) for Python, which allows Python developers to write software that makes use of services like Amazon S3 and Amazon EC2 |
+| botocore | 1.29.12 | A low-level interface to a growing number of Amazon Web Services. The botocore package is the foundation for the AWS CLI  |
+| dj-database-url | 1.0.0 | Allows you to utilize the 12factor inspired DATABASE_URL environment variable to configure your Django application. |
+| Django | 3.2.16 | Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design. |
+| django-allauth | 0.51.0 | Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication. |
+| django-multiupload | 0.6.1 | Simple drop-in multi file upload field for django forms using HTML5's multiple attribute. |
+| django-storages | 1.13.1 | Adds support for storage backends in Django |
+| gunicorn | 20.1.0 | A Python WSGI HTTP Server for UNIX. |
+| jmespath | 1.0.1 | JSON Matching Expressions |
+| oauthlib | 3.2.2 | A generic, spec-compliant, thorough implementation of the OAuth request-signing logic |
+| Pillow | 9.3.0 | Python Imaging Library adds image processing capabilities |
+| psycopg2-binary | 2.9.5 | PostgreSQL database adapter for the Python programming language |
+| PyJWT | 2.6.0 | JSON Web Token implementation in Python |
+| python3-open-id | 3.2.0 | A set of Python packages to support use of the OpenID decentralized identity system |
+| pytz | 2022.7 | Accurate and cross platform timezone calculations |
+| requests-oauthlib | 1.3.1 | Provides OAuth library support for requests |
+| s3transfer | 0.6.0 | For managing Amazon S3 transfers |
+| sqlparse | 0.4.3 | A non-validating SQL parser. |
+| stripe | 5.4.0 | Integrates Stripe into Python/Django project |
 
-## Agile Development Process
 
-### GitHub Projects
+## Database Schema
 
-[GitHub Projects](https://github.com/ancfoster/Zenith-Expedition-Cruises/projects) served as an Agile tool for this project.
-It isn't a specialized tool, but with the right tags and project creation/issue assignments, it can be made to work.
+### Diagram
 
-Through it, user stories, issues, and milestone tasks were planned, then tracked on a weekly basis using the basic Kanban board.
+![Database diagram](readme_assets/schema.jpeg)
 
-Consider adding a basic screenshot of your Projects Board.
+### Database Models
 
-![screenshot](documentation/gh-projects.png)
+Zenith Expedition Cruises is made of 4 custom applications and 11 models, in addition to the user model that comes with the Django admin/authentication system
 
-### GitHub Issues
-
-[GitHub Issues](https://github.com/ancfoster/Zenith-Expedition-Cruises/issues) served as an another Agile tool.
-There, I used my own **User Story Template** to manage user stories.
-
-It also helped with milestone iterations on a weekly basis.
-
-Consider adding a screenshot of your Open and Closed Issues.
-
-- [Open Issues](https://github.com/ancfoster/Zenith-Expedition-Cruises/issues)
-
-    ![screenshot](documentation/gh-issues-open.png)
-
-- [Closed Issues](https://github.com/ancfoster/Zenith-Expedition-Cruises/issues?q=is%3Aissue+is%3Aclosed)
-
-    ![screenshot](documentation/gh-issues-closed.png)
-
-### MoSCoW Prioritization
-
-I've decomposed my Epics into stories prior to prioritizing and implementing them.
-Using this approach, I was able to apply the MoSCow prioritization and labels to my user stories within the Issues tab.
-
-- **Must Have**: guaranteed to be delivered (*max 60% of stories*)
-- **Should Have**: adds significant value, but not vital (*the rest ~20% of stories*)
-- **Could Have**: has small impact if left out (*20% of stories*)
-- **Won't Have**: not a priority for this iteration
 
 ## Ecommerce Business Model
 
-This site sells goods to individual customers, and therefore follows a `Business to Customer` model. By hacing an ecommerce website Zenith Expedition Cruises is able to take new bookings 24 hours a day. 
+This site sells goods to individual customers, and therefore follows a `Business to Customer` model. By having an ecommerce website Zenith Expedition Cruises is able to take new bookings 24 hours a day. 
 
 It is still in its early development stages, although it already has a newsletter, and links for social media marketing.
 
@@ -307,17 +257,13 @@ updates to business hours, notifications of events, and much more!
 
 ## Search Engine Optimization (SEO) & Social Media Marketing
 
-### Keywords
+### Keywords & Description Meta Fields
 
 I've identified some appropriate keywords to align with my site, that should help users
 when searching online to find my page easily from a search engine.
-This included a series of the following keyword types
+I have added the keyword and meta fields to 
 
-- Short-tail (head terms) keywords
-- Long-tail keywords
 
-I also played around with [Word Tracker](https://www.wordtracker.com) a bit
-to check the frequency of some of my site's primary keywords (only until the free trial expired).
 
 ### Sitemap
 
@@ -357,30 +303,11 @@ provided by Code Institute.
 
 ### Newsletter Marketing
 
-I have incorporate a newsletter sign-up form on my application, to allow users to supply their
-email address if they are interested in learning more. 
+I have incorporatee a newsletter sign-up form on my application so that they can keep upto date with the latest news and promotional offers. I have implemented this via MailChimp as:
 
-Option 1 (MailChimp):
-- Sign up for a Mailchimp account
-- This allows up to 2,500 subscription email sends per month
-- Incorporate the code and scripts into your project like in the CI lessons.
-
-Option 2 (Django):
-- Create a custom newsletter app in your project, with a custom model.
-- This method satisfies two assessment criteria:
-    - include a newsletter
-    - one of your custom models
-- It doesn't need anything except the "email" on the model.
-- Example:
-    ```python
-    class Newsletter(models.Model):
-    email = models.EmailField(null=False, blank=False)
-
-    def __str__(self):
-        return self.email
-    ```
-- Consider using the same `send_mail()` functionality used on the `webhook_handler.py` file.
-    - You can trigger an email sent out to subscribed users when new products are added to the site!
+- MailChimp handle the GDPR requirements and make it easy for users to unsubscribe
+- MailChimp includes an email campaign builder, this makes it easy for non-technical staff at Zenith Expedition Cruises to produce emails.
+- MailChimp 
 
 ## Testing
 
