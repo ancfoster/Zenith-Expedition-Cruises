@@ -114,3 +114,16 @@ Any bugs were documented on [GitHub](https://github.com/ancfoster/Zenith-Expedit
 |Delete cruise| After confirming intention the cruise and its tickets and movements are deleted |Pass|
 |Change enquiry status| A django message will appear on the screen confirming the status of an enquiry has been toggled |Pass|
 |Delete enquiry| After confirming intention the enquiry is deleted from the database|Pass|
+
+### Customer/Visitor Tests
+
+| Test | Expected Result | Pass or Fail? |
+|---|---|---|
+|Create account|Fill in registration form and be redirected to home page, login icon becomes logout icon|Pass|
+|Logout|User is logged out|Pass|
+|Login|User is logged in and profile icon changes to logout icon|Pass|
+|Subscribe to newsletter|See confirmation message from Mailchimp after filling out form field|Pass|
+|Send enquiry|After filling out form fields Django success message id displayed|Pass|
+|Start booking|When clicking on a cruise booking button the booking process is launched|Pass|
+|Confirmation message after payment|After filling out the payment fields a success message with booking confirmation number is displayed|Pass|
+|Available suites shown|When a suite category has been selected only available suites will be shown for selection|Pass|
