@@ -125,9 +125,32 @@ To help me manage the planning and implementation of all primary functionality w
 
 ### Cruise Manager Admin Features
 
+- My project includes a stock management system in the background. When a cruise is created, tickets are automatically generated based on the suites and suite categories tables. When a customer makes a booking a ticket is marked as booked so that a customer cannot double book it. If a booking is deleted in the cruise manager interface the ticket comes available to book again.
+
 | Feature | Description | Screenshot |
 | --- | --- | --- |
-| | | ![screenshot](readme_assets/.jpeg) |
+| Button to access cruise manager when user is a 'staff user' | A conditional button only appears when the user is signed in as a staff user. This provides access to the Cruise manager dashboard | ![screenshot](readme_assets/button.jpeg) |
+| Dashboard | Provides key business statistics and links to common actions | ![screenshot](readme_assets/dashboard.jpeg) |
+| Cruise List | Provides a list of cruises in the database. Clicking on a cruise brings up detail view | ![screenshot](readme_assets/cruises_admin.jpeg) |
+| Cruise Detail View | Provides a detail view of a specific cruise and links to Edit/Delete | ![screenshot](readme_assets/admin_cruise_detail.jpeg) |
+| Cruise Delete View | Provides a view to delete a cruise | ![screenshot](readme_assets/cruise_delete.jpeg) |
+| Cruise Edit View | Provides view to edit cruise prices and details | ![screenshot](readme_assets/cruise_edit.jpeg) |
+| Cruise Create View | Provides view to create a new cruise, which generates tickets| ![screenshot](readme_assets/cruise_create.jpeg) |
+| Destinstion list | Lists destinations in the database and links to detail view and ot create one | ![screenshot](readme_assets/destination_list.jpeg) |
+| Destinstion detail view | Shows details of a destination and provides links to edit/delete views. | ![screenshot](readme_assets/desti_detail.jpeg) |
+| Destinstion edit view | Provides a way to edit a destination in the database | ![screenshot](readme_assets/edit_desti.jpeg) |
+| Destinstion delete view | Provides a way to delete a destination from the database | ![screenshot](readme_assets/delete_desti.jpeg) |
+| Tag view | Tags are a way for users to filter cruises. This view shows a list of tags in the system with buttons to create, edit, delete | ![screenshot](readme_assets/tag_view.jpeg) |
+| Tag delete view | Provides a way to delete a tag from the database | ![screenshot](readme_assets/delete_tag.jpeg) |
+| Booking list | Lists bookings in the system, providing a link to see booking details | ![screenshot](readme_assets/booking_list.jpeg) |
+| Booking detail view | Shows details of a specific booking and the amount paid. Shows a delete action button. | ![screenshot](readme_assets/booking_detail.jpeg) |
+| Booking delete view | Provides a way to delete a booking and make the associated ticket available for booking again | ![screenshot](readme_assets/delete_booking.jpeg) |
+| Enquiry list | Shows a list of customer enquiries from the contact form. Shows how many need responding to by staff with a status icon | ![screenshot](readme_assets/enquiry_list.jpeg) |
+| Enquiry message view | Shows the enquiry message and provides action buttons for marking as responded to and deletion. | ![screenshot](readme_assets/enquiry_message.jpeg) |
+
+
+### Customer Features
+
 
 ## Wireframes
 
