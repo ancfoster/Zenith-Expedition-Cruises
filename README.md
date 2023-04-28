@@ -174,7 +174,7 @@ To help me manage the planning and implementation of all primary functionality w
 
 - [Figma](https://figma.com) was used to develop different wireframes & mockups.
 
-- The Figma file with all the mockups and wireframes [can be accessed here](https://www.figma.com/file/31ixxZ8Plr4M71TRG9hGoD/zenith?node-id=0%3A1&t=bFFbWfrFluDT-1)
+- The Figma file with all the mockups and wireframes [can be accessed here](https://www.figma.com/file/31ixxZ8Plr4M71TRG9hGoD/zenith?node-id=0%3A1&t=bFFbVbWfrFluDSET-1)
 
 - Wireframes
 
