@@ -386,28 +386,67 @@ I have incorporated a newsletter sign-up form on my application so that they can
 
 For all testing, please refer to the [TESTING.md](TESTING.md) file.
 
-## Deployment
+### Heroku Deployment
 
-The live deployed application can be found deployed on [Heroku](https://zenith-ci.herokuapp.com/).
+This project uses [Heroku](https://www.heroku.com), a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.
 
-### ElephantSQL Database
+Deployment steps are as follows, after account setup:
 
-This project uses Heroku for the PostgreSQL Database.
+- Select **New** in the top-right corner of your Heroku Dashboard, and select **Create new app** from the dropdown menu.
+- Your app name must be unique, and then choose a region closest to you (EU or USA), and finally, select **Create App**.
+- From the new app **Settings**, click **Reveal Config Vars**, and set your environment variables.
 
-To obtain your own Postgres Database, sign-up with your GitHub account, then follow these steps:
-- Click **Create New Instance** to start a new database.
-- Provide a name (this is commonly the name of the project: Zenith-Expedition-Cruises).
-- Select the **Tiny Turtle (Free)** plan.
-- You can leave the **Tags** blank.
-- Select the **Region** and **Data Center** closest to you.
-- Once created, click on the new database name, where you can view the database URL and Password.
+| Key | Value |
+| --- | --- |
+| `AWS_ACCESS_KEY_ID` | insert your own AWS Access Key ID key here |
+| `AWS_SECRET_ACCESS_KEY` | insert your own AWS Secret Access key here |
+| `DATABASE_URL` | Insert Heroku database url here (setting up Heroku database is in next step) |
+| `SECRET_KEY` | this can be any random secret key |
 
-### Amazon AWS
+Heroku needs two additional files in order to deploy properly.
+- requirements.txt
+- Procfile
 
-This project uses [AWS](https://aws.amazon.com) to store media and static files online, due to the fact that Heroku doesn't persist this type of data.
+You can install this project's **requirements** (where applicable) using:
+- `pip3 install -r requirements.txt`
 
-Once you've created an AWS account and logged-in, follow these series of steps to get your project connected.
-Make sure you're on the **AWS Management Console** page.
+If you have your own packages that have been installed, then the requirements file needs updated using:
+- `pip3 freeze --local > requirements.txt`
+
+The **Procfile** can be created with the following command:
+- `echo web: gunicorn app_name.wsgi > Procfile`
+- *replace **app_name** with the name of your primary Django app name; the folder where settings.py is located*
+
+For Heroku deployment, follow these steps to connect your own GitHub repository to the newly created app:
+
+Either:
+- Select **Automatic Deployment** from the Heroku app.
+
+Or:
+- In the Terminal/CLI, connect to Heroku using this command: `heroku login -i`
+- Set the remote for Heroku: `heroku git:remote -a app_name` (replace *app_name* with your app name)
+- After performing the standard Git `add`, `commit`, and `push` to GitHub, you can now type:
+	- `git push heroku main`
+
+### PostgreSQL database
+
+This project uses a Heroku PostgreSQL Databse.
+
+- Visit Heroku dashboard
+- Under project dashboard, go to the Resources tab.
+- Click on add ons.
+- Under Data Stores, select Heroku Postgres.
+- You will then be asked to pick a plan. The Mini plan is fine for development and light usage purposes. A detailed guide on the differences between the plans is available on the Heorku site.
+- Then search for the Heroku app in the 'App to provison to' box.
+- Select 'nextboat-ci'.
+- Heroku will then provision the database.
+- As part of the provisioning process, a DATABASE_URL config var is added to your app’s configuration. DATABASE_URL contains the URL your app uses to access the database.
+- Go back to the resources tab and you will see the Postgres database.
+- Add the databse url to the `env.py` file.
+
+| `DATABASE_URL` | Insert Heroku database url here |
+
+### AWS S3 configuration steps
 
 #### S3 Bucket
 
@@ -475,7 +514,7 @@ Back on the AWS Services Menu, search for and open **IAM** (Identity and Access 
 Once on the IAM page, follow these steps:
 
 - From **User Groups**, click **Create New Group**.
-	- Suggested Name: `group-zenith-expedition-cruises` (group + the project name)
+	- Suggested Name: `group-Next-Boat` (group + the project name)
 - Tags are optional, but you must click it to get to the **review policy** page.
 - From **User Groups**, select your newly created group, and go to the **Permissions** tab.
 - Open the **Add Permissions** dropdown, and click **Attach Policies**.
@@ -501,17 +540,17 @@ Once on the IAM page, follow these steps:
 		```
 	
 	- Click **Review Policy**.
-	- Suggested Name: `policy-zenith-expedition-cruises` (policy + the project name)
+	- Suggested Name: `policy-Next-Boat-LOWER` (policy + the project name)
 	- Provide a description:
-		- "Access to S3 Bucket for zenith-expedition-cruises static files."
+		- "Access to S3 Bucket for Next-Boat-LOWER static files."
 	- Click **Create Policy**.
-- From **User Groups**, click your "group-zenith-expedition-cruises".
+- From **User Groups**, click your "group-Next-Boat-LOWER".
 - Click **Attach Policy**.
-- Search for the policy you've just created ("policy-zenith-expedition-cruises") and select it, then **Attach Policy**.
+- Search for the policy you've just created ("policy-Next-Boat-LOWER") and select it, then **Attach Policy**.
 - From **User Groups**, click **Add User**.
-	- Suggested Name: `user-zenith-expedition-cruises` (user + the project name)
+	- Suggested Name: `user-Next-Boat-LOWER` (user + the project name)
 - For "Select AWS Access Type", select **Programmatic Access**.
-- Select the group to add your new user to: `group-zenith-expedition-cruises`
+- Select the group to add your new user to: `group-Next-Boat-LOWER`
 - Tags are optional, but you must click it to get to the **review user** page.
 - Click **Create User** once done.
 - You should see a button to **Download .csv**, so click it to save a copy on your system.
@@ -527,6 +566,7 @@ Once on the IAM page, follow these steps:
 - Select any existing media images for your project to prepare them for being uploaded into the new folder.
 - Under **Manage Public Permissions**, select **Grant public read access to this object(s)**.
 - No further settings are required, so click **Upload**.
+
 
 ### Stripe API
 
@@ -571,131 +611,15 @@ Once you've created a Gmail (Google) account and logged-in, follow these series 
 	- `EMAIL_HOST_PASS` = your new 16-character API key
 	- `EMAIL_HOST_USER` = your own personal Gmail email address (`you@gmail.com`)
 
-### Heroku Deployment
+### Local deployment
 
-This project uses [Heroku](https://www.heroku.com), a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.
+In order to make a local copy of this project, you can clone it. In your IDE Terminal, type the following command to clone my repository:
 
-Deployment steps are as follows, after account setup:
-
-- Select **New** in the top-right corner of your Heroku Dashboard, and select **Create new app** from the dropdown menu.
-- Your app name must be unique, and then choose a region closest to you (EU or USA), and finally, select **Create App**.
-- From the new app **Settings**, click **Reveal Config Vars**, and set your environment variables.
-
-| Key | Value |
-| --- | --- |
-| `AWS_ACCESS_KEY_ID` | insert your own AWS Access Key ID key here |
-| `AWS_SECRET_ACCESS_KEY` | insert your own AWS Secret Access key here |
-| `DATABASE_URL` | insert your own ElephantSQL database URL here |
-| `DISABLE_COLLECTSTATIC` | 1 (*this is temporary, and can be removed for the final deployment*) |
-| `EMAIL_HOST_PASS` | insert your own Gmail API key here |
-| `EMAIL_HOST_USER` | insert your own Gmail email address here |
-| `SECRET_KEY` | this can be any random secret key |
-| `STRIPE_PUBLIC_KEY` | insert your own Stripe Public API key here |
-| `STRIPE_SECRET_KEY` | insert your own Stripe Secret API key here |
-| `STRIPE_WH_SECRET` | insert your own Stripe Webhook API key here |
-| `USE_AWS` | True |
-
-Heroku needs two additional files in order to deploy properly.
-- requirements.txt
-- Procfile
-
-You can install this project's **requirements** (where applicable) using:
-- `pip3 install -r requirements.txt`
-
-If you have your own packages that have been installed, then the requirements file needs updated using:
-- `pip3 freeze --local > requirements.txt`
-
-The **Procfile** can be created with the following command:
-- `echo web: gunicorn app_name.wsgi > Procfile`
-- *replace **app_name** with the name of your primary Django app name; the folder where settings.py is located*
-
-For Heroku deployment, follow these steps to connect your own GitHub repository to the newly created app:
-
-Either:
-- Select **Automatic Deployment** from the Heroku app.
-
-Or:
-- In the Terminal/CLI, connect to Heroku using this command: `heroku login -i`
-- Set the remote for Heroku: `heroku git:remote -a app_name` (replace *app_name* with your app name)
-- After performing the standard Git `add`, `commit`, and `push` to GitHub, you can now type:
-	- `git push heroku main`
-
-The project should now be connected and deployed to Heroku!
-
-### Local Deployment
-
-This project can be cloned or forked in order to make a local copy on your own system.
-
-For either method, you will need to install any applicable packages found within the *requirements.txt* file.
-- `pip3 install -r requirements.txt`.
-
-You will need to create a new file called `env.py` at the root-level,
-and include the same environment variables listed above from the Heroku deployment steps.
-
-Sample `env.py` file:
-
-```python
-import os
-
-os.environ.setdefault("AWS_ACCESS_KEY_ID", "insert your own AWS Access Key ID key here")
-os.environ.setdefault("AWS_SECRET_ACCESS_KEY", "insert your own AWS Secret Access key here")
-os.environ.setdefault("DATABASE_URL", "insert your own ElephantSQL database URL here")
-os.environ.setdefault("EMAIL_HOST_PASS", "insert your own Gmail API key here")
-os.environ.setdefault("EMAIL_HOST_USER", "insert your own Gmail email address here")
-os.environ.setdefault("SECRET_KEY", "this can be any random secret key")
-os.environ.setdefault("STRIPE_PUBLIC_KEY", "insert your own Stripe Public API key here")
-os.environ.setdefault("STRIPE_SECRET_KEY", "insert your own Stripe Secret API key here")
-os.environ.setdefault("STRIPE_WH_SECRET", "insert your own Stripe Webhook API key here")
-
-# local environment only (do not include these in production/deployment!)
-os.environ.setdefault("DEBUG", "True")
-```
-
-Once the project is cloned or forked, in order to run it locally, you'll need to follow these steps:
-- Start the Django app: `python3 manage.py runserver`
-- Stop the app once it's loaded: `CTRL+C` or `⌘+C` (Mac)
-- Make any necessary migrations: `python3 manage.py makemigrations`
-- Migrate the data to the database: `python3 manage.py migrate`
-- Create a superuser: `python3 manage.py createsuperuser`
-- Load fixtures (if applicable): `python3 manage.py loaddata file-name.json` (repeat for each file)
-- Everything should be ready now, so run the Django app again: `python3 manage.py runserver`
-
-If you'd like to backup your database models, use the following command for each model you'd like to create a fixture for:
-- `python3 manage.py dumpdata your-model > your-model.json`
-- *repeat this action for each model you wish to backup*
-
-#### Cloning
-
-You can clone the repository by following these steps:
-
-1. Go to the [GitHub repository](https://github.com/ancfoster/Zenith-Expedition-Cruises) 
-2. Locate the Code button above the list of files and click it 
-3. Select if you prefer to clone using HTTPS, SSH, or GitHub CLI and click the copy button to copy the URL to your clipboard
-4. Open Git Bash or Terminal
-5. Change the current working directory to the one where you want the cloned directory
-6. In your IDE Terminal, type the following command to clone my repository:
-	- `git clone https://github.com/ancfoster/Zenith-Expedition-Cruises.git`
-7. Press Enter to create your local clone.
+`git clone https://github.com/ancfoster/Zenith-Expedition-Cruises.git`
 
 Alternatively, if using Gitpod, you can click below to create your own workspace using this repository.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ancfoster/Zenith-Expedition-Cruises)
-
-Please note that in order to directly open the project in Gitpod, you need to have the browser extension installed.
-A tutorial on how to do that can be found [here](https://www.gitpod.io/docs/configure/user-settings/browser-extension).
-
-#### Forking
-
-By forking the GitHub Repository, we make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original owner's repository.
-You can fork this repository by using the following steps:
-
-1. Log in to GitHub and locate the [GitHub Repository](https://github.com/ancfoster/Zenith-Expedition-Cruises)
-2. At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
-3. Once clicked, you should now have a copy of the original repository in your own GitHub account!
-
-### Local VS Deployment
-
-Use this space to discuss any differences between the local version you've developed, and the live deployment site on Heroku.
+[![Open in GitPod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ancfoster/Zenith-Expedition-Cruises)
 
 ## Credits
 
@@ -712,27 +636,9 @@ Use this space to discuss any differences between the local version you've devel
 
 ### Media
 
-Use this space to provide attribution links to any images, videos, or audio files borrowed from online.
-A few examples have been provided below to give you some ideas.
+- Images on home and experience pages came from [Pexels.com](https://pexels.com)
 
-If you're the owner (or a close acquaintance) of all media files, then make sure to specify this.
-Let the assessors know that you have explicit rights to use the media files within your project.
-
-Ideally, you should provide an actual link to every media file used, not just a generic link to the main site!
-The list below is by no means exhaustive. Within the Code Institute Slack community, you can find more "free media" links
-by sending yourself the following command: `!freemedia`.
-
-| Source | Location | Type | Notes |
-| --- | --- | --- | --- |
-| [Pexels](https://www.pexels.com) | entire site | image | favicon on all pages |
-| [Lorem Picsum](https://picsum.photos) | home page | image | hero image background |
-| [Unsplash](https://unsplash.com) | product page | image | sample of fake products |
-| [Pixabay](https://pixabay.com) | gallery page | image | group of photos for gallery |
-| [Wallhere](https://wallhere.com) | footer | image | background wallpaper image in the footer |
-| [This Person Does Not Exist](https://thispersondoesnotexist.com) | testimonials | image | headshots of fake testimonial images |
-| [Audio Micro](https://www.audiomicro.com/free-sound-effects) | game page | audio | free audio files to generate the game sounds |
-| [Videvo](https://www.videvo.net/) | home page | video | background video on the hero section |
-| [TinyPNG](https://tinypng.com) | entire site | image | tool for image compression |
+	- e.g [Lecture image](https://www.pexels.com/photo/smiling-man-in-a-black-suit-holding-a-marker-7648513/)
 
 ### Acknowledgements
 
