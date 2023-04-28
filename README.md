@@ -341,51 +341,46 @@ I've identified some appropriate keywords to align with my site, that should hel
 when searching online to find my page easily from a search engine.
 I have added the keyword and meta fields to the head section to improve SEO.
 
-
+![meta fields in head](readme_assets/meta.jpeg)
 
 ### Sitemap
 
-I've used [XML-Sitemaps](https://www.xml-sitemaps.com) to generate a sitemap.xml file.
-This was generated using my deployed site URL: https://fff.herokuapp.com
+- I've used Djano's built in sitemap application to generate a sitemap automatically.
 
-After it finished crawling the entire site, it created a
-[sitemap.xml](sitemap.xml) which I've downloaded and included in the repository.
+- The sitemap can be be viewed at [https://zenith-ci.herokuapp.com/sitemap.xml](https://zenith-ci.herokuapp.com/sitemap.xml)
 
 ### Robots
 
 I've created the [robots.txt](robots.txt) file at the root-level.
-Inside, I've included the default settings:
 
-```
-User-agent: *
+It can be seen at [https://zenith-ci.herokuapp.com/robots.txt](https://zenith-ci.herokuapp.com/robots.txt)
+
+- `User-agent: *
 Disallow:
-Sitemap: https://fff.herokuapp.com/sitemap.xml
-```
+Sitemap: https://zenith-ci.herokuapp.com/sitemap.xml`
 
-Further links for future implementation:
-- [Google search console](https://search.google.com/search-console)
-- [Creating and submitting a sitemap](https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap)
-- [Managing your sitemaps and using sitemaps reports](https://support.google.com/webmasters/answer/7451001)
-- [Testing the robots.txt file](https://support.google.com/webmasters/answer/6062598)
 
 ### Social Media Marketing
 
 Creating a strong social base (with participation) and linking that to the business site can help drive sales.
 Using more popular providers with a wider user base, such as Facebook, typically maximizes site views.
 
-I've created a mockup Facebook business account using the
-[Balsamiq template](https://code-institute-org.github.io/5P-Assessments-Handbook/files/Facebook_Mockups.zip)
-provided by Code Institute.
+= I've created a Facebook page to promote the company:
 
-![screenshot](documentation/mockup-facebook.png)
+![screenshot](readme_assets/facebook.jpeg)
+
+- In the footer there are links to popular social media sites
+
+![screenshot](readme_assets/socials.jpeg)
 
 ### Newsletter Marketing
 
-I have incorporatee a newsletter sign-up form on my application so that they can keep upto date with the latest news and promotional offers. I have implemented this via MailChimp as:
+I have incorporated a newsletter sign-up form on my application so that they can keep upto date with the latest news and promotional offers. I have implemented this via MailChimp as:
 
 - MailChimp handle the GDPR requirements and make it easy for users to unsubscribe
 - MailChimp includes an email campaign builder, this makes it easy for non-technical staff at Zenith Expedition Cruises to produce emails.
-- MailChimp 
+
+![screenshot](readme_assets/mailchimp.jpeg)
 
 ## Testing
 
@@ -393,11 +388,11 @@ For all testing, please refer to the [TESTING.md](TESTING.md) file.
 
 ## Deployment
 
-The live deployed application can be found deployed on [Heroku](https://fff.herokuapp.com).
+The live deployed application can be found deployed on [Heroku](https://zenith-ci.herokuapp.com/).
 
 ### ElephantSQL Database
 
-This project uses [ElephantSQL](https://www.elephantsql.com) for the PostgreSQL Database.
+This project uses Heroku for the PostgreSQL Database.
 
 To obtain your own Postgres Database, sign-up with your GitHub account, then follow these steps:
 - Click **Create New Instance** to start a new database.
