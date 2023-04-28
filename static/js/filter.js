@@ -10,7 +10,7 @@ tag = urlParams.get('tag');
 // Submit filter form when value changed
 tagSelect.addEventListener('change', () => {
     filterForm.submit();
-})
+});
 
 window.onload = set;
 
@@ -22,6 +22,6 @@ function set() {
         <span class="material-symbols-outlined">cancel</span>
         Remove '${tag}'
     </a>
-        `
+        `;
     }
 }
