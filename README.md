@@ -170,8 +170,23 @@ To help me manage the planning and implementation of all primary functionality w
 | Confirmation email | The user receives a confirmation email after they have made a booking | ![screenshot](readme_assets/email_conf.jpeg) |
 
 
-## Wireframes
+## Wireframes & Mockups
 
+- [Figma](https://figma.com) was used to develop different wireframes & mockups.
+
+- The Figma file with all the mockups and wireframes [can be accessed here](https://www.figma.com/file/31ixxZ8Plr4M71TRG9hGoD/zenith?node-id=0%3A1&t=bFFbWfrFluDT-1)
+
+- Wireframes
+
+	![screenshot](readme_assets/wireframe.jpeg)
+
+- Mockups - from the wireframes mockups were created
+
+	![screenshot](readme_assets/mockup.jpeg)
+
+- Mobile checkout mockups
+
+	![screenshot](readme_assets/checkout_mock.jpeg)
 
 ## Technologies & Tools Used
 
